@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Hopby</string>
+    <string name="create_button">Create</string>
+    <string name="filter_button">Filter</string>
+    <string name="maps_button">Maps</string>
+    <string name="session">Session</string>
+
+</resources>
