@@ -10,8 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hopby">
         <activity
+            android:name=".SessionOverviewActivity"
+            android:label="@string/title_activity_session_overview"></activity>
+        <activity
             android:name=".ui.login.LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+            android:label="@string/title_activity_login" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
