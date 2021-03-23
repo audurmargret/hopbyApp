@@ -1,6 +1,7 @@
 package is.hi.hbv601g.hopby;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -10,6 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
+import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -30,16 +32,8 @@ public class SessionOverviewActivity extends AppCompatActivity {
     private TextView mSessionHobby;
     private TextView mSessionSlots;
 
-    private LocalDate day1 = LocalDate.of(2021, Month.APRIL, 1);
-    private LocalDate day2 = LocalDate.of(2021, Month.APRIL, 5);
-    private LocalTime time1 = LocalTime.of(12,00);
-    private LocalTime time2 = LocalTime.of(14,00);
-    private Session[] mSessionBank = new Session[] {
-            new Session("Georg og felagar", "Nordakjallarinn", day1, time1, 10, 1, "Rosa gaman, mikid stud"),
-            new Session("ELDGOS", "Fagradalsfjall", day1, time2, 10, 3, "Kikjum a thetta gos"),
-            new Session("Addi og co", "Klambratun", day2, time1, 10, 2, "Krofuboltastud"),
-            new Session("Fallega folkid", "Seljaskoli", day2, time1, 10, 2, "Rosa gaman, mikid stud")
-    };
+    private List<Session> mSessionBank;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +49,20 @@ public class SessionOverviewActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
+        NetworkController networkController = NetworkController.getInstance(this);
+        networkController.getSessions(new NetworkCallback<List<Session>>() {
+            @Override
+            public void onSuccess(List<Session> result) {
+                mSessionBank = result;
+                Log.d("SessionOverviewActivity", "First session in bank "+mSessionBank.get(0).getTitle());
+            }
 
+            @Override
+            public void onFailure(String errorString) {
+                Log.d("SessionOverviewActivity", "Failed to get sessions "+ errorString);
+            }
+        });
 
-        updateSessions();
         mButtonFilter = (Button) findViewById(R.id.filter_button);
         mButtonFilter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,22 +88,20 @@ public class SessionOverviewActivity extends AppCompatActivity {
             }
         });
     }
-
     private void updateSessions() {
         mSessionTitle = (TextView) findViewById(R.id.Session_title);
-        mSessionTitle.setText(mSessionBank[0].getTitle());
+        mSessionTitle.setText(mSessionBank.get(0).getTitle());
         mSessionDescription = (TextView) findViewById(R.id.Session_description);
-        mSessionDescription.setText(mSessionBank[0].getDescription());
+        mSessionDescription.setText(mSessionBank.get(0).getDescription());
         mSessionLocation = (TextView) findViewById(R.id.Session_location);
-        mSessionLocation.setText(mSessionBank[0].getLocation());
+        mSessionLocation.setText(mSessionBank.get(0).getLocation());
         mSessionDate = (TextView) findViewById(R.id.Session_date);
-        mSessionDate.setText(mSessionBank[0].getDate().toString());
+        mSessionDate.setText(mSessionBank.get(0).getDate().toString());
         mSessionTime = (TextView) findViewById(R.id.Session_time);
-        mSessionDate.setText(mSessionBank[0].getTime().toString());
+        mSessionDate.setText(mSessionBank.get(0).getTime().toString());
         mSessionSlots = (TextView) findViewById(R.id.Session_slots);
-        mSessionSlots.setText("Total slots: " + mSessionBank[0].getSlots() + " Available slots: " + mSessionBank[0].getSlotsAvailable());
+        mSessionSlots.setText("Total slots: " + mSessionBank.get(0).getSlots() + " Available slots: " + mSessionBank.get(0).getSlotsAvailable());
         mSessionHobby =  (TextView) findViewById(R.id.Session_hobby);
-        mSessionHobby.setText(String.valueOf(mSessionBank[0].getHobbyId()));
+        mSessionHobby.setText(String.valueOf(mSessionBank.get(0).getHobbyId()));
     }
-
 }

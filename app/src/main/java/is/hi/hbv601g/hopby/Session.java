@@ -1,126 +1,135 @@
 package is.hi.hbv601g.hopby;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
 public class Session {
 
-    private long id;
-    private String title;
-    private String location;
-    private LocalDate date;
-    private LocalTime time;
-    private List<User> users;
-    private int slotsAvailable;
-    private int slots;
-    private int hobbyId;
-    private String description;
-
-    public Session() {
-    }
+    @SerializedName("id")
+    private long mId;
+    @SerializedName("title")
+    private String mTitle;
+    @SerializedName("location")
+    private String mLocation;
+    @SerializedName("date")
+    private LocalDate mDate;
+    @SerializedName("time")
+    private LocalTime mTime;
+    @SerializedName("users")
+    private List<User> mUsers;
+    @SerializedName("SlotsAvailable")
+    private int mSlotsAvailable;
+    @SerializedName("Slots")
+    private int mSlots;
+    @SerializedName("HobbyId")
+    private int mHobbyId;
+    @SerializedName("Description")
+    private String mDescription;
 
     public Session(String title, String location, LocalDate date, LocalTime time, int slots, int hobbyId, String description) {
-        this.title = title;
-        this.location = location;
-        this.date = date;
-        this.time = time;
-        this.slots = slots;
-        this.slotsAvailable = slots;
-        this.hobbyId = hobbyId;
-        this.description = description;
+        mTitle = title;
+        mLocation = location;
+        mDate = date;
+        mTime = time;
+        mSlots = slots;
+        mSlotsAvailable = slots;
+        mHobbyId = hobbyId;
+        mDescription = description;
 
     }
 
     public long getId() {
-        return id;
+        return mId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(int mId) {
+        mId = mId;
     }
 
     public String getTitle() {
-        return title;
+        return mTitle;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTitle(String mTitle) {
+        mTitle = mTitle;
     }
 
     public String getLocation() {
-        return location;
+        return mLocation;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setLocation(String mLocation) {
+        mLocation = mLocation;
     }
 
     public LocalDate getDate() {
-        return date;
+        return mDate;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setDate(LocalDate mDate) {
+        mDate = mDate;
     }
 
     public LocalTime getTime() {
-        return time;
+        return mTime;
     }
 
-    public void setTime(LocalTime time) {
-        this.time = time;
+    public void setTime(LocalTime mTime) {
+        mTime = mTime;
     }
 
     public List<User> getUsers() {
-        return users;
+        return mUsers;
     }
 
     public void setUsers(User user) {
-        this.users.add(user);
+        mUsers.add(user);
         System.out.println("Bæta við user í session lista");
-        System.out.println("listinn: " + users);
-        slotsAvailable--;
+        System.out.println("listinn: " + mUsers);
+        mSlotsAvailable--;
     }
 
     public void removeUser(User user) {
-        users.remove(user);
+        mUsers.remove(user);
         System.out.println("Taka " + user.getUserName() + " úr lista");
-        System.out.println("listinn: " + users);
+        System.out.println("listinn: " + mUsers);
         System.out.println("user: " + user);
-        slotsAvailable++;
+        mSlotsAvailable++;
     }
 
     public int getSlotsAvailable() {
-        return slotsAvailable;
+        return mSlotsAvailable;
     }
 
-    public void setSlotsAvailable(int slotsAvailable) {
-        this.slotsAvailable = slotsAvailable;
+    public void setSlotsAvailable(int mSlotsAvailable) {
+        mSlotsAvailable = mSlotsAvailable;
     }
 
     public int getSlots() {
-        return slots;
+        return mSlots;
     }
 
-    public void setSlots(int slots) {
-        this.slots = slots;
+    public void setSlots(int mSlots) {
+        mSlots = mSlots;
     }
 
     public long getHobbyId() {
-        return hobbyId;
+        return mHobbyId;
     }
 
-    public void setHobbyId(int hobbyId) {
-        this.hobbyId = hobbyId;
+    public void setHobbyId(int mHobbyId) {
+        mHobbyId = mHobbyId;
     }
 
     public String getDescription() {
-        return description;
+        return mDescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescription(String mDescription) {
+        mDescription = mDescription;
     }
 
 }
