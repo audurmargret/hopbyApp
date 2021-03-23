@@ -1,6 +1,8 @@
 package is.hi.hbv601g.hopby;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -62,7 +64,7 @@ public class SessionOverviewActivity extends AppCompatActivity {
         mButtonFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: Opna FILTER VIEW
+                System.out.println("filter TAKKI");
             }
         });
 
@@ -70,7 +72,7 @@ public class SessionOverviewActivity extends AppCompatActivity {
         mButtonCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: Opna CREATE VIEW
+                System.out.println("createSession TAKKI");
             }
         });
 
@@ -79,7 +81,9 @@ public class SessionOverviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // TODO: Opna MAPS VIEW
-                System.out.println("MAPS");
+                System.out.println("MAPS TAKKI");
+                Intent intent = new Intent(SessionOverviewActivity.this, MapsActivity.class);
+                startActivity(intent);
             }
         });
     }
