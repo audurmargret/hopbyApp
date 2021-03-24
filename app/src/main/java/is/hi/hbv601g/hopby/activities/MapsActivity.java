@@ -1,6 +1,7 @@
-package is.hi.hbv601g.hopby;
+package is.hi.hbv601g.hopby.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import is.hi.hbv601g.hopby.R;
 
 import android.os.Bundle;
 

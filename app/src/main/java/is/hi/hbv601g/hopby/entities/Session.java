@@ -1,4 +1,4 @@
-package is.hi.hbv601g.hopby;
+package is.hi.hbv601g.hopby.entities;
 
 import com.google.gson.annotations.SerializedName;
 

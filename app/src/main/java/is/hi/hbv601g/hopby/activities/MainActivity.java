@@ -1,17 +1,14 @@
-package is.hi.hbv601g.hopby;
+package is.hi.hbv601g.hopby.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import is.hi.hbv601g.hopby.R;
+import is.hi.hbv601g.hopby.entities.Hobby;
 import is.hi.hbv601g.hopby.ui.login.LoginActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.Month;
 
 public class MainActivity extends AppCompatActivity {
 

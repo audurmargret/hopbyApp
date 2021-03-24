@@ -1,4 +1,4 @@
-package is.hi.hbv601g.hopby;
+package is.hi.hbv601g.hopby.networking;
 
 import android.content.Context;
 
@@ -13,6 +13,8 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 
 import java.util.List;
+
+import is.hi.hbv601g.hopby.entities.Session;
 
 public class NetworkController {
     private static NetworkController sInstance;

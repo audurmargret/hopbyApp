@@ -1,4 +1,4 @@
-package is.hi.hbv601g.hopby;
+package is.hi.hbv601g.hopby.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,9 +9,6 @@ import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.Month;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +16,10 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import is.hi.hbv601g.hopby.R;
+import is.hi.hbv601g.hopby.entities.Session;
+import is.hi.hbv601g.hopby.networking.NetworkCallback;
+import is.hi.hbv601g.hopby.networking.NetworkController;
 
 public class SessionOverviewActivity extends AppCompatActivity {
 
