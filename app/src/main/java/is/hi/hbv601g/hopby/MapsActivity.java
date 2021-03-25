@@ -58,16 +58,16 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        LatLng kringlan = new LatLng(64.1297, -21.8967);
 
         // Add a marker in Reykjavík and move the camera
         LatLng reykjavik = new LatLng(64.1466, -21.9426);
-        LatLng lv = new LatLng(64.1434,-21.8790);
-        mMap.addMarker(new MarkerOptions().position(reykjavik).title("Körfubolti - Reykjavík").icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_basketball_24)));
-        mMap.addMarker(new MarkerOptions().position(lv).title("Ganga - Laugardalsvöllur").icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_directions_walk_24)));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(reykjavik, 15f));
-        mMap.addMarker(new MarkerOptions().position(kringlan).title("Fótbolti - Kringlan").icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_soccer_24)));
-        mMap.addMarker((new MarkerOptions().position(getLocationFromAddress(getApplicationContext(), "Laugalækjarskóli")).title("Laugalækjarskóli").icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_soccer_24))));
+
+        addMarkers("Reykjavík","Ganga");
+        addMarkers("Laugalækjarskóli","Körfubolti");
+        addMarkers("Álftamýri","Fótbolti");
+        addMarkers("Laugardalsvöllur","Fótbolti");
+
         mapButton = (Button) findViewById(R.id.button);
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +78,20 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
     }
+
+    private void addMarkers(String loc, String sport) {
+        // TODO take in array of strings and iterate through
+        if (sport == "Körfubolti") {
+            mMap.addMarker((new MarkerOptions().position(getLocationFromAddress(getApplicationContext(), loc)).title(sport + " " + loc).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_basketball_24))));
+        }
+        else if (sport == "Fótbolti") {
+            mMap.addMarker((new MarkerOptions().position(getLocationFromAddress(getApplicationContext(), loc)).title(sport + " " + loc).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_soccer_24))));
+        }
+        else {
+            mMap.addMarker((new MarkerOptions().position(getLocationFromAddress(getApplicationContext(), loc)).title(sport +" "+ loc).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_directions_walk_24))));
+        }
+    }
+
     private BitmapDescriptor BitmapFromVector(Context context, int vectorResId) {
         // below line is use to generate a drawable.
         Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
