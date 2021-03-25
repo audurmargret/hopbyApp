@@ -81,14 +81,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void addMarkers(String loc, String sport) {
         // TODO take in array of strings and iterate through
-        if (sport == "Körfubolti") {
-            mMap.addMarker((new MarkerOptions().position(getLocationFromAddress(getApplicationContext(), loc)).title(sport + " " + loc).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_basketball_24))));
-        }
-        else if (sport == "Fótbolti") {
-            mMap.addMarker((new MarkerOptions().position(getLocationFromAddress(getApplicationContext(), loc)).title(sport + " " + loc).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_soccer_24))));
-        }
-        else {
-            mMap.addMarker((new MarkerOptions().position(getLocationFromAddress(getApplicationContext(), loc)).title(sport +" "+ loc).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_directions_walk_24))));
+        switch (sport) {
+            case "Körfubolti":
+                mMap.addMarker((new MarkerOptions().position(getLocationFromAddress(getApplicationContext(), loc)).title(sport + " " + loc).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_basketball_24))));
+                break;
+            case "Fótbolti":
+                mMap.addMarker((new MarkerOptions().position(getLocationFromAddress(getApplicationContext(), loc)).title(sport + " " + loc).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_soccer_24))));
+                break;
+            default:
+                mMap.addMarker((new MarkerOptions().position(getLocationFromAddress(getApplicationContext(), loc)).title(sport + " " + loc).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_directions_walk_24))));
         }
     }
 
