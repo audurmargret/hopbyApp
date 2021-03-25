@@ -1,6 +1,7 @@
 package is.hi.hbv601g.hopby;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
@@ -64,6 +65,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         markers.add(new String[]{"Laugalækjarskóli","Körfubolti"});
         markers.add(new String[]{"Álftamýri","Fótbolti"});
         markers.add(new String[]{"Laugardalsvöllur","Fótbolti"});
+        markers.add(new String[]{"Akureyri","Ganga"});
+        markers.add(new String[]{"Fagradalsfjall", "Ganga"});
         addMarkers(markers);
 
         mapButton = (Button) findViewById(R.id.button);
@@ -71,7 +74,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onClick(View view) {
 
-                System.out.println(reykjavik);
+                Intent intent = new Intent(MapsActivity.this, SessionOverviewActivity.class);
+                startActivity(intent);
 
             }
         });
