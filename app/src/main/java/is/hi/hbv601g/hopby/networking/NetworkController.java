@@ -21,7 +21,7 @@ public class NetworkController {
     private static NetworkController sInstance;
     private static RequestQueue sQueue;
     private Context mContext;
-    private static final String BASE_URL = "http://10.0.2.2:8080";
+    private static final String BASE_URL = "http://10.0.2.2:8080/";
 
     public static synchronized NetworkController getInstance(Context context) {
         if(sInstance == null) {
@@ -48,8 +48,10 @@ public class NetworkController {
                 Request.Method.GET, BASE_URL + "hobby/all", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                Log.d("NetworkController", response);
                 Gson gson = new Gson();
                 Type listType = new TypeToken<List<Session>>(){}.getType();
+                Log.d("NetworkController", listType.toString());
                 List<Session> sessionBank = gson.fromJson(response, listType);
                 callback.onSuccess(sessionBank);
             }
@@ -60,5 +62,6 @@ public class NetworkController {
             }
         }
         );
+        sQueue.add(request);
     }
 }
