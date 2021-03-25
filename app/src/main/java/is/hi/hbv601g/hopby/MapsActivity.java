@@ -1,11 +1,6 @@
 package is.hi.hbv601g.hopby;
 
-import androidx.annotation.DrawableRes;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
@@ -16,6 +11,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -23,10 +21,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -34,8 +32,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private GoogleMap mMap;
     private Button mapButton;
-
-
+    private ArrayList<String[]> markers = new ArrayList <String[]>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +60,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         LatLng reykjavik = new LatLng(64.1466, -21.9426);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(reykjavik, 15f));
 
-        addMarkers("Reykjavík","Ganga");
-        addMarkers("Laugalækjarskóli","Körfubolti");
-        addMarkers("Álftamýri","Fótbolti");
-        addMarkers("Laugardalsvöllur","Fótbolti");
+        markers.add(new String[]{"Reykjavík","Ganga"});
+        markers.add(new String[]{"Laugalækjarskóli","Körfubolti"});
+        markers.add(new String[]{"Álftamýri","Fótbolti"});
+        markers.add(new String[]{"Laugardalsvöllur","Fótbolti"});
+        addMarkers(markers);
 
         mapButton = (Button) findViewById(R.id.button);
         mapButton.setOnClickListener(new View.OnClickListener() {
@@ -79,17 +77,25 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
     }
 
-    private void addMarkers(String loc, String sport) {
-        // TODO take in array of strings and iterate through
-        switch (sport) {
-            case "Körfubolti":
-                mMap.addMarker((new MarkerOptions().position(getLocationFromAddress(getApplicationContext(), loc)).title(sport + " " + loc).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_basketball_24))));
-                break;
-            case "Fótbolti":
-                mMap.addMarker((new MarkerOptions().position(getLocationFromAddress(getApplicationContext(), loc)).title(sport + " " + loc).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_soccer_24))));
-                break;
-            default:
-                mMap.addMarker((new MarkerOptions().position(getLocationFromAddress(getApplicationContext(), loc)).title(sport + " " + loc).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_directions_walk_24))));
+    private void addMarkers(ArrayList markers) {
+
+        int lenMarkers = markers.size();
+        String [] locspo;
+
+        for(int i = 0; i < lenMarkers; i++) {
+            locspo = (String[]) markers.get(i);
+            String loc = locspo[0];
+            String sport = locspo[1];
+            switch (sport) {
+                case "Körfubolti":
+                    mMap.addMarker((new MarkerOptions().position(getLocationFromAddress(getApplicationContext(), loc)).title(sport + " " + loc).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_basketball_24))));
+                    break;
+                case "Fótbolti":
+                    mMap.addMarker((new MarkerOptions().position(getLocationFromAddress(getApplicationContext(), loc)).title(sport + " " + loc).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_soccer_24))));
+                    break;
+                default:
+                    mMap.addMarker((new MarkerOptions().position(getLocationFromAddress(getApplicationContext(), loc)).title(sport + " " + loc).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_directions_walk_24))));
+            }
         }
     }
 
