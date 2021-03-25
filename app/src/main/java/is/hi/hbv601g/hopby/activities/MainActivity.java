@@ -3,7 +3,6 @@ package is.hi.hbv601g.hopby.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import is.hi.hbv601g.hopby.R;
 import is.hi.hbv601g.hopby.entities.Hobby;
-import is.hi.hbv601g.hopby.ui.login.LoginActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // TODO: Opna LOGIN VIEW
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
+                //Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                //startActivity(intent);
             }
         });
 

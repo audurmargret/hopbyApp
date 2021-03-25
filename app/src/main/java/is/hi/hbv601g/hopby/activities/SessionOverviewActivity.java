@@ -41,15 +41,6 @@ public class SessionOverviewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_session_overview);
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(navView, navController);
 
         NetworkController networkController = NetworkController.getInstance(this);
         networkController.getSessions(new NetworkCallback<List<Session>>() {
@@ -57,6 +48,7 @@ public class SessionOverviewActivity extends AppCompatActivity {
             public void onSuccess(List<Session> result) {
                 mSessionBank = result;
                 Log.d("SessionOverviewActivity", "First session in bank "+mSessionBank.get(0).getTitle());
+                updateSessions();
             }
 
             @Override
@@ -93,6 +85,7 @@ public class SessionOverviewActivity extends AppCompatActivity {
         });
     }
     private void updateSessions() {
+        Log.d("SessionOverviewActivity", "First session in bank "+mSessionBank.get(0).getTitle());
         mSessionTitle = (TextView) findViewById(R.id.Session_title);
         mSessionTitle.setText(mSessionBank.get(0).getTitle());
         mSessionDescription = (TextView) findViewById(R.id.Session_description);
