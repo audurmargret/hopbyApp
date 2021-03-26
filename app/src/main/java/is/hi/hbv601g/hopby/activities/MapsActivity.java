@@ -22,6 +22,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
@@ -31,7 +32,7 @@ import java.util.List;
 import is.hi.hbv601g.hopby.R;
 
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarkerClickListener, OnMapReadyCallback {
 
     private GoogleMap mMap;
     private Button mapButton;
@@ -61,7 +62,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         // Add a marker in Reykjavík and move the camera
         LatLng reykjavik = new LatLng(64.1466, -21.9426);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(reykjavik, 15f));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(reykjavik, 12f));
 
         markers.add(new String[]{"Reykjavík","Ganga"});
         markers.add(new String[]{"Laugalækjarskóli","Körfubolti"});
@@ -69,7 +70,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         markers.add(new String[]{"Laugardalsvöllur","Fótbolti"});
         markers.add(new String[]{"Akureyri","Ganga"});
         markers.add(new String[]{"Fagradalsfjall", "Ganga"});
-        addMarkers(markers);
+
+        addMarkers(markers); // Add markers on map
+        mMap.setOnMarkerClickListener(this); // Make markers do something when clicked
 
         mapButton = (Button) findViewById(R.id.button);
         mapButton.setOnClickListener(new View.OnClickListener() {
@@ -86,21 +89,24 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void addMarkers(ArrayList markers) {
 
         int lenMarkers = markers.size();
-        String [] locspo;
+        String [] locSpo;
 
         for(int i = 0; i < lenMarkers; i++) {
-            locspo = (String[]) markers.get(i);
-            String loc = locspo[0];
-            String sport = locspo[1];
+            locSpo = (String[]) markers.get(i); // each instance of location + sport
+            String locName = locSpo[0]; // location address
+            String sport = locSpo[1]; // type of sport
+            LatLng loc = getLocationFromAddress(getApplicationContext(), locName); // coordinates for location from address
+
             switch (sport) {
                 case "Körfubolti":
-                    mMap.addMarker((new MarkerOptions().position(getLocationFromAddress(getApplicationContext(), loc)).title(sport + " " + loc).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_basketball_24))));
+                    mMap.addMarker((new MarkerOptions().position(loc).title(sport + " " + locName).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_basketball_24)))).setTag(0);
                     break;
                 case "Fótbolti":
-                    mMap.addMarker((new MarkerOptions().position(getLocationFromAddress(getApplicationContext(), loc)).title(sport + " " + loc).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_soccer_24))));
+                    mMap.addMarker((new MarkerOptions().position(loc).title(sport + " " + locName).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_soccer_24)))).setTag(0);
                     break;
                 default:
-                    mMap.addMarker((new MarkerOptions().position(getLocationFromAddress(getApplicationContext(), loc)).title(sport + " " + loc).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_directions_walk_24))));
+                    mMap.addMarker((new MarkerOptions().position(loc).title(sport + " " + locName).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_directions_walk_24)))).setTag(0);
+
             }
         }
     }
@@ -157,5 +163,23 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
         return resLatLng;
+    }
+
+    @Override
+    public boolean onMarkerClick(final Marker marker) {
+        // Retrieve the data from the marker.
+        Integer clickCount = (Integer) marker.getTag();
+
+        // Check if a click count was set, then display the click count.
+        if (clickCount != null) {
+            clickCount = clickCount + 1;
+            marker.setTag(clickCount);
+            Toast.makeText(this,
+                    marker.getTitle() +
+                            " has been clicked " + clickCount + " times.",
+                    Toast.LENGTH_SHORT).show();
+        }
+
+        return false;
     }
 }
