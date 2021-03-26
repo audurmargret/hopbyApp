@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -37,6 +38,8 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
     private GoogleMap mMap;
     private Button mapButton;
     private ArrayList<String[]> markers = new ArrayList <String[]>();
+    private String prevAddress;
+    private Marker prevMarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,13 +104,13 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
 
             switch (sport) {
                 case "Körfubolti":
-                    mMap.addMarker((new MarkerOptions().position(loc).alpha(0.7f).title(sport + " " + locName).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_basketball_24)))).setTag(0);
+                    mMap.addMarker((new MarkerOptions().position(loc).alpha(0.6f).title(sport + " " + locName).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_basketball_24)))).setTag(0);
                     break;
                 case "Fótbolti":
-                    mMap.addMarker((new MarkerOptions().position(loc).alpha(0.7f).title(sport + " " + locName).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_soccer_24)))).setTag(0);
+                    mMap.addMarker((new MarkerOptions().position(loc).alpha(0.6f).title(sport + " " + locName).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_soccer_24)))).setTag(0);
                     break;
                 default:
-                    mMap.addMarker((new MarkerOptions().position(loc).alpha(0.7f).title(sport + " " + locName).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_directions_walk_24)))).setTag(0);
+                    mMap.addMarker((new MarkerOptions().position(loc).alpha(0.6f).title(sport + " " + locName).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_directions_walk_24)))).setTag(0);
 
             }
         }
@@ -170,7 +173,18 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
     @Override
     public boolean onMarkerClick(final Marker marker) {
         // Retrieve the data from the marker.
-        marker.setAlpha(1.0f);
+        if (prevAddress == null){
+            marker.setAlpha(1.0f);
+            prevAddress = marker.getTitle();
+            prevMarker = marker;
+        }
+        else if (!marker.getTitle().equals(prevAddress)){
+            marker.setAlpha(1.0f);
+            prevMarker.setAlpha(0.6f);
+            prevAddress = marker.getTitle();
+            prevMarker = marker;
+        }
+        
         Integer clickCount = (Integer) marker.getTag();
 
         // Check if a click count was set, then display the click count.
@@ -181,9 +195,6 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
                     marker.getTitle() +
                             " has been clicked " + clickCount + " times.",
                     Toast.LENGTH_SHORT).show();
-            if(clickCount % 2 == 0){
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 15f));
-            }
         }
         return false;
     }
