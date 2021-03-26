@@ -70,6 +70,8 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
         markers.add(new String[]{"Laugardalsvöllur","Fótbolti"});
         markers.add(new String[]{"Akureyri","Ganga"});
         markers.add(new String[]{"Fagradalsfjall", "Ganga"});
+        markers.add(new String[]{"Arbaer","Körfubolti"});
+        markers.add(new String[]{"Briedholt","Fótbolti"});
 
         addMarkers(markers); // Add markers on map
         mMap.setOnMarkerClickListener(this); // Make markers do something when clicked
@@ -99,33 +101,33 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
 
             switch (sport) {
                 case "Körfubolti":
-                    mMap.addMarker((new MarkerOptions().position(loc).title(sport + " " + locName).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_basketball_24)))).setTag(0);
+                    mMap.addMarker((new MarkerOptions().position(loc).alpha(0.7f).title(sport + " " + locName).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_basketball_24)))).setTag(0);
                     break;
                 case "Fótbolti":
-                    mMap.addMarker((new MarkerOptions().position(loc).title(sport + " " + locName).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_soccer_24)))).setTag(0);
+                    mMap.addMarker((new MarkerOptions().position(loc).alpha(0.7f).title(sport + " " + locName).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_soccer_24)))).setTag(0);
                     break;
                 default:
-                    mMap.addMarker((new MarkerOptions().position(loc).title(sport + " " + locName).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_directions_walk_24)))).setTag(0);
+                    mMap.addMarker((new MarkerOptions().position(loc).alpha(0.7f).title(sport + " " + locName).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_directions_walk_24)))).setTag(0);
 
             }
         }
     }
 
     private BitmapDescriptor BitmapFromVector(Context context, int vectorResId) {
-        // below line is use to generate a drawable.
+        // below line is used to generate a drawable.
         Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
 
-        // below line is use to set bounds to our vector drawable.
+        // below line is used to set bounds to our vector drawable.
         vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
 
-        // below line is use to create a bitmap for our
+        // below line is used to create a bitmap for our
         // drawable which we have added.
         Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
 
-        // below line is use to add bitmap in our canvas.
+        // below line is used to add bitmap in our canvas.
         Canvas canvas = new Canvas(bitmap);
 
-        // below line is use to draw our
+        // below line is used to draw our
         // vector drawable in canvas.
         vectorDrawable.draw(canvas);
 
@@ -168,6 +170,7 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
     @Override
     public boolean onMarkerClick(final Marker marker) {
         // Retrieve the data from the marker.
+        marker.setAlpha(1.0f);
         Integer clickCount = (Integer) marker.getTag();
 
         // Check if a click count was set, then display the click count.
@@ -178,8 +181,10 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
                     marker.getTitle() +
                             " has been clicked " + clickCount + " times.",
                     Toast.LENGTH_SHORT).show();
+            if(clickCount % 2 == 0){
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 15f));
+            }
         }
-
         return false;
     }
 }
