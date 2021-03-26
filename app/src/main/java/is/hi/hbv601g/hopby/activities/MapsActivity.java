@@ -27,6 +27,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,10 +63,9 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
         // Add a marker in Reykjavík and move the camera
         LatLng reykjavik = new LatLng(64.1466, -21.9426);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(reykjavik, 12f));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(reykjavik, 13f));
 
         markers.add(new String[]{"Reykjavík","Ganga"});
         markers.add(new String[]{"Laugalækjarskóli","Körfubolti"});
@@ -86,7 +86,6 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
 
                 Intent intent = new Intent(MapsActivity.this, SessionOverviewActivity.class);
                 startActivity(intent);
-
             }
         });
     }
@@ -172,7 +171,7 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
 
     @Override
     public boolean onMarkerClick(final Marker marker) {
-        // Retrieve the data from the marker.
+        // Increase opacity on selected marker
         if (prevAddress == null){
             marker.setAlpha(1.0f);
             prevAddress = marker.getTitle();
@@ -184,7 +183,7 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
             prevAddress = marker.getTitle();
             prevMarker = marker;
         }
-        
+
         Integer clickCount = (Integer) marker.getTag();
 
         // Check if a click count was set, then display the click count.
