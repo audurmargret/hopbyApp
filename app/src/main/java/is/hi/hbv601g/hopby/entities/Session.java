@@ -14,10 +14,10 @@ public class Session {
     private String mTitle;
     @SerializedName("location")
     private String mLocation;
-    @SerializedName("date")
-    private LocalDate mDate;
-    @SerializedName("time")
-    private LocalTime mTime;
+//    @SerializedName("date")
+//    private LocalDate mDate;
+//    @SerializedName("time")
+//    private LocalTime mTime;
     @SerializedName("users")
     private List<User> mUsers;
     @SerializedName("SlotsAvailable")
@@ -32,8 +32,8 @@ public class Session {
     public Session(String title, String location, LocalDate date, LocalTime time, int slots, int hobbyId, String description) {
         mTitle = title;
         mLocation = location;
-        mDate = date;
-        mTime = time;
+//        mDate = date;
+//        mTime = time;
         mSlots = slots;
         mSlotsAvailable = slots;
         mHobbyId = hobbyId;
@@ -65,21 +65,21 @@ public class Session {
         mLocation = mLocation;
     }
 
-    public LocalDate getDate() {
-        return mDate;
-    }
-
-    public void setDate(LocalDate mDate) {
-        mDate = mDate;
-    }
-
-    public LocalTime getTime() {
-        return mTime;
-    }
-
-    public void setTime(LocalTime mTime) {
-        mTime = mTime;
-    }
+//    public LocalDate getDate() {
+//        return mDate;
+//    }
+//
+//    public void setDate(LocalDate mDate) {
+//        mDate = mDate;
+//    }
+//
+//    public LocalTime getTime() {
+//        return mTime;
+//    }
+//
+//    public void setTime(LocalTime mTime) {
+//        mTime = mTime;
+//    }
 
     public List<User> getUsers() {
         return mUsers;

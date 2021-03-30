@@ -92,10 +92,10 @@ public class SessionOverviewActivity extends AppCompatActivity {
         mSessionDescription.setText(mSessionBank.get(0).getDescription());
         mSessionLocation = (TextView) findViewById(R.id.Session_location);
         mSessionLocation.setText(mSessionBank.get(0).getLocation());
-        mSessionDate = (TextView) findViewById(R.id.Session_date);
-        mSessionDate.setText(mSessionBank.get(0).getDate().toString());
-        mSessionTime = (TextView) findViewById(R.id.Session_time);
-        mSessionDate.setText(mSessionBank.get(0).getTime().toString());
+//        mSessionDate = (TextView) findViewById(R.id.Session_date);
+//        mSessionDate.setText(mSessionBank.get(0).getDate().toString());
+//        mSessionTime = (TextView) findViewById(R.id.Session_time);
+//        mSessionDate.setText(mSessionBank.get(0).getTime().toString());
         mSessionSlots = (TextView) findViewById(R.id.Session_slots);
         mSessionSlots.setText("Total slots: " + mSessionBank.get(0).getSlots() + " Available slots: " + mSessionBank.get(0).getSlotsAvailable());
         mSessionHobby =  (TextView) findViewById(R.id.Session_hobby);
