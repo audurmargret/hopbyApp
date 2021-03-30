@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
-    <uses-feature android:name="android.hardware.type.watch" />
+
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -21,21 +21,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hopby"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.sessionInfoActivity"></activity>
 
-        <uses-library
-            android:name="com.google.android.wearable"
-            android:required="true" />
-        <!--
-               Set to true if your app is Standalone, that is, it does not require the handheld
-               app to run.
-        -->
-        <meta-data
-            android:name="com.google.android.wearable.standalone"
-            android:value="true" />
+
+
 
         <activity
-            android:name=".networking.session_info"
+            android:name=".activities.sessionInfoActivity"
             android:label="@string/title_activity_session_info">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -57,13 +48,11 @@
 
         <activity
             android:name=".activities.MapsActivity"
-            android:label="@string/title_activity_maps" />
+            android:label="@string/title_activity_maps"></activity>
         <activity
             android:name=".activities.SessionOverviewActivity"
             android:label="@string/title_activity_session_overview" />
-        <activity
-            android:name=".ui.login.LoginActivity"
-            android:label="@string/title_activity_login" />
+
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
