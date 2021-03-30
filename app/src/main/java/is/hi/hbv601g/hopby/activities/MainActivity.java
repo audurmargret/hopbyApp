@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button mButtonLogin;
     private Button mButtonSession;
+    private Button mButtonInfo;
 
     private Hobby[] mHobbyBank = new Hobby[] {
             new Hobby("Fotbolti", 1),
@@ -44,6 +45,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // TODO: Opna LOGIN VIEW
                 Intent intent = new Intent(MainActivity.this, SessionOverviewActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mButtonInfo = (Button) findViewById(R.id.info_button);
+        mButtonInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: Opna INFO VIEW
+                Intent intent = new Intent(MainActivity.this, sessionInfoActivity.class);
                 startActivity(intent);
             }
         });
