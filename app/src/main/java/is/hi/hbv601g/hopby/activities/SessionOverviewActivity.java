@@ -7,15 +7,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+
 import is.hi.hbv601g.hopby.R;
 import is.hi.hbv601g.hopby.entities.Session;
 import is.hi.hbv601g.hopby.networking.NetworkCallback;
@@ -57,7 +52,7 @@ public class SessionOverviewActivity extends AppCompatActivity {
             }
         });
 
-        mButtonFilter = (Button) findViewById(R.id.filter_button);
+        mButtonFilter = (Button) findViewById(R.id.submit_button);
         mButtonFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,7 +60,7 @@ public class SessionOverviewActivity extends AppCompatActivity {
             }
         });
 
-        mButtonCreate = (Button) findViewById(R.id.createSession_button);
+        mButtonCreate = (Button) findViewById(R.id.cancel_button);
         mButtonCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

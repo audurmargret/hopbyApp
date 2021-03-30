@@ -12,18 +12,16 @@
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
+        android:gravity="top"
         android:orientation="vertical"
         tools:context=".activities.MainActivity"
         tools:layout_editor_absoluteY="56dp">
 
         <LinearLayout
-            android:layout_width="382dp"
-            android:layout_height="43dp"
-            android:orientation="horizontal"
-            tools:layout_editor_absoluteX="17dp"
-            tools:layout_editor_absoluteY="374dp"
-            tools:ignore="MissingConstraints">
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:gravity="top"
+            android:padding="20dp">
 
             <Button
                 android:id="@+id/maps_button"
@@ -33,64 +31,44 @@
                 android:text="@string/maps_button" />
 
             <Button
-                android:id="@+id/filter_button"
+                android:id="@+id/submit_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:enabled="false"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
                 android:text="@string/filter_button" />
 
             <Button
-                android:id="@+id/createSession_button"
+                android:id="@+id/cancel_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:enabled="false"
+                android:layout_marginRight="3dp"
                 android:text="@string/create_button" />
 
+            <Button
+                android:id="@+id/back_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:text="Back" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/Session_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/Session_slots"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="" />
-
-        <TextView
-            android:id="@+id/Session_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="" />
-
-        <TextView
-            android:id="@+id/Session_hobby"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Hall'o" />
-
-        <TextView
-            android:id="@+id/Session_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="" />
-
-        <TextView
-            android:id="@+id/Session_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="" />
-
-        <TextView
-            android:id="@+id/Session_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="" />
+            <ListView
+                android:id="@+id/session_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
 
     </LinearLayout>
+
+</LinearLayout>
 
 
 
