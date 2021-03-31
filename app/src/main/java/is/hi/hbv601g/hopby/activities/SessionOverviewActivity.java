@@ -81,7 +81,7 @@ public class SessionOverviewActivity extends AppCompatActivity {
     }
     private void updateSessions() {
         Log.d("SessionOverviewActivity", "First session in bank "+mSessionBank.get(0).getTitle());
-        mSessionTitle = (TextView) findViewById(R.id.Session_title);
+        /*mSessionTitle = (TextView) findViewById(R.id.Session_title);
         mSessionTitle.setText(mSessionBank.get(0).getTitle());
         mSessionDescription = (TextView) findViewById(R.id.Session_description);
         mSessionDescription.setText(mSessionBank.get(0).getDescription());
@@ -94,6 +94,6 @@ public class SessionOverviewActivity extends AppCompatActivity {
         mSessionSlots = (TextView) findViewById(R.id.Session_slots);
         mSessionSlots.setText("Total slots: " + mSessionBank.get(0).getSlots() + " Available slots: " + mSessionBank.get(0).getSlotsAvailable());
         mSessionHobby =  (TextView) findViewById(R.id.Session_hobby);
-        mSessionHobby.setText(String.valueOf(mSessionBank.get(0).getHobbyId()));
+        mSessionHobby.setText(String.valueOf(mSessionBank.get(0).getHobbyId()));*/
     }
 }
