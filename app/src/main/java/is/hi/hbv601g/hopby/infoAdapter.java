@@ -13,10 +13,10 @@ import java.util.ArrayList;
 
 import is.hi.hbv601g.hopby.entities.Session;
 
-public class infoAdapter extends ArrayAdapter<Session>{
+public class infoAdapter extends ArrayAdapter<InfoModel>{
 
-        public infoAdapter(@NonNull Context context, ArrayList<Session> sessionArrayList) {
-            super(context, 0, sessionArrayList);
+        public infoAdapter(@NonNull Context context, ArrayList<InfoModel> infoArrayList) {
+            super(context, 0, infoArrayList);
         }
 
         @NonNull
@@ -27,11 +27,11 @@ public class infoAdapter extends ArrayAdapter<Session>{
                 // Layout Inflater inflates each item to be displayed in GridView.
                 listitemView = LayoutInflater.from(getContext()).inflate(R.layout.info_item, parent, false);
             }
-            Session session = getItem(position);
+            InfoModel infoModel = getItem(position);
             TextView infoRight = listitemView.findViewById(R.id.info_right);
             TextView infoLeft = listitemView.findViewById(R.id.info_left);
-            infoRight.setText(session.getTitle());
-            infoLeft.setText("Title");
+            infoRight.setText(infoModel.getString());
+            infoLeft.setText(infoModel.getType());
             return listitemView;
         }
     }
