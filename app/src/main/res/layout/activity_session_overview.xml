@@ -55,16 +55,14 @@
                 android:text="Back" />
         </LinearLayout>
 
-        <LinearLayout
+        <GridView
+            android:id="@+id/overview_grid"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <ListView
-                android:id="@+id/session_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
+            android:layout_height="500dp"
+            android:horizontalSpacing="6dp"
+            android:numColumns="2"
+            android:verticalSpacing="6dp">
+        </GridView>
 
     </LinearLayout>
 

@@ -15,7 +15,7 @@ import java.util.List;
 import is.hi.hbv601g.hopby.InfoModel;
 import is.hi.hbv601g.hopby.R;
 import is.hi.hbv601g.hopby.entities.Session;
-import is.hi.hbv601g.hopby.infoAdapter;
+import is.hi.hbv601g.hopby.InfoAdapter;
 import is.hi.hbv601g.hopby.networking.NetworkCallback;
 import is.hi.hbv601g.hopby.networking.NetworkController;
 
@@ -69,7 +69,7 @@ public class SessionInfoActivity extends AppCompatActivity {
         sessionArrayList.add(new InfoModel(String.valueOf(mSessionBank.get(0).getSlots()), "Slots"));
         sessionArrayList.add(new InfoModel(mSessionBank.get(0).getUsers().toString(), "Users"));
 
-        infoAdapter adapter = new infoAdapter(this, sessionArrayList);
+        InfoAdapter adapter = new InfoAdapter(this, sessionArrayList);
         grid.setAdapter(adapter);
     }
 

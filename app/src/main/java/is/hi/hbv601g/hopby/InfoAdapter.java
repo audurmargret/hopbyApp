@@ -13,9 +13,9 @@ import java.util.ArrayList;
 
 import is.hi.hbv601g.hopby.entities.Session;
 
-public class infoAdapter extends ArrayAdapter<InfoModel>{
+public class InfoAdapter extends ArrayAdapter<InfoModel>{
 
-        public infoAdapter(@NonNull Context context, ArrayList<InfoModel> infoArrayList) {
+        public InfoAdapter(@NonNull Context context, ArrayList<InfoModel> infoArrayList) {
             super(context, 0, infoArrayList);
         }
 
