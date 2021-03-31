@@ -27,6 +27,7 @@ public class SessionOverviewActivity extends AppCompatActivity {
     private Button mButtonFilter;
     private Button mButtonCreate;
     private Button mButtonMaps;
+    private Button mButtonInfo;
     private TextView mSessionTitle;
     private TextView mSessionDescription;
     private TextView mSessionLocation;
@@ -85,6 +86,8 @@ public class SessionOverviewActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
     }
     private void updateSessions() {
         Log.d("SessionOverviewActivity", "First session in bank "+mSessionBank.get(0).getTitle());
@@ -98,6 +101,17 @@ public class SessionOverviewActivity extends AppCompatActivity {
 
         OverviewAdapter adapter = new OverviewAdapter(this, sessionArrayList);
         grid.setAdapter(adapter);
+
+        /*mButtonInfo = (Button) findViewById(R.id.info_button);
+        mButtonInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: Opna rétt info
+                System.out.println("INFO TAKKI");
+                Intent intent = new Intent(SessionOverviewActivity.this, SessionInfoActivity.class);
+                startActivity(intent);
+            }
+        });*/
 
     }
 }

@@ -32,13 +32,11 @@ public class OverviewAdapter extends ArrayAdapter<OverviewModel> {
         TextView overviewDate = listitemView.findViewById(R.id.overview_date);
         TextView overviewTime = listitemView.findViewById(R.id.overview_time);
         TextView overviewSlots = listitemView.findViewById(R.id.overview_slots);
-        TextView overviewAvailableSlots = listitemView.findViewById(R.id.overview_availableSlots);
         overviewTitle.setText(overviewModel.getTitle());
         overviewLocation.setText(overviewModel.getLocation());
         overviewDate.setText(overviewModel.getDate());
         overviewTime.setText(overviewModel.getTime());
-        overviewSlots.setText(overviewModel.getSlots());
-        overviewAvailableSlots.setText(overviewModel.getAvailableSlots());
+        overviewSlots.setText("Slots: " +overviewModel.getAvailableSlots() + "/" + overviewModel.getSlots());
         return listitemView;
     }
 }
