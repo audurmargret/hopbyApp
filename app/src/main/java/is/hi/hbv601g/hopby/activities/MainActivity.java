@@ -34,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // TODO: Opna LOGIN VIEW
-                //Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                //startActivity(intent);
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // TODO: Opna INFO VIEW
-                Intent intent = new Intent(MainActivity.this, sessionInfoActivity.class);
+                Intent intent = new Intent(MainActivity.this, SessionInfoActivity.class);
                 startActivity(intent);
             }
         });

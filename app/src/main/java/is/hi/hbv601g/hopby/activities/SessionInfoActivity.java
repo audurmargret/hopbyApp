@@ -12,9 +12,8 @@ import java.util.ArrayList;
 
 import is.hi.hbv601g.hopby.InfoModel;
 import is.hi.hbv601g.hopby.R;
-import is.hi.hbv601g.hopby.entities.Session;
 
-public class sessionInfoActivity extends AppCompatActivity {
+public class SessionInfoActivity extends AppCompatActivity {
     private Button mButtonMaps;
 
     GridView grid;
@@ -32,7 +31,7 @@ public class sessionInfoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // TODO: Opna MAPS VIEW
                 System.out.println("MAPS TAKKI");
-                Intent intent = new Intent(sessionInfoActivity.this, MapsActivity.class);
+                Intent intent = new Intent(SessionInfoActivity.this, MapsActivity.class);
                 startActivity(intent);
             }
         });
