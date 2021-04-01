@@ -21,44 +21,29 @@ import is.hi.hbv601g.hopby.R;
 import is.hi.hbv601g.hopby.entities.Session;
 import is.hi.hbv601g.hopby.networking.NetworkCallback;
 import is.hi.hbv601g.hopby.networking.NetworkController;
+import is.hi.hbv601g.hopby.services.SessionService;
 
 public class SessionOverviewActivity extends AppCompatActivity {
 
     private Button mButtonFilter;
     private Button mButtonCreate;
     private Button mButtonMaps;
-    private Button mButtonInfo;
-    private TextView mSessionTitle;
-    private TextView mSessionDescription;
-    private TextView mSessionLocation;
-    private TextView mSessionDate;
-    private TextView mSessionTime;
-    private TextView mSessionHobby;
-    private TextView mSessionSlots;
-
-    private List<Session> mSessionBank;
     GridView grid;
+
+    private SessionService mSessionService;
+    private List<Session> mSessionBank;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_session_overview);
 
-        NetworkController networkController = NetworkController.getInstance(this);
-        networkController.getSessions(new NetworkCallback<List<Session>>() {
-            @Override
-            public void onSuccess(List<Session> result) {
-                mSessionBank = result;
-                Log.d("SessionOverviewActivity", "First session in bank "+mSessionBank.get(0).getTitle());
-                updateSessions();
-            }
 
-            @Override
-            public void onFailure(String errorString) {
-                Log.d("SessionOverviewActivity", "Failed to get sessions "+ errorString);
-            }
-        });
+        NetworkController networkController = NetworkController.getInstance(this);
+        mSessionService = new SessionService(networkController, this);
 
         mButtonFilter = (Button) findViewById(R.id.submit_button);
         mButtonFilter.setOnClickListener(new View.OnClickListener() {
@@ -87,31 +72,19 @@ public class SessionOverviewActivity extends AppCompatActivity {
             }
         });
 
-
     }
-    private void updateSessions() {
-        Log.d("SessionOverviewActivity", "First session in bank "+mSessionBank.get(0).getTitle());
+    public void updateSessions(List<Session> mSessionBank) {
         grid = findViewById(R.id.overview_grid);
         ArrayList<OverviewModel> sessionArrayList = new ArrayList<OverviewModel>();
 
         int length = mSessionBank.size();
-        for(int i =0; i<length; i++){
-            sessionArrayList.add(new OverviewModel(mSessionBank.get(i).getTitle(), mSessionBank.get(i).getLocation(), "12:00", "04-04-2021", String.valueOf(mSessionBank.get(i).getSlots()),  String.valueOf(mSessionBank.get(i).getSlotsAvailable())));
+        for (int i = 0; i < length; i++) {
+            sessionArrayList.add(new OverviewModel(mSessionBank.get(i).getTitle(), mSessionBank.get(i).getLocation(), "12:00", "04-04-2021", String.valueOf(mSessionBank.get(i).getSlots()), String.valueOf(mSessionBank.get(i).getSlotsAvailable())));
+            Log.d("SessionOverviewActivity", " " + mSessionBank.get(i).getSlots());
         }
-
         OverviewAdapter adapter = new OverviewAdapter(this, sessionArrayList);
         grid.setAdapter(adapter);
-
-        /*mButtonInfo = (Button) findViewById(R.id.info_button);
-        mButtonInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO: Opna rétt info
-                System.out.println("INFO TAKKI");
-                Intent intent = new Intent(SessionOverviewActivity.this, SessionInfoActivity.class);
-                startActivity(intent);
-            }
-        });*/
-
     }
+
+
 }
