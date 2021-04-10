@@ -17,6 +17,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 import is.hi.hbv601g.hopby.entities.Session;
+import is.hi.hbv601g.hopby.entities.User;
 
 public class NetworkController {
     private static NetworkController sInstance;
@@ -54,6 +55,27 @@ public class NetworkController {
                 Log.d("NetworkController", listType.toString());
                 List<Session> sessionBank = gson.fromJson(response, listType);
                 callback.onSuccess(sessionBank);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callback.onFailure(error.toString());
+            }
+        }
+        );
+        sQueue.add(request);
+    }
+    public void getUsers(NetworkCallback<List<User>> callback) {
+        StringRequest request = new StringRequest(
+                Request.Method.GET, BASE_URL + "users", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("NetworkController", response);
+                Gson gson = new Gson();
+                Type listType = new TypeToken<List<User>>(){}.getType();
+                Log.d("NetworkController", listType.toString());
+                List<User> userBank = gson.fromJson(response, listType);
+                callback.onSuccess(userBank);
             }
         }, new Response.ErrorListener() {
             @Override
