@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import is.hi.hbv601g.hopby.OverviewAdapter;
-import is.hi.hbv601g.hopby.OverviewModel;
 import is.hi.hbv601g.hopby.R;
 import is.hi.hbv601g.hopby.activities.SessionOverviewActivity;
 import is.hi.hbv601g.hopby.entities.Session;

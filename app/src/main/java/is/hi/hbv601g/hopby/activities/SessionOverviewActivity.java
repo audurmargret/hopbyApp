@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import is.hi.hbv601g.hopby.InfoAdapter;
 import is.hi.hbv601g.hopby.InfoModel;
 import is.hi.hbv601g.hopby.OverviewAdapter;
-import is.hi.hbv601g.hopby.OverviewModel;
 import is.hi.hbv601g.hopby.R;
 import is.hi.hbv601g.hopby.entities.Session;
 import is.hi.hbv601g.hopby.networking.NetworkCallback;
@@ -75,11 +76,19 @@ public class SessionOverviewActivity extends AppCompatActivity {
     }
     public void updateSessions(List<Session> mSessionBank) {
         grid = findViewById(R.id.overview_grid);
-        ArrayList<OverviewModel> sessionArrayList = new ArrayList<OverviewModel>();
+        ArrayList<Session> sessionArrayList = new ArrayList<Session>();
 
         int length = mSessionBank.size();
         for (int i = 0; i < length; i++) {
-            sessionArrayList.add(new OverviewModel(mSessionBank.get(i).getTitle(), mSessionBank.get(i).getLocation(), "12:00", "04-04-2021", String.valueOf(mSessionBank.get(i).getSlots()), String.valueOf(mSessionBank.get(i).getSlotsAvailable())));
+            LocalDate localDate = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                localDate = LocalDate.parse("2021-04-20");
+            }
+            LocalTime localTime = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                localTime = LocalTime.parse("12:00");
+            }
+            sessionArrayList.add(new Session(mSessionBank.get(i).getTitle(), mSessionBank.get(i).getLocation(), localDate, localTime, mSessionBank.get(i).getSlots(), mSessionBank.get(i).getHobbyId(), mSessionBank.get(i).getDescription()));
             Log.d("SessionOverviewActivity", " " + mSessionBank.get(i).getSlots());
         }
         OverviewAdapter adapter = new OverviewAdapter(this, sessionArrayList);

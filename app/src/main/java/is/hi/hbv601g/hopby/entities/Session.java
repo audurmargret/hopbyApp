@@ -117,7 +117,7 @@ public class Session {
         mSlots = mSlots;
     }
 
-    public long getHobbyId() {
+    public int getHobbyId() {
         return mHobbyId;
     }
 

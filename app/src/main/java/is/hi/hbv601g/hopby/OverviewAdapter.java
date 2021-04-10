@@ -11,10 +11,11 @@ import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import is.hi.hbv601g.hopby.entities.Session;
 
-public class OverviewAdapter extends ArrayAdapter<OverviewModel> {
+public class OverviewAdapter extends ArrayAdapter<Session> {
 
-    public OverviewAdapter(@NonNull Context context, ArrayList<OverviewModel> overviewArrayList) {
+    public OverviewAdapter(@NonNull Context context, ArrayList<Session> overviewArrayList) {
         super(context, 0, overviewArrayList);
     }
 
@@ -26,7 +27,7 @@ public class OverviewAdapter extends ArrayAdapter<OverviewModel> {
             // Layout Inflater inflates each item to be displayed in GridView.
             listitemView = LayoutInflater.from(getContext()).inflate(R.layout.overview_item, parent, false);
         }
-        OverviewModel overviewModel = getItem(position);
+        Session overviewModel = getItem(position);
         TextView overviewTitle = listitemView.findViewById(R.id.overview_title);
         TextView overviewLocation = listitemView.findViewById(R.id.overview_location);
         TextView overviewDate = listitemView.findViewById(R.id.overview_date);
@@ -34,9 +35,11 @@ public class OverviewAdapter extends ArrayAdapter<OverviewModel> {
         TextView overviewSlots = listitemView.findViewById(R.id.overview_slots);
         overviewTitle.setText(overviewModel.getTitle());
         overviewLocation.setText(overviewModel.getLocation());
-        overviewDate.setText(overviewModel.getDate());
-        overviewTime.setText(overviewModel.getTime());
-        overviewSlots.setText("Slots: " +overviewModel.getAvailableSlots() + "/" + overviewModel.getSlots());
+        //overviewDate.setText(overviewModel.getDate());
+        //overviewTime.setText(overviewModel.getTime());
+        overviewDate.setText("2021-04-21");
+        overviewTime.setText("12:00");
+        overviewSlots.setText("Slots: " +overviewModel.getSlotsAvailable() + "/" + overviewModel.getSlots());
         return listitemView;
     }
 }
