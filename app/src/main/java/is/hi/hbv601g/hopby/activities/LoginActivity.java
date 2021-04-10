@@ -9,11 +9,13 @@ import is.hi.hbv601g.hopby.networking.NetworkController;
 import is.hi.hbv601g.hopby.services.SessionService;
 import is.hi.hbv601g.hopby.services.UserService;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -51,6 +53,13 @@ public class LoginActivity extends AppCompatActivity {
                 if(success){
                     Intent intent = new Intent(LoginActivity.this, SessionOverviewActivity.class);
                     startActivity(intent);
+                }
+                else {
+                    Context context = getApplicationContext();
+                    CharSequence text = "Username and password don't match";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
                 }
 
             }
