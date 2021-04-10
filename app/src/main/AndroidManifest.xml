@@ -19,7 +19,6 @@
         android:theme="@style/Theme.Hopby"
         android:usesCleartextTraffic="true">
         <activity android:name=".SignupActivity"></activity>
-        <activity android:name=".LoginActivity" />
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".CreateSessionActivity" />
         <activity
