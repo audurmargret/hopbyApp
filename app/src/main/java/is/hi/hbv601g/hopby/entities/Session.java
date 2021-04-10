@@ -1,6 +1,8 @@
 package is.hi.hbv601g.hopby.entities;
 
 
+import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.time.LocalDate;
@@ -15,10 +17,10 @@ public class Session {
     private String mTitle;
     @SerializedName("location")
     private String mLocation;
-//    @SerializedName("date")
-//    private LocalDate mDate;
-//    @SerializedName("time")
-//    private LocalTime mTime;
+    @SerializedName("date")
+    private String mDate;
+    @SerializedName("time")
+    private String mTime;
     @SerializedName("users")
     private List<User> mUsers;
     @SerializedName("SlotsAvailable")
@@ -30,11 +32,11 @@ public class Session {
     @SerializedName("Description")
     private String mDescription;
 
-    public Session(String title, String location, LocalDate date, LocalTime time, int slots, int hobbyId, String description) {
+    public Session(String title, String location, String date, String time, int slots, int hobbyId, String description) {
         mTitle = title;
         mLocation = location;
-//        mDate = date;
-//        mTime = time;
+        mDate = date;
+        mTime = time;
         mSlots = slots;
         mSlotsAvailable = slots;
         mHobbyId = hobbyId;
@@ -66,21 +68,25 @@ public class Session {
         mLocation = mLocation;
     }
 
-//    public LocalDate getDate() {
-//        return mDate;
-//    }
-//
-//    public void setDate(LocalDate mDate) {
-//        mDate = mDate;
-//    }
-//
-//    public LocalTime getTime() {
-//        return mTime;
-//    }
-//
-//    public void setTime(LocalTime mTime) {
-//        mTime = mTime;
-//    }
+    public String getDate() {
+        //String year = mDate.substring(0,4);
+        //String month = mDate.substring(5,7);
+        //String day = mDate.substring(8,10);
+        //String date = day.concat("-").concat(month).concat("-").concat(year);
+        return mDate;
+    }
+
+    public void setDate(String mDate) {
+        mDate = mDate;
+    }
+
+    public String getTime() {
+        return mTime.substring(0,5);
+    }
+
+    public void setTime(String mTime) {
+        mTime = mTime;
+    }
 
     public List<User> getUsers() {
         return mUsers;

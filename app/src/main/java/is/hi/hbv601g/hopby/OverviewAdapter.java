@@ -35,10 +35,10 @@ public class OverviewAdapter extends ArrayAdapter<Session> {
         TextView overviewSlots = listitemView.findViewById(R.id.overview_slots);
         overviewTitle.setText(overviewModel.getTitle());
         overviewLocation.setText(overviewModel.getLocation());
-        //overviewDate.setText(overviewModel.getDate());
-        //overviewTime.setText(overviewModel.getTime());
-        overviewDate.setText("2021-04-21");
-        overviewTime.setText("12:00");
+        overviewDate.setText(overviewModel.getDate());
+        overviewTime.setText(overviewModel.getTime());
+        //overviewDate.setText("2021-04-21");
+        //overviewTime.setText("12:00");
         overviewSlots.setText("Slots: " +overviewModel.getSlotsAvailable() + "/" + overviewModel.getSlots());
         return listitemView;
     }

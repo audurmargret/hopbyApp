@@ -34,7 +34,7 @@ public class SessionInfoActivity extends AppCompatActivity {
             @Override
             public void onSuccess(List<Session> result) {
                 mSessionBank = result;
-                Log.d("SessionOverviewActivity", "First session in bank "+mSessionBank.get(0).getTitle());
+                Log.d("SessionOverviewActivity", "First session in bank "+mSessionBank.get(0).getDescription());
                 updateSession();
             }
 

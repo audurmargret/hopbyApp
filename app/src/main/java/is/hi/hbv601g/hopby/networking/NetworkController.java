@@ -44,7 +44,6 @@ public class NetworkController {
     }
 
     public void getSessions(NetworkCallback<List<Session>> callback) {
-        Log.d("NetworkController", "Hal'o");
         StringRequest request = new StringRequest(
                 Request.Method.GET, BASE_URL + "hobby/all", new Response.Listener<String>() {
             @Override

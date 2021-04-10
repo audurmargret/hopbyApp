@@ -80,15 +80,7 @@ public class SessionOverviewActivity extends AppCompatActivity {
 
         int length = mSessionBank.size();
         for (int i = 0; i < length; i++) {
-            LocalDate localDate = null;
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                localDate = LocalDate.parse("2021-04-20");
-            }
-            LocalTime localTime = null;
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                localTime = LocalTime.parse("12:00");
-            }
-            sessionArrayList.add(new Session(mSessionBank.get(i).getTitle(), mSessionBank.get(i).getLocation(), localDate, localTime, mSessionBank.get(i).getSlots(), mSessionBank.get(i).getHobbyId(), mSessionBank.get(i).getDescription()));
+            sessionArrayList.add(new Session(mSessionBank.get(i).getTitle(), mSessionBank.get(i).getLocation(), mSessionBank.get(i).getDate(), mSessionBank.get(i).getTime(), mSessionBank.get(i).getSlots(), mSessionBank.get(i).getHobbyId(), mSessionBank.get(i).getDescription()));
             Log.d("SessionOverviewActivity", " " + mSessionBank.get(i).getSlots());
         }
         OverviewAdapter adapter = new OverviewAdapter(this, sessionArrayList);
