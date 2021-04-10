@@ -11,11 +11,12 @@ import is.hi.hbv601g.hopby.networking.NetworkController;
 
 public class UserService {
 
-
     private List<User> mUserBank;
+    NetworkController mNetworkController;
 
     public UserService(NetworkController networkController) {
-        networkController.getUsers(new NetworkCallback<List<User>>() {
+        mNetworkController = networkController;
+        mNetworkController.getUsers(new NetworkCallback<List<User>>() {
             @Override
             public void onSuccess(List<User> result) {
                 mUserBank = result;
@@ -29,14 +30,37 @@ public class UserService {
         });
     }
 
-    public List<User> getUserBank() {
-        return mUserBank;
+    public void signup(String name, String username, String password) {
+        User newUser = new User(name, username, password);
+        mNetworkController.addUser(newUser, new NetworkCallback<User>() {
+            @Override
+            public void onSuccess(User result) {
+                mUserBank.add(result);
+                Log.d("UserService", "User added to bank " + result.getUserName());
+            }
+
+            @Override
+            public void onFailure(String errorString) {
+                Log.d("UserService", "Failed to add user " + errorString);
+            }
+        });
     }
 
-    public boolean userExist( String username, String password) {
+
+    public boolean userExist( String username) {
         int len = mUserBank.size();
         for(int i=0; i<len; i++) {
-            Log.d("UserService", mUserBank.get(i).getUserName() + " " + username);
+            if(mUserBank.get(i).getUserName().equals(username)) {
+                Log.d("UserService", "notandi er til");
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean login(String username, String password){
+        int len = mUserBank.size();
+        for(int i=0; i<len; i++) {
             if(mUserBank.get(i).getUserName().equals(username)) {
                 Log.d("UserService", "notandi er til");
                 if(mUserBank.get(i).getPassword().equals(password)) {

@@ -18,9 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hopby"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SignupActivity"></activity>
+        <activity android:name=".activities.SignupActivity"></activity>
         <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".CreateSessionActivity" />
+        <activity android:name=".activities.CreateSessionActivity" />
         <activity
             android:name=".activities.SessionInfoActivity"
             android:label="@string/title_activity_session_info" />
