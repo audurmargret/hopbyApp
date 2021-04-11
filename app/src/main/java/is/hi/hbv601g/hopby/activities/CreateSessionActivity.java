@@ -52,10 +52,19 @@ public class CreateSessionActivity extends AppCompatActivity {
 
                 int slots = Integer.parseInt(mSlots.getText().toString());
                 int hobby = Integer.parseInt(mHobbyId.getText().toString());
-                mSessionService.addSession(mTitle.getText().toString(), mDate.getText().toString(), mTime.getText().toString().replaceAll("%3A", ":"), slots, hobby, mDescription.getText().toString(), mLocation.getText().toString());
+                mSessionService.addSession(mTitle.getText().toString(), mDate.getText().toString(), mTime.getText().toString(), slots, hobby, mDescription.getText().toString(), mLocation.getText().toString());
 
                 Intent intent = new Intent(CreateSessionActivity.this, SessionInfoActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        mButtonCancel = (Button) findViewById(R.id.cancel_button);
+        mButtonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("CANCEL TAKKI");
+                finish();
             }
         });
 

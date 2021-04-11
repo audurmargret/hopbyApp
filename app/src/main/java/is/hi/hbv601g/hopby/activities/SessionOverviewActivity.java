@@ -29,6 +29,7 @@ public class SessionOverviewActivity extends AppCompatActivity {
     private Button mButtonFilter;
     private Button mButtonCreate;
     private Button mButtonMaps;
+    private Button mButtonBack;
     GridView grid;
 
     private SessionService mSessionService;
@@ -38,16 +39,15 @@ public class SessionOverviewActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_session_overview);
 
-
         NetworkController networkController = NetworkController.getInstance(this);
+
         mSessionService = new SessionService(networkController);
         mSessionService.getAllSession(this);
 
-        mButtonFilter = (Button) findViewById(R.id.submit_button);
+        mButtonFilter = (Button) findViewById(R.id.filter_button);
         mButtonFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,11 +55,12 @@ public class SessionOverviewActivity extends AppCompatActivity {
             }
         });
 
-        mButtonCreate = (Button) findViewById(R.id.cancel_button);
+        mButtonCreate = (Button) findViewById(R.id.create_button);
         mButtonCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("createSession TAKKI");
+                Intent intent = new Intent(SessionOverviewActivity.this, CreateSessionActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -71,6 +72,14 @@ public class SessionOverviewActivity extends AppCompatActivity {
                 System.out.println("MAPS TAKKI");
                 Intent intent = new Intent(SessionOverviewActivity.this, MapsActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        mButtonBack = (Button) findViewById(R.id.back_button);
+        mButtonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
 

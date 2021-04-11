@@ -71,6 +71,25 @@ public class NetworkController {
         );
         sQueue.add(request);
     }
+    public void getSession(NetworkCallback<Session> callback) {
+        StringRequest request = new StringRequest(
+                Request.Method.GET, BASE_URL + "hobby/all", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("NetworkController", response);
+                Gson gson = new Gson();
+                Session session = gson.fromJson(response, Session.class);
+                callback.onSuccess(session);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callback.onFailure(error.toString());
+            }
+        }
+        );
+        sQueue.add(request);
+    }
     public void getUsers(NetworkCallback<List<User>> callback) {
         StringRequest request = new StringRequest(
                 Request.Method.GET, BASE_URL + "users", new Response.Listener<String>() {
@@ -142,6 +161,7 @@ public class NetworkController {
                 Log.d("NetworkController", response);
                 Gson gson = new Gson();
                 Session session = gson.fromJson(response, Session.class);
+                Log.d("Network Controller", session.getTitle());
                 callback.onSuccess(session);
             }
         }, new Response.ErrorListener() {

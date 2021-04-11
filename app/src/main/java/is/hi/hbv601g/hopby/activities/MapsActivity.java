@@ -83,9 +83,7 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent intent = new Intent(MapsActivity.this, SessionOverviewActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
     }

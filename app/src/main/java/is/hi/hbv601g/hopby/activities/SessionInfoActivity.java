@@ -18,11 +18,13 @@ import is.hi.hbv601g.hopby.entities.Session;
 import is.hi.hbv601g.hopby.InfoAdapter;
 import is.hi.hbv601g.hopby.networking.NetworkCallback;
 import is.hi.hbv601g.hopby.networking.NetworkController;
+import is.hi.hbv601g.hopby.services.SessionService;
 
 public class SessionInfoActivity extends AppCompatActivity {
     private Button mButtonMaps;
     private List<Session> mSessionBank;
 
+    private SessionService mSessionService;
     GridView grid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,22 +32,10 @@ public class SessionInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_session_info);
 
         NetworkController networkController = NetworkController.getInstance(this);
-        networkController.getSessions(new NetworkCallback<List<Session>>() {
-            @Override
-            public void onSuccess(List<Session> result) {
-                mSessionBank = result;
-                Log.d("SessionOverviewActivity", "First session in bank "+mSessionBank.get(0).getDescription());
-                updateSession();
-            }
 
-            @Override
-            public void onFailure(String errorString) {
-                Log.d("SessionOverviewActivity", "Failed to get sessions "+ errorString);
-            }
-        });
-
-
-
+        mSessionService = new SessionService(networkController);
+        // TODO: breyta 0 yfir í einhvern index til að birta rétt session
+        mSessionService.getSession(this, 0);
 
 
         mButtonMaps = (Button) findViewById(R.id.info_button_maps);
@@ -59,15 +49,15 @@ public class SessionInfoActivity extends AppCompatActivity {
             }
         });
     }
-    public void updateSession() {
+    public void updateSession(Session session) {
         grid = findViewById(R.id.info_grid);
         ArrayList<InfoModel> sessionArrayList = new ArrayList<InfoModel>();
 
-        sessionArrayList.add(new InfoModel(mSessionBank.get(0).getTitle(), "Title"));
-        sessionArrayList.add(new InfoModel(mSessionBank.get(0).getDescription(), "Description"));
-        sessionArrayList.add(new InfoModel(mSessionBank.get(0).getLocation(), "Location"));
-        sessionArrayList.add(new InfoModel(String.valueOf(mSessionBank.get(0).getSlots()), "Slots"));
-        sessionArrayList.add(new InfoModel(mSessionBank.get(0).getUsers().toString(), "Users"));
+        sessionArrayList.add(new InfoModel(session.getTitle(), "Title"));
+        sessionArrayList.add(new InfoModel(session.getDescription(), "Description"));
+        sessionArrayList.add(new InfoModel(session.getLocation(), "Location"));
+        sessionArrayList.add(new InfoModel(String.valueOf(session.getSlots()), "Slots"));
+        sessionArrayList.add(new InfoModel(session.getUsers().toString(), "Users"));
 
         InfoAdapter adapter = new InfoAdapter(this, sessionArrayList);
         grid.setAdapter(adapter);
