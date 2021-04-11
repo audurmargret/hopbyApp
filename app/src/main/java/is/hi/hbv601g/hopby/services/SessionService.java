@@ -15,6 +15,7 @@ import is.hi.hbv601g.hopby.OverviewAdapter;
 import is.hi.hbv601g.hopby.R;
 import is.hi.hbv601g.hopby.activities.SessionOverviewActivity;
 import is.hi.hbv601g.hopby.entities.Session;
+import is.hi.hbv601g.hopby.entities.User;
 import is.hi.hbv601g.hopby.networking.NetworkCallback;
 import is.hi.hbv601g.hopby.networking.NetworkController;
 
@@ -26,8 +27,11 @@ public class SessionService {
     private NetworkController mNetworkController;
     private SessionOverviewActivity mSessionOverviewActivity;
 
-    public SessionService(NetworkController networkController, SessionOverviewActivity sessionOverviewActivity) {
+    public SessionService(NetworkController networkController) {
         mNetworkController = networkController;
+    }
+
+    public void getAllSession(SessionOverviewActivity sessionOverviewActivity) {
         mSessionOverviewActivity = sessionOverviewActivity;
         mNetworkController.getSessions(new NetworkCallback<List<Session>>() {
             @Override
@@ -40,6 +44,23 @@ public class SessionService {
             @Override
             public void onFailure(String errorString) {
                 Log.d("SessionOverviewActivity", "Failed to get sessions " + errorString);
+            }
+        });
+    }
+
+    public void addSession(String title, String date, String time, int slots, int hobbyId, String description, String location) {
+        Session newSession = new Session(title,location,date,time, slots, hobbyId, description);
+        Log.d("SessionService", newSession.getTime());
+        mNetworkController.addSession(newSession, new NetworkCallback<Session>() {
+            @Override
+            public void onSuccess(Session result) {
+                mSessionBank.add(result);
+                Log.d("SessionService", "Session added to bank " + result.getTitle());
+            }
+
+            @Override
+            public void onFailure(String errorString) {
+                Log.d("SessionService", "Failed to add session " + errorString);
             }
         });
     }

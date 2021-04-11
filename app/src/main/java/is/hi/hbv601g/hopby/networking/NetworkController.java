@@ -119,4 +119,37 @@ public class NetworkController {
         });
         sQueue.add(request);
     }
+
+    public void addSession(Session session, NetworkCallback<Session> callback) {
+        String url = Uri.parse(BASE_URL)
+                .buildUpon()
+                .appendPath("hobby")
+                .appendPath("addSession")
+                .appendQueryParameter("title", session.getTitle())
+                .appendQueryParameter("date", session.getDate())
+                .appendQueryParameter("time", session.getTime())
+                .appendQueryParameter("slots", String.valueOf(session.getSlots()))
+                .appendQueryParameter("hobbyId", String.valueOf(session.getHobbyId()))
+                .appendQueryParameter("description", session.getDescription())
+                .appendQueryParameter("location", session.getLocation())
+                .build().toString();
+
+        Log.d("NetworkController", url);
+        StringRequest request = new StringRequest(
+                Request.Method.POST, url,  new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("NetworkController", response);
+                Gson gson = new Gson();
+                Session session = gson.fromJson(response, Session.class);
+                callback.onSuccess(session);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callback.onFailure(error.toString());
+            }
+        });
+        sQueue.add(request);
+    }
 }

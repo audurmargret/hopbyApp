@@ -44,7 +44,8 @@ public class SessionOverviewActivity extends AppCompatActivity {
 
 
         NetworkController networkController = NetworkController.getInstance(this);
-        mSessionService = new SessionService(networkController, this);
+        mSessionService = new SessionService(networkController);
+        mSessionService.getAllSession(this);
 
         mButtonFilter = (Button) findViewById(R.id.submit_button);
         mButtonFilter.setOnClickListener(new View.OnClickListener() {

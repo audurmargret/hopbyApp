@@ -81,7 +81,8 @@ public class Session {
     }
 
     public String getTime() {
-        return mTime.substring(0,5);
+        //return mTime.substring(0,5);
+        return mTime;
     }
 
     public void setTime(String mTime) {

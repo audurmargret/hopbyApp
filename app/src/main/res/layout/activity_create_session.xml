@@ -12,7 +12,8 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="44dp">
+        tools:layout_editor_absoluteY="44dp"
+        tools:ignore="MissingConstraints">
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -29,7 +30,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_hobbyId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Hobby" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -43,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -67,13 +79,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/input_description"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:hint="Description"
                 android:inputType="textMultiLine"
-                android:lines="5"></EditText>
+                android:lines="3"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -98,12 +110,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:gravity="bottom"
+            android:gravity="center"
             android:padding="20dp">
 
             <Button
                 android:id="@+id/cancel_button"
-                android:layout_width="118dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:enabled="true"
@@ -111,7 +123,7 @@
 
             <Button
                 android:id="@+id/submit_button"
-                android:layout_width="122dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:enabled="true"
