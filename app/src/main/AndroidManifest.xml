@@ -6,10 +6,6 @@
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the "MyLocation" functionality.
     -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,20 +14,27 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hopby"
         android:usesCleartextTraffic="true">
-        <activity
-            android:name=".activities.SignupActivity"
-            android:label="@string/title_activity_signup"></activity>
-        <activity
-            android:name=".activities.LoginActivity">
+        <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.CreateSessionActivity" />
+        <activity
+            android:name=".activities.SignupActivity"
+            android:label="@string/title_activity_signup" />
+        <activity
+            android:name=".activities.CreateSessionActivity"
+            android:label="@string/title_activity_create_session" />
         <activity
             android:name=".activities.SessionInfoActivity"
             android:label="@string/title_activity_session_info" />
+        <activity
+            android:name=".activities.SessionOverviewActivity"
+            android:label="@string/title_activity_session_overview" />
+        <activity
+            android:name=".activities.MapsActivity"
+            android:label="@string/title_activity_maps" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -40,16 +43,13 @@
              sign the APK for publishing.
              You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
-        <activity
-            android:name=".activities.MapsActivity"
-            android:label="@string/title_activity_maps" />
-        <activity
-            android:name=".activities.SessionOverviewActivity"
-            android:label="@string/title_activity_session_overview" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
     </application>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
 </manifest>

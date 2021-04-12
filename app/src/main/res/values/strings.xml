@@ -1,40 +1,34 @@
 <resources>
     <string name="app_name">Hopby</string>
-    <string name="create_button">Create</string>
-    <string name="filter_button">Filter</string>
-    <string name="maps_button">Maps</string>
-    <string name="session">Session</string>
+
+    <string name="button_create">CREATE</string>
+    <string name="button_filter">FILTER</string>
+    <string name="button_maps">MAPS</string>
+    <string name="button_login">LOGIN</string>
+    <string name="button_session">SESSION</string>
+    <string name="button_cancel">CANCEL</string>
+    <string name="button_submit">SUBMIT</string>
+    <string name="button_signup">SIGN UP</string>
+    <string name="button_info">INFO</string>
+    <string name="button_back">BACK</string>
+
     <string name="title_activity_login">Hopby - Login</string>
     <string name="title_activity_signup">Hopby - Sign Up</string>
     <string name="title_activity_session_overview">Hopby - All Sessions</string>
     <string name="title_activity_session_info">Hopby - Session Info</string>
     <string name="title_activity_maps">Hopby - Map</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
-    <string name="title_home">Home</string>
-    <string name="login_button">LOGIN</string>
-    <string name="session_button">SESSION</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
-    <!--
-    This string is used for square devices and overridden by hello_world in
-    values-round/strings.xml for round devices.
-    -->
-    <string name="hello_world">Hello Square World!</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <string name="title_activity_create_session">Hopby - Create New Session</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="info_button">INFO</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="location">Location</string>
+    <string name="slots">Slots</string>
+    <string name="time">Time</string>
+    <string name="date">Date</string>
+    <string name="hobby">Hobby</string>
+
+    <string name="name">Name</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
 
 </resources>

@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         android:gravity="top"
         android:orientation="vertical"
-        tools:context=".activities.MainActivity"
+        tools:context=".activities.SessionOverviewActivity"
         tools:layout_editor_absoluteY="56dp">
 
         <GridView
@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:enabled="true"
-                android:text="@string/maps_button" />
+                android:text="@string/button_maps" />
 
             <Button
                 android:id="@+id/filter_button"
@@ -45,7 +45,7 @@
                 android:layout_marginLeft="3dp"
                 android:layout_marginRight="3dp"
                 android:enabled="true"
-                android:text="@string/filter_button" />
+                android:text="@string/button_filter" />
 
             <Button
                 android:id="@+id/create_button"
@@ -53,14 +53,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="3dp"
                 android:enabled="true"
-                android:text="@string/create_button" />
+                android:text="@string/button_create" />
 
             <Button
                 android:id="@+id/back_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:enabled="true"
-                android:text="Back" />
+                android:text="@string/button_back" />
         </LinearLayout>
 
     </LinearLayout>
