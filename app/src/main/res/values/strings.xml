@@ -4,7 +4,11 @@
     <string name="filter_button">Filter</string>
     <string name="maps_button">Maps</string>
     <string name="session">Session</string>
-    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_login">Hopby - Login</string>
+    <string name="title_activity_signup">Hopby - Sign Up</string>
+    <string name="title_activity_session_overview">Hopby - All Sessions</string>
+    <string name="title_activity_session_info">Hopby - Session Info</string>
+    <string name="title_activity_maps">Hopby - Map</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
@@ -13,14 +17,11 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
-    <string name="title_activity_session_overview">MainActivity</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
     <string name="login_button">LOGIN</string>
     <string name="session_button">SESSION</string>
-    <string name="title_activity_maps">Map</string>
-    <string name="title_activity_session_info">session_info</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
     <!--
     This string is used for square devices and overridden by hello_world in
     values-round/strings.xml for round devices.

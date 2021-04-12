@@ -39,7 +39,7 @@ public class SessionService {
             @Override
             public void onSuccess(List<Session> result) {
                 mSessionBank = result;
-                Log.d("SessionService", "First session in bank " + mSessionBank.get(0).getTitle() + " " + mSessionBank.get(0).getId());
+                Log.d("SessionService", "First session in bank " + mSessionBank.get(0).getTitle() + ", slots: " + mSessionBank.get(0).getSlots());
                 mSessionOverviewActivity.updateSessions(mSessionBank);
             }
 
