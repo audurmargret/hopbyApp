@@ -64,16 +64,11 @@ public class SessionService {
             public void onFailure(String errorString) {
                 Log.d("SessionService", "Failed to get sessions " + errorString);
             }
-<<<<<<< Updated upstream
         });
 
-=======
-        }, id);
->>>>>>> Stashed changes
     }
 
     public void addSession(String title, String date, String time, int slots, int hobbyId, String description, String location) {
-        time.replace(".", "");
         Session newSession = new Session(title,location,date,time, slots, hobbyId, description);
         Log.d("SessionService", newSession.getTime());
         mNetworkController.addSession(newSession, new NetworkCallback<Session>() {

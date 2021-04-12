@@ -35,7 +35,6 @@ public class SessionInfoActivity extends AppCompatActivity {
         NetworkController networkController = NetworkController.getInstance(this);
 
         mSessionService = new SessionService(networkController);
-<<<<<<< Updated upstream
         // TODO: breyta 0 yfir í einhvern index til að birta rétt session
 
         Intent intent = getIntent();
@@ -45,10 +44,6 @@ public class SessionInfoActivity extends AppCompatActivity {
         Log.d("SessionInfoActivity", "intent " + intent.getStringExtra("index"));
         Log.d("SessionInfoActivity", "index " + index);
         mSessionService.getSession(this, index);
-=======
-        // TODO: breyta 7 yfir í einhvern index til að birta rétt session
-        mSessionService.getSession(this, 7);
->>>>>>> Stashed changes
 
 
         mButtonMaps = (Button) findViewById(R.id.info_button_maps);

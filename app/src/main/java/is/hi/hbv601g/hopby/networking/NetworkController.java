@@ -71,7 +71,6 @@ public class NetworkController {
         );
         sQueue.add(request);
     }
-<<<<<<< Updated upstream
     public void getSession(NetworkCallback<Session> callback) {
         String url = Uri.parse(BASE_URL)
                 .buildUpon()
@@ -79,14 +78,6 @@ public class NetworkController {
                 .appendPath("all")
                 .build().toString();
 
-=======
-    public void getSession(NetworkCallback<Session> callback, int id) {
-        String url = Uri.parse(BASE_URL)
-                .buildUpon()
-                .appendPath("openSession")
-                .appendPath(Integer.toString(id))
-                .build().toString();
->>>>>>> Stashed changes
         StringRequest request = new StringRequest(
                 Request.Method.GET, url, new Response.Listener<String>() {
             @Override
