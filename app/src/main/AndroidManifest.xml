@@ -19,7 +19,13 @@
         android:theme="@style/Theme.Hopby"
         android:usesCleartextTraffic="true">
         <activity android:name=".activities.SignupActivity"></activity>
-        <activity android:name=".activities.LoginActivity" />
+        <activity
+            android:name=".activities.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".activities.CreateSessionActivity" />
         <activity
             android:name=".activities.SessionInfoActivity"
@@ -38,13 +44,6 @@
         <activity
             android:name=".activities.SessionOverviewActivity"
             android:label="@string/title_activity_session_overview" />
-        <activity android:name=".activities.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
