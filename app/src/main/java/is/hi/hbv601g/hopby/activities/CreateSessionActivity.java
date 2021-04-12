@@ -54,7 +54,8 @@ public class CreateSessionActivity extends AppCompatActivity {
                 int hobby = Integer.parseInt(mHobbyId.getText().toString());
                 mSessionService.addSession(mTitle.getText().toString(), mDate.getText().toString(), mTime.getText().toString(), slots, hobby, mDescription.getText().toString(), mLocation.getText().toString());
 
-                Intent intent = new Intent(CreateSessionActivity.this, SessionInfoActivity.class);
+                // TODO: breyta hér þannig það opni info en ekki overview
+                Intent intent = new Intent(CreateSessionActivity.this, SessionOverviewActivity.class);
                 startActivity(intent);
             }
         });
@@ -63,7 +64,6 @@ public class CreateSessionActivity extends AppCompatActivity {
         mButtonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("CANCEL TAKKI");
                 finish();
             }
         });
