@@ -48,6 +48,8 @@ public class SessionOverviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 System.out.println("filter TAKKI");
+                Intent intent = new Intent(SessionOverviewActivity.this, FilterActivity.class);
+                startActivity(intent);
             }
         });
 

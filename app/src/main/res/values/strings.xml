@@ -31,4 +31,23 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
 
+    <string name="filter_football">FOOTBALL</string>
+    <string name="filter_basketball">BASKETBALL</string>
+    <string name="filter_hike">HIKE</string>
+
+    <string name="filter_monday">MON</string>
+    <string name="filter_tuesday">TUE</string>
+    <string name="filter_wednesday">WED</string>
+    <string name="filter_thursday">THU</string>
+    <string name="filter_friday">FRI</string>
+    <string name="filter_saturday">SAT</string>
+    <string name="filter_sunday">SUN</string>
+
+    <string name="filter_evening">EVENING</string>
+    <string name="filter_afternoon">AFTERNOON</string>
+    <string name="filter_morning">MORNING</string>
+    <string name="filter_hobby">Hobby:</string>
+    <string name="filter_day">Days:</string>
+    <string name="filter_time">Time:</string>
+
 </resources>
