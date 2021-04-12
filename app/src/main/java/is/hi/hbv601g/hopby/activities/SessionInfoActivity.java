@@ -22,6 +22,7 @@ import is.hi.hbv601g.hopby.services.SessionService;
 
 public class SessionInfoActivity extends AppCompatActivity {
     private Button mButtonMaps;
+    private Button mButtonBack;
     private List<Session> mSessionBank;
 
     private SessionService mSessionService;
@@ -34,8 +35,20 @@ public class SessionInfoActivity extends AppCompatActivity {
         NetworkController networkController = NetworkController.getInstance(this);
 
         mSessionService = new SessionService(networkController);
+<<<<<<< Updated upstream
         // TODO: breyta 0 yfir í einhvern index til að birta rétt session
-        mSessionService.getSession(this, 0);
+
+        Intent intent = getIntent();
+
+        String index = intent.getStringExtra("index");
+
+        Log.d("SessionInfoActivity", "intent " + intent.getStringExtra("index"));
+        Log.d("SessionInfoActivity", "index " + index);
+        mSessionService.getSession(this, index);
+=======
+        // TODO: breyta 7 yfir í einhvern index til að birta rétt session
+        mSessionService.getSession(this, 7);
+>>>>>>> Stashed changes
 
 
         mButtonMaps = (Button) findViewById(R.id.info_button_maps);
@@ -46,6 +59,14 @@ public class SessionInfoActivity extends AppCompatActivity {
                 System.out.println("MAPS TAKKI");
                 Intent intent = new Intent(SessionInfoActivity.this, MapsActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        mButtonBack = (Button) findViewById(R.id.info_button_back);
+        mButtonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
     }

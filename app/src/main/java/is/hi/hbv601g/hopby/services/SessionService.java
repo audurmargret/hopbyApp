@@ -39,34 +39,41 @@ public class SessionService {
             @Override
             public void onSuccess(List<Session> result) {
                 mSessionBank = result;
-                Log.d("SessionOverviewActivity", "First session in bank " + mSessionBank.get(0).getTitle());
+                Log.d("SessionService", "First session in bank " + mSessionBank.get(0).getTitle() + " " + mSessionBank.get(0).getId());
                 mSessionOverviewActivity.updateSessions(mSessionBank);
             }
 
             @Override
             public void onFailure(String errorString) {
-                Log.d("SessionOverviewActivity", "Failed to get sessions " + errorString);
+                Log.d("SessionService", "Failed to get sessions " + errorString);
             }
         });
     }
 
-    public void getSession(SessionInfoActivity sessionInfoActivity, int id) {
+    public void getSession(SessionInfoActivity sessionInfoActivity, String index) {
         mSessionInfoActivity = sessionInfoActivity;
-        mNetworkController.getSession(new NetworkCallback<Session>() {
+        mNetworkController.getSessions(new NetworkCallback<List<Session>>() {
             @Override
-            public void onSuccess(Session result) {
-                Log.d("SessionOverviewActivity", "Result session: " + result.getTitle());
-                mSessionInfoActivity.updateSession(result);
+            public void onSuccess(List<Session> result) {
+                mSessionBank = result;
+                Log.d("SessionService", "First session in bank " + mSessionBank.get(0).getTitle() + " " + mSessionBank.get(0).getId());
+                mSessionInfoActivity.updateSession(mSessionBank.get(Integer.parseInt(index)));
             }
 
             @Override
             public void onFailure(String errorString) {
-                Log.d("SessionOverviewActivity", "Failed to get session " + errorString);
+                Log.d("SessionService", "Failed to get sessions " + errorString);
             }
+<<<<<<< Updated upstream
         });
+
+=======
+        }, id);
+>>>>>>> Stashed changes
     }
 
     public void addSession(String title, String date, String time, int slots, int hobbyId, String description, String location) {
+        time.replace(".", "");
         Session newSession = new Session(title,location,date,time, slots, hobbyId, description);
         Log.d("SessionService", newSession.getTime());
         mNetworkController.addSession(newSession, new NetworkCallback<Session>() {

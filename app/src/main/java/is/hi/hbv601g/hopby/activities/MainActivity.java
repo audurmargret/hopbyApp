@@ -50,16 +50,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mButtonInfo = (Button) findViewById(R.id.info_button);
-        mButtonInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO: Opna INFO VIEW
-                Intent intent = new Intent(MainActivity.this, SessionInfoActivity.class);
-                startActivity(intent);
-            }
-        });
-
         mButtonCreate = (Button) findViewById(R.id.create_button);
         mButtonCreate.setOnClickListener(new View.OnClickListener() {
             @Override

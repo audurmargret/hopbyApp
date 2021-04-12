@@ -6,21 +6,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.TextView;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import is.hi.hbv601g.hopby.InfoAdapter;
-import is.hi.hbv601g.hopby.InfoModel;
 import is.hi.hbv601g.hopby.OverviewAdapter;
 import is.hi.hbv601g.hopby.R;
 import is.hi.hbv601g.hopby.entities.Session;
-import is.hi.hbv601g.hopby.networking.NetworkCallback;
 import is.hi.hbv601g.hopby.networking.NetworkController;
 import is.hi.hbv601g.hopby.services.SessionService;
 
@@ -30,6 +24,7 @@ public class SessionOverviewActivity extends AppCompatActivity {
     private Button mButtonCreate;
     private Button mButtonMaps;
     private Button mButtonBack;
+    private Button mButtonInfo;
     GridView grid;
 
     private SessionService mSessionService;
@@ -43,6 +38,8 @@ public class SessionOverviewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_session_overview);
 
         NetworkController networkController = NetworkController.getInstance(this);
+
+        grid = findViewById(R.id.overview_grid);
 
         mSessionService = new SessionService(networkController);
         mSessionService.getAllSession(this);
@@ -85,7 +82,7 @@ public class SessionOverviewActivity extends AppCompatActivity {
 
     }
     public void updateSessions(List<Session> mSessionBank) {
-        grid = findViewById(R.id.overview_grid);
+
         ArrayList<Session> sessionArrayList = new ArrayList<Session>();
 
         int length = mSessionBank.size();
@@ -96,6 +93,5 @@ public class SessionOverviewActivity extends AppCompatActivity {
         OverviewAdapter adapter = new OverviewAdapter(this, sessionArrayList);
         grid.setAdapter(adapter);
     }
-
 
 }

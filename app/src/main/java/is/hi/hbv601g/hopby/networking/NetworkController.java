@@ -55,11 +55,11 @@ public class NetworkController {
                 Request.Method.GET, BASE_URL + "hobby/all", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("NetworkController", response);
+                Log.d("NetworkController", "getSessions" + response);
                 Gson gson = new Gson();
                 Type listType = new TypeToken<List<Session>>(){}.getType();
-                Log.d("NetworkController", listType.toString());
                 List<Session> sessionBank = gson.fromJson(response, listType);
+                Log.d("NetworkController", "sessionBank, 0 "+ sessionBank.get(0).getTitle() + " " + sessionBank.get(0).getId());
                 callback.onSuccess(sessionBank);
             }
         }, new Response.ErrorListener() {
@@ -71,9 +71,24 @@ public class NetworkController {
         );
         sQueue.add(request);
     }
+<<<<<<< Updated upstream
     public void getSession(NetworkCallback<Session> callback) {
+        String url = Uri.parse(BASE_URL)
+                .buildUpon()
+                .appendPath("hobby")
+                .appendPath("all")
+                .build().toString();
+
+=======
+    public void getSession(NetworkCallback<Session> callback, int id) {
+        String url = Uri.parse(BASE_URL)
+                .buildUpon()
+                .appendPath("openSession")
+                .appendPath(Integer.toString(id))
+                .build().toString();
+>>>>>>> Stashed changes
         StringRequest request = new StringRequest(
-                Request.Method.GET, BASE_URL + "hobby/all", new Response.Listener<String>() {
+                Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("NetworkController", response);
