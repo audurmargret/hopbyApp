@@ -2,6 +2,7 @@ package is.hi.hbv601g.hopby.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import is.hi.hbv601g.hopby.R;
+import is.hi.hbv601g.hopby.entities.User;
 import is.hi.hbv601g.hopby.networking.NetworkController;
 import is.hi.hbv601g.hopby.services.UserService;
 
@@ -41,9 +42,9 @@ public class LoginActivity extends AppCompatActivity {
                 mTextInputEditTextPassword = findViewById(R.id.input_passw);
 
                 Log.d("LoginActivity", String.valueOf(mTextInputEditTextUsername.getEditableText()) + " " + String.valueOf(mTextInputEditTextPassword.getEditableText()));
-                boolean success = mUserService.login(String.valueOf(mTextInputEditTextUsername.getEditableText()), String.valueOf(mTextInputEditTextPassword.getEditableText()));
+                User user = mUserService.login(String.valueOf(mTextInputEditTextUsername.getEditableText()), String.valueOf(mTextInputEditTextPassword.getEditableText()));
 
-                if (success) {
+                if (user != null) {
                     Intent intent = new Intent(LoginActivity.this, SessionOverviewActivity.class);
                     startActivity(intent);
                 } else {

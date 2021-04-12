@@ -47,7 +47,7 @@ public class UserService {
     }
 
 
-    public boolean userExist( String username) {
+    public boolean userExist(String username) {
         int len = mUserBank.size();
         for(int i=0; i<len; i++) {
             if(mUserBank.get(i).getUserName().equals(username)) {
@@ -58,17 +58,17 @@ public class UserService {
         return false;
     }
 
-    public boolean login(String username, String password){
+    public User login(String username, String password){
         int len = mUserBank.size();
         for(int i=0; i<len; i++) {
             if(mUserBank.get(i).getUserName().equals(username)) {
                 Log.d("UserService", "notandi er til");
                 if(mUserBank.get(i).getPassword().equals(password)) {
                     Log.d("UserService", "Rétt lykilorð");
-                    return true;
+                    return mUserBank.get(i);
                 }
             }
         }
-        return false;
+        return null;
     }
 }

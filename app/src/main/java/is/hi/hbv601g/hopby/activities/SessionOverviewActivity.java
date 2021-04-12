@@ -31,7 +31,6 @@ public class SessionOverviewActivity extends AppCompatActivity {
     private List<Session> mSessionBank;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

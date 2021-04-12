@@ -23,7 +23,10 @@ import is.hi.hbv601g.hopby.services.SessionService;
 public class SessionInfoActivity extends AppCompatActivity {
     private Button mButtonMaps;
     private Button mButtonBack;
+    private Button mButtonJoin;
     private List<Session> mSessionBank;
+
+    private String mIndex;
 
     private SessionService mSessionService;
     GridView grid;
@@ -35,16 +38,11 @@ public class SessionInfoActivity extends AppCompatActivity {
         NetworkController networkController = NetworkController.getInstance(this);
 
         mSessionService = new SessionService(networkController);
-        // TODO: breyta 0 yfir í einhvern index til að birta rétt session
 
-        Intent intent = getIntent();
+        Intent getIntent = getIntent();
+        mIndex = getIntent.getStringExtra("index");
 
-        String index = intent.getStringExtra("index");
-
-        Log.d("SessionInfoActivity", "intent " + intent.getStringExtra("index"));
-        Log.d("SessionInfoActivity", "index " + index);
-        mSessionService.getSession(this, index);
-
+        mSessionService.getSession(this, mIndex);
 
         mButtonMaps = (Button) findViewById(R.id.info_button_maps);
         mButtonMaps.setOnClickListener(new View.OnClickListener() {
@@ -64,6 +62,17 @@ public class SessionInfoActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        mButtonJoin = (Button) findViewById(R.id.info_button_join);
+        mButtonJoin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: Breyta yfir í leave ef viðkomandi er þegar skráður
+                // TODO: Birta toast ef það tókst að join-a
+                System.out.println("Join TAKKI");
+
+            }
+        });;
     }
     public void updateSession(Session session) {
         grid = findViewById(R.id.info_grid);
@@ -72,7 +81,8 @@ public class SessionInfoActivity extends AppCompatActivity {
         sessionArrayList.add(new InfoModel(session.getTitle(), "Title"));
         sessionArrayList.add(new InfoModel(session.getDescription(), "Description"));
         sessionArrayList.add(new InfoModel(session.getLocation(), "Location"));
-        sessionArrayList.add(new InfoModel(String.valueOf(session.getSlots()), "Slots"));
+        //"Slots: " +overviewModel.getSlotsAvailable() + "/" + overviewModel.getSlots()
+        sessionArrayList.add(new InfoModel(String.valueOf(session.getSlotsAvailable())+ " / " + String.valueOf(session.getSlots()), "Slots"));
         sessionArrayList.add(new InfoModel(session.getUsers().toString(), "Users"));
 
         InfoAdapter adapter = new InfoAdapter(this, sessionArrayList);

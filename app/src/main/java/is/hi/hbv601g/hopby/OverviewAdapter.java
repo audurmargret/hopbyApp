@@ -54,7 +54,6 @@ public class OverviewAdapter extends ArrayAdapter<Session> {
         infoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(), "index "+ position, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mContext, SessionInfoActivity.class);
                 intent.putExtra("index", String.valueOf(position));
                 Log.d("OverviewAdapter", "intent " + intent.getStringExtra("index"));

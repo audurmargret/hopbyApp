@@ -23,13 +23,13 @@ public class Session {
     private String mTime;
     @SerializedName("users")
     private List<User> mUsers;
-    @SerializedName("SlotsAvailable")
+    @SerializedName("slotsAvailable")
     private int mSlotsAvailable;
-    @SerializedName("Slots")
+    @SerializedName("slots")
     private int mSlots;
-    @SerializedName("HobbyId")
+    @SerializedName("hobbyId")
     private int mHobbyId;
-    @SerializedName("Description")
+    @SerializedName("description")
     private String mDescription;
 
     public Session(String title, String location, String date, String time, int slots, int hobbyId, String description) {
