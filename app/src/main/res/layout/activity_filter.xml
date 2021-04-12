@@ -35,6 +35,7 @@
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_football"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:text="@string/filter_football"
@@ -42,6 +43,7 @@
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_basketball"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:text="@string/filter_basketball"
@@ -49,6 +51,7 @@
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_hike"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:text="@string/filter_hike"
@@ -73,6 +76,7 @@
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_monday"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="55dp"
                     android:layout_height="wrap_content"
                     android:text="@string/filter_monday"
@@ -80,6 +84,7 @@
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_tuesday"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="55dp"
                     android:layout_height="wrap_content"
                     android:text="@string/filter_tuesday"
@@ -87,6 +92,7 @@
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_wednesday"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="55dp"
                     android:layout_height="wrap_content"
                     android:text="@string/filter_wednesday"
@@ -94,6 +100,7 @@
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_thursday"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="55dp"
                     android:layout_height="wrap_content"
                     android:text="@string/filter_thursday"
@@ -101,6 +108,7 @@
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_friday"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="55dp"
                     android:layout_height="wrap_content"
                     android:text="@string/filter_friday"
@@ -108,6 +116,7 @@
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_saturday"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="55dp"
                     android:layout_height="wrap_content"
                     android:text="@string/filter_saturday"
@@ -115,6 +124,7 @@
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_sunday"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="55dp"
                     android:layout_height="wrap_content"
                     android:text="@string/filter_sunday"
@@ -139,6 +149,7 @@
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_morning"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:text="@string/filter_morning"
@@ -146,6 +157,7 @@
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_afternoon"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:text="@string/filter_afternoon"
@@ -153,6 +165,7 @@
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chip_evening"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:text="@string/filter_evening"
