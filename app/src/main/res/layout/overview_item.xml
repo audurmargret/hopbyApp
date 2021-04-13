@@ -54,6 +54,7 @@
             android:enabled="true"
             android:text="@string/button_info"
             android:layout_gravity="bottom"
+            style="?android:attr/buttonBarButtonStyle"
             />
 
 

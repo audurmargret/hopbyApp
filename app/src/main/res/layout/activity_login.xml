@@ -24,7 +24,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="59dp"
                 android:layout_margin="7dp"
-                android:hint="@string/username" />
+                android:hint="@string/username"
+                android:background="@android:color/transparent"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -37,7 +38,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:hint="@string/password"
-                android:inputType="textPassword"/>
+                android:inputType="textPassword"
+                android:background="@android:color/transparent"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
@@ -58,7 +60,8 @@
                 android:layout_width="178dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/button_signup" />
+                android:text="@string/button_signup"
+                style="?android:attr/buttonBarButtonStyle"/>
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

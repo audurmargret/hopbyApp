@@ -17,18 +17,20 @@
                 android:layout_height="736dp"
                 android:layout_gravity="center_horizontal"
                 android:orientation="vertical"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp">
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="50dp">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp">
+                    android:layout_height="50dp"
+                    >
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/input_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/title" />
+                        android:hint="@string/title"
+                        android:background="@android:color/transparent"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -65,7 +67,8 @@
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:hint="@string/time"
-                        android:inputType="time" />
+                        android:inputType="time"
+                        android:background="@android:color/transparent"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -76,7 +79,8 @@
                         android:id="@+id/input_slots"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/slots" />
+                        android:hint="@string/slots"
+                        android:background="@android:color/transparent"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -89,34 +93,45 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/description"
                         android:inputType="textMultiLine"
-                        android:lines="3" />
+                        android:lines="3"
+                        android:background="@android:color/transparent"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/input_location"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/location" />
-                </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="250dp"
+                        android:layout_height="50dp"
+                        android:layout_marginBottom="20dp">
 
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/input_location"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            android:hint="@string/location" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                <Button
-                    android:id="@+id/maps_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:enabled="true"
-                    android:text="@string/button_maps" />
+                    <Button
+                        android:id="@+id/maps_button"
+                        android:layout_width="70dp"
+                        android:layout_height="50dp"
+                        android:enabled="true"
+                        android:text="@string/button_map"
+                        android:layout_marginTop="-20dp"
+                        android:layout_marginRight="-50dp"
+                        style="?android:attr/buttonBarButtonStyle"/>
 
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:gravity="center"
-                    android:padding="20dp">
+                    android:padding="20dp"
+                    android:layout_marginBottom="50dp">
 
                     <Button
                         android:id="@+id/cancel_button"
@@ -124,7 +139,8 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:enabled="true"
-                        android:text="@string/button_cancel" />
+                        android:text="@string/button_cancel"
+                        style="?android:attr/buttonBarButtonStyle"/>
 
                     <Button
                         android:id="@+id/submit_button"
@@ -132,7 +148,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:enabled="true"
-                        android:text="@string/button_submit" />
+                        android:text="@string/button_submit"/>
 
                 </LinearLayout>
             </LinearLayout>
