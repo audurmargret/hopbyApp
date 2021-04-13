@@ -35,7 +35,7 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
     private TextInputEditText mSlots;
     private TextInputEditText mDescription;
     private TextInputEditText mLocation;
-    private int mHobbyId;
+    private String mHobbyId;
     private CalendarView mCalendarView;
 
     private SessionService mSessionService;
@@ -46,20 +46,15 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
         setContentView(R.layout.activity_create_session);
 
         NetworkController networkController = NetworkController.getInstance(this);
-
         mSessionService = new SessionService(networkController);
 
         final Spinner hobbySpinner = (Spinner) findViewById(R.id.hobby_spinner);
         hobbySpinner.setOnItemSelectedListener(this);
 
-        List<String> hobbies = new ArrayList<String>();
-        hobbies.add("Football");
-        hobbies.add("Basketball");
-        hobbies.add("Hike");
+        List<String> hobbies = mSessionService.getHobbies();
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, hobbies);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         hobbySpinner.setAdapter(dataAdapter);
 
         mButtonSubmit = (Button) findViewById(R.id.submit_button);
@@ -72,12 +67,7 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
                 mSlots = findViewById(R.id.input_slots);
                 mDescription = findViewById(R.id.input_description);
                 mLocation = findViewById(R.id.input_location);
-
-                int slots = Integer.parseInt(mSlots.getText().toString());
-
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                String dateString = simpleDateFormat.format(mCalendarView.getDate());
-                mSessionService.addSession(mTitle.getText().toString(), dateString, mTime.getText().toString(), slots, mHobbyId, mDescription.getText().toString(), mLocation.getText().toString());
+                mSessionService.addSession(mTitle, mCalendarView, mTime, mSlots, mHobbyId, mDescription, mLocation);
 
                 // TODO: breyta hér þannig það opni info en ekki overview
                 Intent intent = new Intent(CreateSessionActivity.this, SessionOverviewActivity.class);
@@ -93,22 +83,18 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
             }
         });
 
-
-
     }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         String item = adapterView.getItemAtPosition(i).toString();
         Log.d("CreateSessionActivity", "ON CLICK ITEM DROP DROWN + item: " + item);
-        if(item.equals("Football")) mHobbyId = 1;
-        else if(item.equals("Basketball")) mHobbyId = 2;
-        else if(item.equals("Hike")) mHobbyId = 3;
+        mHobbyId = item;
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
-        mHobbyId = 1;
+        mHobbyId = "Football";
 
     }
 }
