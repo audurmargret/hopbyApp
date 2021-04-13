@@ -49,5 +49,8 @@
     <string name="filter_hobby">Hobby:</string>
     <string name="filter_day">Days:</string>
     <string name="filter_time">Time:</string>
+    <string name="football">Football</string>
+    <string name="basketball">Basketball</string>
+    <string name="hike">Hike</string>
 
 </resources>
