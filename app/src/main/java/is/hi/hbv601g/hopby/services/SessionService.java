@@ -1,6 +1,7 @@
 package is.hi.hbv601g.hopby.services;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -12,11 +13,17 @@ import com.google.android.material.textfield.TextInputEditText;
 import org.jetbrains.annotations.NotNull;
 import org.w3c.dom.Text;
 
+import java.lang.reflect.Array;
+import java.util.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import androidx.annotation.RequiresApi;
 import is.hi.hbv601g.hopby.OverviewAdapter;
 import is.hi.hbv601g.hopby.R;
 import is.hi.hbv601g.hopby.activities.SessionInfoActivity;
@@ -39,14 +46,14 @@ public class SessionService {
         mNetworkController = networkController;
     }
 
-    public void getAllSession(SessionOverviewActivity sessionOverviewActivity) {
+    public void getAllSession(SessionOverviewActivity sessionOverviewActivity, boolean filter) {
         mSessionOverviewActivity = sessionOverviewActivity;
         mNetworkController.getSessions(new NetworkCallback<List<Session>>() {
             @Override
             public void onSuccess(List<Session> result) {
                 mSessionBank = result;
                 Log.d("SessionService", "First session in bank " + mSessionBank.get(0).getTitle() + ", slots: " + mSessionBank.get(0).getSlots());
-                mSessionOverviewActivity.updateSessions(mSessionBank);
+                mSessionOverviewActivity.updateSessions(mSessionBank, filter);
             }
 
             @Override
@@ -117,6 +124,67 @@ public class SessionService {
         return hobbies;
     }
 
+
+    public ArrayList<Session> filter(List<Session> sessionBank, boolean[] h, boolean[] t, boolean[]d) throws ParseException {
+        ArrayList<Session> sessionArrayList = new ArrayList<Session>();
+        int bankLength = sessionBank.size();
+
+        int hobbyCount = 0;
+        int timeCount = 0;
+        int dayCount = 0;
+
+        for(int i=0; i<h.length; i++) {
+            if (h[i]) {
+                hobbyCount++;
+            }
+        }
+
+        for(int i=0; i<t.length; i++) {
+            if (t[i]) {
+                timeCount++;
+            }
+        }
+
+        for(int i=0; i<d.length; i++) {
+            if (d[i]) {
+                dayCount++;
+            }
+        }
+        if((hobbyCount == 0 || hobbyCount == h.length) && (timeCount == 0 || timeCount == t.length) && (dayCount == 0 || dayCount == d.length)) {
+            // Enginn filter hér, er hægt að skila einhverju?
+            return null;
+        }
+
+        int[] day = new int[dayCount];
+        int indexD = 0;
+        for(int i = 0; i<d.length; i++) {
+            if(d[i]) {
+                if(i==6) day[indexD++] = 1;
+                else day[indexD++] = i+2;
+            }
+        }
+
+
+
+
+        for(int i = 0; i<bankLength; i++) {
+            // tékka hvort dags passar:
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = dateFormat.parse(sessionBank.get(i).getDate());
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+            System.out.println(date.toString().substring(0,3));
+
+            for(int ii = 0; ii<day.length; ii++) {
+                if(dayOfWeek == day[ii]) {
+                    sessionArrayList.add(sessionBank.get(i));
+                }
+            }
+
+        }
+        return sessionArrayList;
+    }
 
 }
 

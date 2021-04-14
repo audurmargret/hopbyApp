@@ -30,6 +30,10 @@ public class SessionOverviewActivity extends AppCompatActivity {
     private SessionService mSessionService;
     private List<Session> mSessionBank;
 
+    private boolean[] mHobbies;
+    private boolean[] mTimes;
+    private boolean[] mDays;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +44,24 @@ public class SessionOverviewActivity extends AppCompatActivity {
 
         grid = findViewById(R.id.overview_grid);
 
+        Intent getIntent = getIntent();
+        boolean filter = getIntent.getBooleanExtra("filter", false);
+        mHobbies = getIntent.getBooleanArrayExtra("hobbies");
+        mTimes = getIntent.getBooleanArrayExtra("times");
+        mDays = getIntent.getBooleanArrayExtra("days");
+
+        if(filter) Log.d("SessionOverviewActivity", "BOOLEAN HOBBIES: " +  mHobbies[0] + mTimes[0] + mDays[0] + "----------");
+
+
+
         mSessionService = new SessionService(networkController);
-        mSessionService.getAllSession(this);
+        mSessionService.getAllSession(this, filter);
+
 
         mButtonFilter = (Button) findViewById(R.id.filter_button);
         mButtonFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("filter TAKKI");
                 Intent intent = new Intent(SessionOverviewActivity.this, FilterActivity.class);
                 startActivity(intent);
             }
@@ -67,7 +81,6 @@ public class SessionOverviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // TODO: Opna MAPS VIEW
-                System.out.println("MAPS TAKKI");
                 Intent intent = new Intent(SessionOverviewActivity.this, MapsActivity.class);
                 startActivity(intent);
             }
@@ -82,17 +95,32 @@ public class SessionOverviewActivity extends AppCompatActivity {
         });
 
     }
-    public void updateSessions(List<Session> mSessionBank) {
+    public void updateSessions(List<Session> mSessionBank, boolean filter) {
 
-        ArrayList<Session> sessionArrayList = new ArrayList<Session>();
+        ArrayList<Session> sessionArrayList;
+        if(filter) {
+            try{
+                sessionArrayList = mSessionService.filter(mSessionBank, mHobbies, mTimes, mDays);
+            } catch (Exception e) {
+                Log.d("SessionOverviewActivity", "Gat ekki notað filter" + e.toString());
+                sessionArrayList = new ArrayList<Session>();
 
-        int length = mSessionBank.size();
-        for (int i = 0; i < length; i++) {
-            sessionArrayList.add(new Session(mSessionBank.get(i).getId(), mSessionBank.get(i).getTitle(), mSessionBank.get(i).getLocation(), mSessionBank.get(i).getDate(), mSessionBank.get(i).getTime(), mSessionBank.get(i).getSlots(), mSessionBank.get(i).getHobbyId(), mSessionBank.get(i).getDescription()));
-            Log.d("SessionOverviewActivity", " " + mSessionBank.get(i).getSlots());
+                int length = mSessionBank.size();
+                for (int i = 0; i < length; i++) {
+                    sessionArrayList.add(new Session(mSessionBank.get(i).getId(), mSessionBank.get(i).getTitle(), mSessionBank.get(i).getLocation(), mSessionBank.get(i).getDate(), mSessionBank.get(i).getTime(), mSessionBank.get(i).getSlots(), mSessionBank.get(i).getHobbyId(), mSessionBank.get(i).getDescription()));
+                }
+            }
+        } else {
+            sessionArrayList = new ArrayList<Session>();
+
+            int length = mSessionBank.size();
+            for (int i = 0; i < length; i++) {
+                sessionArrayList.add(new Session(mSessionBank.get(i).getId(), mSessionBank.get(i).getTitle(), mSessionBank.get(i).getLocation(), mSessionBank.get(i).getDate(), mSessionBank.get(i).getTime(), mSessionBank.get(i).getSlots(), mSessionBank.get(i).getHobbyId(), mSessionBank.get(i).getDescription()));
+            }
         }
         OverviewAdapter adapter = new OverviewAdapter(this, sessionArrayList);
         grid.setAdapter(adapter);
     }
+
 
 }

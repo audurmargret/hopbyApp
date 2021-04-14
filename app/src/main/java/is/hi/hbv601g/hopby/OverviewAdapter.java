@@ -50,15 +50,12 @@ public class OverviewAdapter extends ArrayAdapter<Session> {
         overviewSlots.setText("Slots: " +overviewModel.getSlotsAvailable() + "/" + overviewModel.getSlots());
 
         String id = Long.toString(overviewModel.getId());
-        Log.d("OverviewAdapter", "ID " + id);
         Button infoButton = listitemView.findViewById(R.id.info_button);
         infoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("OverviewAdapter","ID onClick " + id);
                 Intent intent = new Intent(mContext, SessionInfoActivity.class);
                 intent.putExtra("id", id);
-                Log.d("OverviewAdapter", "intent " + intent.getStringExtra("index"));
                 mContext.startActivity(intent);
             }
         });
