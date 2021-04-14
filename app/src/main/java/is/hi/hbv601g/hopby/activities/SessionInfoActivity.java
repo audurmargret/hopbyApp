@@ -26,7 +26,7 @@ public class SessionInfoActivity extends AppCompatActivity {
     private Button mButtonJoin;
     private List<Session> mSessionBank;
 
-    private String mIndex;
+    private long mId;
 
     private SessionService mSessionService;
     GridView grid;
@@ -40,9 +40,9 @@ public class SessionInfoActivity extends AppCompatActivity {
         mSessionService = new SessionService(networkController);
 
         Intent getIntent = getIntent();
-        mIndex = getIntent.getStringExtra("index");
+        mId = Long.parseLong(getIntent.getStringExtra("id"));
 
-        mSessionService.getSession(this, mIndex);
+        mSessionService.getSession(this, mId);
 
         mButtonMaps = (Button) findViewById(R.id.info_button_maps);
         mButtonMaps.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +81,6 @@ public class SessionInfoActivity extends AppCompatActivity {
         sessionArrayList.add(new InfoModel(session.getTitle(), "Title"));
         sessionArrayList.add(new InfoModel(session.getDescription(), "Description"));
         sessionArrayList.add(new InfoModel(session.getLocation(), "Location"));
-        //"Slots: " +overviewModel.getSlotsAvailable() + "/" + overviewModel.getSlots()
         sessionArrayList.add(new InfoModel(String.valueOf(session.getSlotsAvailable())+ " / " + String.valueOf(session.getSlots()), "Slots"));
         sessionArrayList.add(new InfoModel(session.getUsers().toString(), "Users"));
 

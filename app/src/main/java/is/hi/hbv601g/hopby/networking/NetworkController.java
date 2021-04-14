@@ -71,11 +71,11 @@ public class NetworkController {
         );
         sQueue.add(request);
     }
-    public void getSession(NetworkCallback<Session> callback) {
+    public void getSession(NetworkCallback<Session> callback, long id) {
         String url = Uri.parse(BASE_URL)
                 .buildUpon()
-                .appendPath("hobby")
-                .appendPath("all")
+                .appendPath("openSession")
+                .appendPath(Long.toString(id))
                 .build().toString();
 
         StringRequest request = new StringRequest(
@@ -167,7 +167,7 @@ public class NetworkController {
                 Log.d("NetworkController", response);
                 Gson gson = new Gson();
                 Session session = gson.fromJson(response, Session.class);
-                Log.d("Network Controller", session.getTitle());
+                Log.d("Network Controller", session.getTitle() + " ID : " + session.getId());
                 callback.onSuccess(session);
             }
         }, new Response.ErrorListener() {

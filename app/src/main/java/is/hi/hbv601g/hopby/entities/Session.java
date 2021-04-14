@@ -32,7 +32,8 @@ public class Session {
     @SerializedName("description")
     private String mDescription;
 
-    public Session(String title, String location, String date, String time, int slots, int hobbyId, String description) {
+    public Session(long id, String title, String location, String date, String time, int slots, int hobbyId, String description) {
+        mId = id;
         mTitle = title;
         mLocation = location;
         mDate = date;

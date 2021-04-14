@@ -57,7 +57,7 @@ public class OverviewAdapter extends ArrayAdapter<Session> {
             public void onClick(View view) {
                 Log.d("OverviewAdapter","ID onClick " + id);
                 Intent intent = new Intent(mContext, SessionInfoActivity.class);
-                intent.putExtra("index", String.valueOf(position));
+                intent.putExtra("id", id);
                 Log.d("OverviewAdapter", "intent " + intent.getStringExtra("index"));
                 mContext.startActivity(intent);
             }

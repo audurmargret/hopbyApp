@@ -56,26 +56,24 @@ public class SessionService {
         });
     }
 
-    public void getSession(SessionInfoActivity sessionInfoActivity, String index) {
+    public void getSession(SessionInfoActivity sessionInfoActivity, long id) {
         mSessionInfoActivity = sessionInfoActivity;
-        mNetworkController.getSessions(new NetworkCallback<List<Session>>() {
+        mNetworkController.getSession(new NetworkCallback<Session>() {
             @Override
-            public void onSuccess(List<Session> result) {
-                mSessionBank = result;
-                Log.d("SessionService", "First session in bank " + mSessionBank.get(0).getTitle() + " " + mSessionBank.get(0).getId());
-                mSessionInfoActivity.updateSession(mSessionBank.get(Integer.parseInt(index)));
+            public void onSuccess(Session result) {
+                mSessionInfoActivity.updateSession(result);
             }
 
             @Override
             public void onFailure(String errorString) {
                 Log.d("SessionService", "Failed to get sessions " + errorString);
             }
-        });
+        }, id);
 
     }
 
     public void addSession(TextInputEditText title, CalendarView date, TextInputEditText time, TextInputEditText slots, String hobbyId, TextInputEditText description, TextInputEditText location) {
-        Session newSession = format(title, date, time, slots, hobbyId, description, location);
+        Session newSession = format( title, date, time, slots, hobbyId, description, location);
         Log.d("SessionService", newSession.getTime());
         mNetworkController.addSession(newSession, new NetworkCallback<Session>() {
             @Override
@@ -106,7 +104,7 @@ public class SessionService {
         else if(hobby.equals("Basketball")) hobbyInt = 2;
         else hobbyInt = 1;
 
-        Session session = new Session(titleString, locationString, dateString, timeString, slotsInt, hobbyInt, descriptionString);
+        Session session = new Session(0, titleString, locationString, dateString, timeString, slotsInt, hobbyInt, descriptionString);
         Log.d("SessionService", "FORMAT");
         return session;
     }
