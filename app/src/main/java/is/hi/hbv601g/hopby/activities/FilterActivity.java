@@ -20,6 +20,7 @@ import java.util.List;
 public class FilterActivity extends AppCompatActivity {
 
     private Button mButtonSubmit;
+    private Button mButtonCancel;
     private ChipGroup mChipGroupHobby;
     private ChipGroup mChipGroupDay;
     private ChipGroup mChipGroupTime;
@@ -54,6 +55,14 @@ public class FilterActivity extends AppCompatActivity {
                 intent.putExtra("times", time);
                 intent.putExtra("days", day);
                 startActivity(intent);
+            }
+        });
+
+        mButtonCancel = (Button) findViewById(R.id.cancel_button);
+        mButtonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
     }
