@@ -7,7 +7,10 @@ import is.hi.hbv601g.hopby.networking.NetworkController;
 import is.hi.hbv601g.hopby.services.SessionService;
 
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,9 +22,11 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class CreateSessionActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -69,9 +74,14 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
                 mLocation = findViewById(R.id.input_location);
                 mSessionService.addSession(mTitle, mCalendarView, mTime, mSlots, mHobbyId, mDescription, mLocation);
 
-                // TODO: breyta hér þannig það opni info en ekki overview
-                Intent intent = new Intent(CreateSessionActivity.this, SessionOverviewActivity.class);
-                startActivity(intent);
+                if(!isLegalLoc(mLocation.getText().toString())) {
+                    mLocation.setError("Location not found");
+                }
+                else {
+                    // TODO: breyta hér þannig það opni info en ekki overview
+                    Intent intent = new Intent(CreateSessionActivity.this, SessionOverviewActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -83,6 +93,22 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
             }
         });
 
+    }
+
+    private boolean isLegalLoc(String createLocation) {
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        List<Address> address;
+        try {
+            address = geocoder.getFromLocationName(createLocation, 1);
+
+            if (address.size() == 0) {
+                return false;
+            } else {
+                return true;
+            }
+        } catch (IOException ex) {
+            return false;
+        }
     }
 
     @Override

@@ -30,17 +30,21 @@ import java.io.IOException;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import is.hi.hbv601g.hopby.R;
+import is.hi.hbv601g.hopby.entities.Session;
 
 
 public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarkerClickListener, OnMapReadyCallback {
 
     private GoogleMap mMap;
     private Button mapButton;
-    private ArrayList<String[]> markers = new ArrayList <String[]>();
+    private ArrayList<String[]> mapMarkers = new ArrayList <String[]>();
     private String prevAddress;
-    private Marker prevMarker;
+    private Marker mapPrevMarker;
+    public static ArrayList<Session> testMarkers;
+    private static Context ctx;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,19 +71,23 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
         LatLng reykjavik = new LatLng(64.1466, -21.9426);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(reykjavik, 13f));
 
-        markers.add(new String[]{"Reykjavík","Ganga"});
-        markers.add(new String[]{"Laugalækjarskóli","Körfubolti"});
-        markers.add(new String[]{"Álftamýri","Fótbolti"});
-        markers.add(new String[]{"Laugardalsvöllur","Fótbolti"});
-        markers.add(new String[]{"Akureyri","Ganga"});
-        markers.add(new String[]{"Fagradalsfjall", "Ganga"});
-        markers.add(new String[]{"Arbaer","Körfubolti"});
-        markers.add(new String[]{"Briedholt","Fótbolti"});
+        // TODO use array info from overview
+        mapMarkers.add(new String[]{"Reykjavík","Ganga"});
+        mapMarkers.add(new String[]{"Laugalækjarskóli","Körfubolti"});
+        mapMarkers.add(new String[]{"Álftamýri","Fótbolti"});
+        mapMarkers.add(new String[]{"Laugardalsvöllur","Fótbolti"});
+        mapMarkers.add(new String[]{"Akureyri","Ganga"});
+        mapMarkers.add(new String[]{"Fagradalsfjall", "Ganga"});
+        mapMarkers.add(new String[]{"Arbaer","Körfubolti"});
+        mapMarkers.add(new String[]{"Briedholt","Fótbolti"});
 
-        addMarkers(markers); // Add markers on map
+        testMarkers = SessionOverviewActivity.getSessionArrayList();
+        System.out.println(testMarkers);
+
+        addMarkers(mapMarkers); // Add markers on map
         mMap.setOnMarkerClickListener(this); // Make markers do something when clicked
 
-        mapButton = (Button) findViewById(R.id.button);
+        mapButton = (Button) findViewById(R.id.maps_button_finish);
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -161,7 +169,7 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
         } catch (IOException ex) {
 
             ex.printStackTrace();
-            Toast.makeText(context, ex.getMessage(), Toast.LENGTH_LONG).show();
+            //Toast.makeText(context, ex.getMessage(), Toast.LENGTH_LONG).show();
         }
 
         return resLatLng;
@@ -173,13 +181,13 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
         if (prevAddress == null){
             marker.setAlpha(1.0f);
             prevAddress = marker.getTitle();
-            prevMarker = marker;
+            mapPrevMarker = marker;
         }
         else if (!marker.getTitle().equals(prevAddress)){
             marker.setAlpha(1.0f);
-            prevMarker.setAlpha(0.6f);
+            mapPrevMarker.setAlpha(0.6f);
             prevAddress = marker.getTitle();
-            prevMarker = marker;
+            mapPrevMarker = marker;
         }
 
         Integer clickCount = (Integer) marker.getTag();
