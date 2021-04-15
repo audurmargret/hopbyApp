@@ -59,12 +59,5 @@ public class FilterActivity extends AppCompatActivity {
             }
         });
 
-        mButtonCancel = (Button) findViewById(R.id.cancel_button);
-        mButtonCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
     }
 }

@@ -72,14 +72,15 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
                 mSlots = findViewById(R.id.input_slots);
                 mDescription = findViewById(R.id.input_description);
                 mLocation = findViewById(R.id.input_location);
-                mSessionService.addSession(mTitle, mCalendarView, mTime, mSlots, mHobbyId, mDescription, mLocation);
+                long resultId = mSessionService.addSession(mTitle, mCalendarView, mTime, mSlots, mHobbyId, mDescription, mLocation);
 
                 if(!isLegalLoc(mLocation.getText().toString())) {
                     mLocation.setError("Location not found");
                 }
                 else {
                     // TODO: breyta hér þannig það opni info en ekki overview
-                    Intent intent = new Intent(CreateSessionActivity.this, SessionOverviewActivity.class);
+                    Intent intent = new Intent(CreateSessionActivity.this, SessionInfoActivity.class);
+                    intent.putExtra("id", Long.toString(resultId));
                     startActivity(intent);
                 }
             }
