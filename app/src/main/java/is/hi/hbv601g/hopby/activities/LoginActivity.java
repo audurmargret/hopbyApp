@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
                 User user = mUserService.login(String.valueOf(mTextInputEditTextUsername.getEditableText()), String.valueOf(mTextInputEditTextPassword.getEditableText()));
 
                 if (user != null) {
-                    Intent intent = new Intent(LoginActivity.this, SessionOverviewActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, FilterActivity.class);
                     startActivity(intent);
                 } else {
                     Context context = getApplicationContext();

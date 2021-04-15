@@ -54,6 +54,7 @@ public class FilterActivity extends AppCompatActivity {
                 intent.putExtra("hobbies", hobbies);
                 intent.putExtra("times", time);
                 intent.putExtra("days", day);
+
                 startActivity(intent);
             }
         });

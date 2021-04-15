@@ -59,8 +59,9 @@ public class SessionOverviewActivity extends AppCompatActivity {
         mButtonFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SessionOverviewActivity.this, FilterActivity.class);
-                startActivity(intent);
+                //Intent intent = new Intent(SessionOverviewActivity.this, FilterActivity.class);
+                //startActivity(intent);
+                finish();
             }
         });
 
@@ -83,7 +84,7 @@ public class SessionOverviewActivity extends AppCompatActivity {
             }
         });
 
-        mButtonBack = (Button) findViewById(R.id.back_button);
+        mButtonBack = (Button) findViewById(R.id.logout_button);
         mButtonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

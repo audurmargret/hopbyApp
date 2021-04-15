@@ -53,5 +53,6 @@
     <string name="basketball">Basketball</string>
     <string name="hike">Hike</string>
     <string name="button_map">MAP</string>
+    <string name="button_logout">LOGOUT</string>
 
 </resources>
