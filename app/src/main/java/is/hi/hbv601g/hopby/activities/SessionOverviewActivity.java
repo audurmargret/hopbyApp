@@ -51,10 +51,6 @@ public class SessionOverviewActivity extends AppCompatActivity {
         mTimes = getIntent.getBooleanArrayExtra("times");
         mDays = getIntent.getBooleanArrayExtra("days");
 
-        if(filter) Log.d("SessionOverviewActivity", "BOOLEAN HOBBIES: " +  mHobbies[0] + mTimes[0] + mDays[0] + "----------");
-
-
-
         mSessionService = new SessionService(networkController);
         mSessionService.getAllSession(this, filter);
 
@@ -117,6 +113,11 @@ public class SessionOverviewActivity extends AppCompatActivity {
             for (int i = 0; i < length; i++) {
                 sessionArrayList.add(new Session(mSessionBank.get(i).getId(), mSessionBank.get(i).getTitle(), mSessionBank.get(i).getLocation(), mSessionBank.get(i).getDate(), mSessionBank.get(i).getTime(), mSessionBank.get(i).getSlots(), mSessionBank.get(i).getHobbyId(), mSessionBank.get(i).getDescription()));
             }
+        }
+
+        if(sessionArrayList.size() < 1) {
+            // TODO:  birta einhver skilaboð um að það hafi ekki uppfylt þessi skilyrði
+            Log.d("SessionOverviewActivity", "-------ARRAY TÓMT --------");
         }
         OverviewAdapter adapter = new OverviewAdapter(this, sessionArrayList);
         grid.setAdapter(adapter);

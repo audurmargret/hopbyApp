@@ -22,6 +22,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import androidx.annotation.RequiresApi;
 import is.hi.hbv601g.hopby.OverviewAdapter;
@@ -150,10 +151,6 @@ public class SessionService {
                 dayCount++;
             }
         }
-        if((hobbyCount == 0 || hobbyCount == h.length) && (timeCount == 0 || timeCount == t.length) && (dayCount == 0 || dayCount == d.length)) {
-            // Enginn filter hér, er hægt að skila einhverju?
-            return null;
-        }
 
         int[] day = new int[dayCount];
         int indexD = 0;
@@ -164,25 +161,106 @@ public class SessionService {
             }
         }
 
-
-
-
-        for(int i = 0; i<bankLength; i++) {
-            // tékka hvort dags passar:
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = dateFormat.parse(sessionBank.get(i).getDate());
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(date);
-            int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
-            System.out.println(date.toString().substring(0,3));
-
-            for(int ii = 0; ii<day.length; ii++) {
-                if(dayOfWeek == day[ii]) {
-                    sessionArrayList.add(sessionBank.get(i));
+        int[] time = new int[timeCount*2];
+        int indexT = 0;
+        for (int i=0; i<t.length; i++) {
+            if(t[i]) {
+                if(i == 0) {
+                    time[indexT++] = 0000;
+                    time[indexT++] = 1200;
+                }
+                if(i == 1) {
+                    time[indexT++] = 1200;
+                    time[indexT++] = 1800;
+                }
+                if(i == 2) {
+                    time[indexT++] = 1800;
+                    time[indexT++] = 2400;
                 }
             }
-
         }
+
+        int[] hobby = new int[hobbyCount];
+        int indexH = 0;
+        for(int i = 0; i<h.length; i++) {
+            if(h[i]) {
+                hobby[indexH++] = i+1;
+            }
+        }
+        boolean checkTime = true;
+        if (timeCount == 0 || timeCount == t.length) {
+            checkTime = false;
+        }
+
+        boolean checkDay = true;
+        if(dayCount == 0 || dayCount == d.length) {
+            checkDay = false;
+        }
+
+        boolean checkHobby = true;
+        if (hobbyCount == 0 || hobbyCount == h.length) {
+            checkHobby = false;
+        }
+
+        System.out.println("CHECK TIME " + checkTime + " Count: " + timeCount);
+        System.out.println("CHECK DAY " + checkDay + " Count: " + dayCount);
+        System.out.println("CHECK HOBBY " + checkHobby + " Count: " + hobbyCount);
+        boolean fitsDay = false;
+        boolean fitsTime = false;
+        boolean fitsHobby = false;
+
+        for(int i = 0; i<bankLength; i++) {
+            if(checkDay) {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = dateFormat.parse(sessionBank.get(i).getDate());
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(date);
+                int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+                for(int value : day) {
+                    if(dayOfWeek == value) {
+                        fitsDay = true;
+                        break;
+                    }
+                }
+            } else {
+                fitsDay = true;
+            }
+
+            if(checkTime) {
+                for (int iTime = 0; iTime < time.length; iTime += 2) {
+                    SimpleDateFormat formatTime = new SimpleDateFormat("HHmm", Locale.getDefault());
+                    int sessionTime = Integer.parseInt(sessionBank.get(i).getTime().replace(":", "").substring(0, 4));
+                    if (sessionTime >= time[iTime] && sessionTime < time[iTime + 1]) {
+                        fitsTime = true;
+                        break;
+                    }
+                }
+            } else {
+                fitsTime = true;
+            }
+
+            if(checkHobby) {
+                for (int index = 0; index < hobby.length; index++) {
+
+                    if (sessionBank.get(i).getHobbyId() == hobby[index]) {
+                        fitsHobby = true;
+                        break;
+                    }
+                }
+            } else {
+                fitsHobby = true;
+            }
+
+            if(fitsDay && fitsTime && fitsHobby) {
+                System.out.println("YAY PASSAR");
+                sessionArrayList.add(sessionBank.get(i));
+            }
+            fitsDay = false;
+            fitsTime = false;
+            fitsHobby = false;
+        }
+
+
         return sessionArrayList;
     }
 
