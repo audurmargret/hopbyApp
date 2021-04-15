@@ -81,8 +81,8 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
         mapMarkers.add(new String[]{"Arbaer","Körfubolti"});
         mapMarkers.add(new String[]{"Briedholt","Fótbolti"});
 
-        testMarkers = SessionOverviewActivity.getSessionArrayList();
-        System.out.println(testMarkers);
+        //testMarkers = SessionOverviewActivity.getSessionArrayList();
+        //System.out.println(testMarkers);
 
         addMarkers(mapMarkers); // Add markers on map
         mMap.setOnMarkerClickListener(this); // Make markers do something when clicked
