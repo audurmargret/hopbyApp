@@ -56,11 +56,11 @@
                 android:text="@string/button_create" />
 
             <Button
-                android:id="@+id/back_button"
+                android:id="@+id/logout_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:enabled="true"
-                android:text="@string/button_back" />
+                android:text="@string/button_logout" />
         </LinearLayout>
 
     </LinearLayout>

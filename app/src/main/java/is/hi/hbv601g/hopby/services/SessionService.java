@@ -43,6 +43,8 @@ public class SessionService {
     private SessionOverviewActivity mSessionOverviewActivity;
     private SessionInfoActivity mSessionInfoActivity;
 
+    private long sessionId;
+
     public SessionService(NetworkController networkController) {
         mNetworkController = networkController;
     }
@@ -80,7 +82,7 @@ public class SessionService {
 
     }
 
-    public void addSession(TextInputEditText title, CalendarView date, TextInputEditText time, TextInputEditText slots, String hobbyId, TextInputEditText description, TextInputEditText location) {
+    public long addSession(TextInputEditText title, CalendarView date, TextInputEditText time, TextInputEditText slots, String hobbyId, TextInputEditText description, TextInputEditText location) {
         Session newSession = format( title, date, time, slots, hobbyId, description, location);
         Log.d("SessionService", newSession.getTime());
         mNetworkController.addSession(newSession, new NetworkCallback<Session>() {
@@ -88,6 +90,7 @@ public class SessionService {
             public void onSuccess(Session result) {
                 //mSessionBank.add(result);
                 Log.d("SessionService", "Session added to bank " + result.getTitle());
+                sessionId = result.getId();
             }
 
             @Override
@@ -95,6 +98,8 @@ public class SessionService {
                 Log.d("SessionService", "Failed to add session " + errorString);
             }
         });
+
+        return sessionId;
     }
 
     public Session format(TextInputEditText title, CalendarView date, TextInputEditText time, TextInputEditText slots, String hobby, TextInputEditText description, TextInputEditText location) {

@@ -80,6 +80,9 @@ public class SessionInfoActivity extends AppCompatActivity {
 
         sessionArrayList.add(new InfoModel(session.getTitle(), "Title"));
         sessionArrayList.add(new InfoModel(session.getDescription(), "Description"));
+        if(session.getHobbyId() == 1)  sessionArrayList.add(new InfoModel("Football", "HobbyId"));
+        if(session.getHobbyId() == 2)  sessionArrayList.add(new InfoModel("Basketball", "HobbyId"));
+        if(session.getHobbyId() == 3)  sessionArrayList.add(new InfoModel("Hike", "HobbyId"));
         sessionArrayList.add(new InfoModel(session.getLocation(), "Location"));
         sessionArrayList.add(new InfoModel(String.valueOf(session.getSlotsAvailable())+ " / " + String.valueOf(session.getSlots()), "Slots"));
         sessionArrayList.add(new InfoModel(session.getUsers().toString(), "Users"));
