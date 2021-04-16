@@ -29,7 +29,7 @@ public class SessionOverviewActivity extends AppCompatActivity {
 
     private SessionService mSessionService;
     private List<Session> mSessionBank;
-    private ArrayList<Session> sessionArrayList;
+    private static ArrayList<Session> sessionArrayList;
 
     private boolean[] mHobbies;
     private boolean[] mTimes;
@@ -123,7 +123,7 @@ public class SessionOverviewActivity extends AppCompatActivity {
         grid.setAdapter(adapter);
     }
 
-    //public static ArrayList<Session> getSessionArrayList() {
-    //    return sessionArrayList;
-    //}
+    public static ArrayList<Session> getSessionArrayList() {
+        return sessionArrayList;
+    }
 }

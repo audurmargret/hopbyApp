@@ -32,19 +32,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import is.hi.hbv601g.hopby.OverviewAdapter;
 import is.hi.hbv601g.hopby.R;
 import is.hi.hbv601g.hopby.entities.Session;
+import is.hi.hbv601g.hopby.networking.NetworkController;
+import is.hi.hbv601g.hopby.services.SessionService;
 
 
 public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarkerClickListener, OnMapReadyCallback {
 
     private GoogleMap mMap;
     private Button mapButton;
-    private ArrayList<String[]> mapMarkers = new ArrayList <String[]>();
     private String prevAddress;
     private Marker mapPrevMarker;
-    public static ArrayList<Session> testMarkers;
-    private static Context ctx;
+    private  ArrayList<Session> mSessions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,9 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        // Get sessions from overview
+        mSessions = SessionOverviewActivity.getSessionArrayList();
     }
 
     /**
@@ -67,26 +71,18 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
         // Add a marker in Reykjavík and move the camera
         LatLng reykjavik = new LatLng(64.1466, -21.9426);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(reykjavik, 13f));
 
-        // TODO use array info from overview
-        mapMarkers.add(new String[]{"Reykjavík","Ganga"});
-        mapMarkers.add(new String[]{"Laugalækjarskóli","Körfubolti"});
-        mapMarkers.add(new String[]{"Álftamýri","Fótbolti"});
-        mapMarkers.add(new String[]{"Laugardalsvöllur","Fótbolti"});
-        mapMarkers.add(new String[]{"Akureyri","Ganga"});
-        mapMarkers.add(new String[]{"Fagradalsfjall", "Ganga"});
-        mapMarkers.add(new String[]{"Arbaer","Körfubolti"});
-        mapMarkers.add(new String[]{"Briedholt","Fótbolti"});
+        // Add markers on map
+        addCurrentMarkers(mSessions);
 
-        //testMarkers = SessionOverviewActivity.getSessionArrayList();
-        //System.out.println(testMarkers);
+        // Make markers do something when clicked
+        mMap.setOnMarkerClickListener(this);
 
-        addMarkers(mapMarkers); // Add markers on map
-        mMap.setOnMarkerClickListener(this); // Make markers do something when clicked
-
+        // Close map
         mapButton = (Button) findViewById(R.id.maps_button_finish);
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,31 +92,30 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
         });
     }
 
-    private void addMarkers(ArrayList markers) {
+    // Adds markers to correct from current sessions
+    private void addCurrentMarkers(ArrayList sessions) {
+        int length = sessions.size();
 
-        int lenMarkers = markers.size();
-        String [] locSpo;
+        for(int i = 0; i < length; i++) {
+            String location = mSessions.get(i).getLocation();
+            int sport = mSessions.get(i).getHobbyId();
+            LatLng coordinates = getLocationFromAddress(getApplicationContext(), location);
 
-        for(int i = 0; i < lenMarkers; i++) {
-            locSpo = (String[]) markers.get(i); // each instance of location + sport
-            String locName = locSpo[0]; // location address
-            String sport = locSpo[1]; // type of sport
-            LatLng loc = getLocationFromAddress(getApplicationContext(), locName); // coordinates for location from address
-
+            // Draw markers on map with correct icon depending on activity
             switch (sport) {
-                case "Körfubolti":
-                    mMap.addMarker((new MarkerOptions().position(loc).alpha(0.6f).title(sport + " " + locName).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_basketball_24)))).setTag(0);
+                case 1:
+                    mMap.addMarker((new MarkerOptions().position(coordinates).alpha(0.6f).title("Football - " + location).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_soccer_24)))).setTag(0);
                     break;
-                case "Fótbolti":
-                    mMap.addMarker((new MarkerOptions().position(loc).alpha(0.6f).title(sport + " " + locName).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_soccer_24)))).setTag(0);
+                case 2:
+                    mMap.addMarker((new MarkerOptions().position(coordinates).alpha(0.6f).title("Basketball - " + location).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_basketball_24)))).setTag(0);
                     break;
                 default:
-                    mMap.addMarker((new MarkerOptions().position(loc).alpha(0.6f).title(sport + " " + locName).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_directions_walk_24)))).setTag(0);
-
+                    mMap.addMarker((new MarkerOptions().position(coordinates).alpha(0.6f).title("Hike - " + location).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_directions_walk_24)))).setTag(0);
             }
         }
     }
 
+    // Draws markers on map
     private BitmapDescriptor BitmapFromVector(Context context, int vectorResId) {
         // below line is used to generate a drawable.
         Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
@@ -143,8 +138,8 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
+    // Returns coordinates from address name
     private LatLng getLocationFromAddress(Context context, String inputtedAddress) {
-
         Geocoder coder = new Geocoder(context);
         List<Address> address;
         LatLng resLatLng = null;
@@ -175,9 +170,10 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
         return resLatLng;
     }
 
+
+    // Increase opacity on selected marker
     @Override
     public boolean onMarkerClick(final Marker marker) {
-        // Increase opacity on selected marker
         if (prevAddress == null){
             marker.setAlpha(1.0f);
             prevAddress = marker.getTitle();

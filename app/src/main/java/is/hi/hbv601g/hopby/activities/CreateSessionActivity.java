@@ -47,6 +47,7 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_session);
 
@@ -74,8 +75,12 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
                 mLocation = findViewById(R.id.input_location);
                 mSessionService.addSession(mTitle, mCalendarView, mTime, mSlots, mHobbyId, mDescription, mLocation);
 
+                // Upon illegal input display error message
                 if(!isLegalLoc(mLocation.getText().toString())) {
                     mLocation.setError("Location not found");
+                }
+                else if(mTime.length() != 4){
+                    mTime.setError("Time must be in the format 'hhmm'");
                 }
                 else {
                     // TODO: breyta hér þannig það opni info en ekki overview
@@ -96,6 +101,7 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
     }
 
     private boolean isLegalLoc(String createLocation) {
+        // Checks if there is at least one legal address from the input text
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         List<Address> address;
         try {
