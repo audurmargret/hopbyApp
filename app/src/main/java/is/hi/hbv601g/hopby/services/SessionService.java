@@ -8,6 +8,7 @@ import android.widget.CalendarView;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import com.google.android.gms.common.internal.ShowFirstParty;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.jetbrains.annotations.NotNull;
@@ -42,6 +43,10 @@ public class SessionService {
     private NetworkController mNetworkController;
     private SessionOverviewActivity mSessionOverviewActivity;
     private SessionInfoActivity mSessionInfoActivity;
+
+    private int mHobbyCount;
+    private int mTimeCount;
+    private int mDayCount;
 
     private long sessionId;
 
@@ -130,34 +135,105 @@ public class SessionService {
         return hobbies;
     }
 
+    public String filterText(boolean[] h, boolean[] t, boolean[] d) {
+        if(mHobbyCount == 0 && mTimeCount == 0 && mDayCount == 0) {
+            return "No filters applied";
+        }
+
+        String hobby = "";
+        String day = "";
+        String time = "";
+        String returnString = "";
+
+        if(mHobbyCount>0){
+            if(mHobbyCount == 1){
+                hobby = "Hobby: ";
+            } else {
+                hobby = "Hobbies: ";
+            }
+            for (int i = 0; i<h.length; i++) {
+                if (h[i]){
+                    hobby = hobby.concat(String.valueOf(i));
+                }
+            }
+            hobby = hobby.replace("0", "Football ");
+            hobby = hobby.replace("1", " Basketball ");
+            hobby = hobby.replace("2", " Hike");
+            hobby = hobby.replace("  ", " - ");
+            hobby = hobby.concat("\n");
+        }
+
+        if(mTimeCount>0){
+            time = "Time: ";
+            for (int i = 0; i<t.length; i++) {
+                if (t[i]){
+                    time = time.concat(String.valueOf(i));
+                }
+            }
+            time = time.replace("0", "Morning ");
+            time = time.replace("1", " Afternoon ");
+            time = time.replace("2", " Evening");
+            time = time.replace("  ", " - ");
+            time = time.concat("\n");
+
+        }
+
+        if(mDayCount>0){
+            if(mDayCount == 1){
+                day = "Day: ";
+            } else {
+                day = "Days: ";
+            }
+            for (int i = 0; i<d.length; i++) {
+                if (d[i]){
+                    day = day.concat(String.valueOf(i));
+                }
+            }
+            day = day.replace("0", "Mon ");
+            day = day.replace("1", " Tue ");
+            day = day.replace("2", " Wed ");
+            day = day.replace("3", " Thu ");
+            day = day.replace("4", " Fri ");
+            day = day.replace("5", " Sat ");
+            day = day.replace("6", " Sun");
+            day = day.replace("  ", " - ");
+            day = day.concat("\n");
+        }
+        returnString = returnString.concat(hobby).concat(time).concat(day);
+        return returnString;
+    }
+
+
+
+
 
     public ArrayList<Session> filter(List<Session> sessionBank, boolean[] h, boolean[] t, boolean[]d) throws ParseException {
         ArrayList<Session> sessionArrayList = new ArrayList<Session>();
         int bankLength = sessionBank.size();
 
-        int hobbyCount = 0;
-        int timeCount = 0;
-        int dayCount = 0;
+        mHobbyCount = 0;
+        mTimeCount = 0;
+        mDayCount = 0;
 
         for(int i=0; i<h.length; i++) {
             if (h[i]) {
-                hobbyCount++;
+                mHobbyCount++;
             }
         }
 
         for(int i=0; i<t.length; i++) {
             if (t[i]) {
-                timeCount++;
+                mTimeCount++;
             }
         }
 
         for(int i=0; i<d.length; i++) {
             if (d[i]) {
-                dayCount++;
+                mDayCount++;
             }
         }
 
-        int[] day = new int[dayCount];
+        int[] day = new int[mDayCount];
         int indexD = 0;
         for(int i = 0; i<d.length; i++) {
             if(d[i]) {
@@ -166,7 +242,7 @@ public class SessionService {
             }
         }
 
-        int[] time = new int[timeCount*2];
+        int[] time = new int[mTimeCount*2];
         int indexT = 0;
         for (int i=0; i<t.length; i++) {
             if(t[i]) {
@@ -185,7 +261,7 @@ public class SessionService {
             }
         }
 
-        int[] hobby = new int[hobbyCount];
+        int[] hobby = new int[mHobbyCount];
         int indexH = 0;
         for(int i = 0; i<h.length; i++) {
             if(h[i]) {
@@ -193,23 +269,23 @@ public class SessionService {
             }
         }
         boolean checkTime = true;
-        if (timeCount == 0 || timeCount == t.length) {
+        if (mTimeCount == 0 || mTimeCount == t.length) {
             checkTime = false;
         }
 
         boolean checkDay = true;
-        if(dayCount == 0 || dayCount == d.length) {
+        if(mDayCount == 0 || mDayCount == d.length) {
             checkDay = false;
         }
 
         boolean checkHobby = true;
-        if (hobbyCount == 0 || hobbyCount == h.length) {
+        if (mHobbyCount == 0 || mHobbyCount == h.length) {
             checkHobby = false;
         }
 
-        System.out.println("CHECK TIME " + checkTime + " Count: " + timeCount);
-        System.out.println("CHECK DAY " + checkDay + " Count: " + dayCount);
-        System.out.println("CHECK HOBBY " + checkHobby + " Count: " + hobbyCount);
+        System.out.println("CHECK TIME " + checkTime + " Count: " + mTimeCount);
+        System.out.println("CHECK DAY " + checkDay + " Count: " + mDayCount);
+        System.out.println("CHECK HOBBY " + checkHobby + " Count: " + mHobbyCount);
         boolean fitsDay = false;
         boolean fitsTime = false;
         boolean fitsHobby = false;
