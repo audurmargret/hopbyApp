@@ -29,6 +29,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.io.IOException;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -46,6 +47,8 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
     private String prevAddress;
     private Marker mapPrevMarker;
     private  ArrayList<Session> mSessions;
+    private HashMap<String, Double> markerLocation;
+    private Double COORDINATE_OFFSET = 0.0003;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,7 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
 
         // Get sessions from overview
         mSessions = SessionOverviewActivity.getSessionArrayList();
+        markerLocation = new HashMap<String, Double>();
     }
 
     /**
@@ -92,6 +96,11 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
         });
     }
 
+    // Return whether marker with same location is already on map
+    private boolean mapAlreadyHasMarkerForLocation(String location) {
+        return (markerLocation.containsKey(location));
+    }
+
     // Adds markers to correct from current sessions
     private void addCurrentMarkers(ArrayList sessions) {
         int length = sessions.size();
@@ -100,6 +109,15 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
             String location = mSessions.get(i).getLocation();
             int sport = mSessions.get(i).getHobbyId();
             LatLng coordinates = getLocationFromAddress(getApplicationContext(), location);
+
+            if(mapAlreadyHasMarkerForLocation(location)){
+                markerLocation.put(location, markerLocation.get(location) + COORDINATE_OFFSET );
+                coordinates = new LatLng(coordinates.latitude+markerLocation.get(location),coordinates.longitude+markerLocation.get(location));
+                Log.d("herna", "kemst hingað "+(coordinates.latitude+markerLocation.get(location)));
+            }
+            else{
+                markerLocation.put(location, 0.0);
+            }
 
             // Draw markers on map with correct icon depending on activity
             switch (sport) {
@@ -171,7 +189,9 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
     }
 
 
-    // Increase opacity on selected marker
+    // Do something when a marker is selected
+    // Increases opacity
+    // TODO open session info when double clicked
     @Override
     public boolean onMarkerClick(final Marker marker) {
         if (prevAddress == null){
