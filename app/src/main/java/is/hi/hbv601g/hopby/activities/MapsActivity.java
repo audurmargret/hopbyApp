@@ -110,6 +110,8 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
             int sport = mSessions.get(i).getHobbyId();
             LatLng coordinates = getLocationFromAddress(getApplicationContext(), location);
 
+            // Check if location is already use - if so apply offset
+            // TODO use coordinates not name (doesn't account for spelling error)
             if(mapAlreadyHasMarkerForLocation(location)){
                 markerLocation.put(location, markerLocation.get(location) + COORDINATE_OFFSET );
                 coordinates = new LatLng(coordinates.latitude+markerLocation.get(location),coordinates.longitude+markerLocation.get(location));
