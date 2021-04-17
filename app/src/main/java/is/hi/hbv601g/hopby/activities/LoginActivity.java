@@ -52,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences preferences = getSharedPreferences("MYPREFS", MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString("loggedInUser", user.getUserName() );
+                    editor.putString("loggedInName", user.getName());
                     editor.commit();
                     Log.d("LoginActivity", "SHARED PREFRENECES");
 

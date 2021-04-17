@@ -84,7 +84,7 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
                 }
                 else {
                     // TODO: breyta hér þannig það opni info en ekki overview
-                    Intent intent = new Intent(CreateSessionActivity.this, SessionInfoActivity.class);
+                    Intent intent = new Intent(CreateSessionActivity.this, SessionOverviewActivity.class);
                     intent.putExtra("id", Long.toString(resultId));
                     startActivity(intent);
                 }

@@ -151,6 +151,7 @@ public class NetworkController {
                 .appendPath("signup")
                 .appendQueryParameter("userName", user.getUserName())
                 .appendQueryParameter("password", user.getPassword())
+                .appendQueryParameter("name", user.getName())
                 .build().toString();
 
         Log.d("NetworkController", url);
