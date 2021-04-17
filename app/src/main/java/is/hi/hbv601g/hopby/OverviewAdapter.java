@@ -37,20 +37,20 @@ public class OverviewAdapter extends ArrayAdapter<Session> {
             // Layout Inflater inflates each item to be displayed in GridView.
             listitemView = LayoutInflater.from(getContext()).inflate(R.layout.overview_item, parent, false);
         }
-        Session overviewModel = getItem(position);
+        Session session = getItem(position);
         TextView overviewTitle = listitemView.findViewById(R.id.overview_title);
         TextView overviewLocation = listitemView.findViewById(R.id.overview_location);
         TextView overviewDate = listitemView.findViewById(R.id.overview_date);
         TextView overviewTime = listitemView.findViewById(R.id.overview_time);
         TextView overviewSlots = listitemView.findViewById(R.id.overview_slots);
-        overviewTitle.setText(overviewModel.getTitle());
-        overviewLocation.setText(overviewModel.getLocation());
-        overviewDate.setText(overviewModel.getDate());
-        overviewTime.setText(overviewModel.getTime());
-        overviewSlots.setText("Slots:  "+(((overviewModel.getSlots())-(overviewModel.getSlotsAvailable())))+ " / "+overviewModel.getSlots());
+        overviewTitle.setText(session.getTitle());
+        overviewLocation.setText(session.getLocation());
+        overviewDate.setText(session.getDate());
+        overviewTime.setText(session.getTime());
+        overviewSlots.setText("Slots:  "+(((session.getSlots())-(session.getSlotsAvailable())))+ " / "+session.getSlots());
 
 
-        String id = Long.toString(overviewModel.getId());
+        String id = Long.toString(session.getId());
         Button infoButton = listitemView.findViewById(R.id.info_button);
         infoButton.setOnClickListener(new View.OnClickListener() {
             @Override

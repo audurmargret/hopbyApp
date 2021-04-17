@@ -1,35 +1,20 @@
 package is.hi.hbv601g.hopby.services;
 
-import android.content.Context;
-import android.os.Build;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.CalendarView;
-import android.widget.GridView;
-import android.widget.TextView;
 
-import com.google.android.gms.common.internal.ShowFirstParty;
 import com.google.android.material.textfield.TextInputEditText;
 
-import org.jetbrains.annotations.NotNull;
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Array;
 import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-import androidx.annotation.RequiresApi;
-import is.hi.hbv601g.hopby.MySessionsActivity;
-import is.hi.hbv601g.hopby.OverviewAdapter;
-import is.hi.hbv601g.hopby.R;
-import is.hi.hbv601g.hopby.activities.MapsActivity;
+import is.hi.hbv601g.hopby.activities.MySessionsActivity;
 import is.hi.hbv601g.hopby.activities.SessionInfoActivity;
 import is.hi.hbv601g.hopby.activities.SessionOverviewActivity;
 import is.hi.hbv601g.hopby.entities.Session;

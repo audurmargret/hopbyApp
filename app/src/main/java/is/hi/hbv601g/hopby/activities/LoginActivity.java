@@ -1,7 +1,6 @@
 package is.hi.hbv601g.hopby.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import is.hi.hbv601g.hopby.MainActivity;
 import is.hi.hbv601g.hopby.R;
 import is.hi.hbv601g.hopby.entities.User;
 import is.hi.hbv601g.hopby.networking.NetworkController;

@@ -1,6 +1,8 @@
-package is.hi.hbv601g.hopby;
+package is.hi.hbv601g.hopby.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import is.hi.hbv601g.hopby.OverviewAdapter;
+import is.hi.hbv601g.hopby.R;
 import is.hi.hbv601g.hopby.entities.Session;
 import is.hi.hbv601g.hopby.networking.NetworkController;
 import is.hi.hbv601g.hopby.services.SessionService;
