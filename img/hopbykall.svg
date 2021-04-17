@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 1112 1113" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1,0,0,1,-17158,0)">
+        <g id="Artboard8" transform="matrix(0.542969,0,0,1,7841.74,0)">
+            <rect x="17158" y="0" width="2048" height="1112.23" style="fill:none;"/>
+            <g transform="matrix(1.63071,-2.82208,5.19749,0.885427,1707.2,19873.9)">
+                <g transform="matrix(0.983434,0.181265,-0.181265,0.983434,292.064,-1270.4)">
+                    <path d="M6983.5,891.138C7002.45,879.242 7184.44,807.727 7191.82,839.744C7199.2,871.76 7046.7,1071.34 7027.75,1083.24C7008.81,1095.13 7087.28,945.117 7078.13,911.12C7068.98,877.124 6964.55,903.034 6983.5,891.138Z" style="fill:rgb(33,86,89);stroke:rgb(33,86,89);stroke-width:0.41px;"/>
+                </g>
+                <g transform="matrix(1,0,0,1,-14.6552,47.417)">
+                    <ellipse cx="7266.37" cy="792.327" rx="22.344" ry="21.5" style="fill:rgb(33,86,89);stroke:rgb(33,86,89);stroke-width:0.41px;"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

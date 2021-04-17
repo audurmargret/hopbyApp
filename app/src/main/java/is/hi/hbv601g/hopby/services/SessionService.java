@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Locale;
 
 import androidx.annotation.RequiresApi;
+import is.hi.hbv601g.hopby.MySessionsActivity;
 import is.hi.hbv601g.hopby.OverviewAdapter;
 import is.hi.hbv601g.hopby.R;
 import is.hi.hbv601g.hopby.activities.MapsActivity;
@@ -44,6 +45,7 @@ public class SessionService {
     private NetworkController mNetworkController;
     private SessionOverviewActivity mSessionOverviewActivity;
     private SessionInfoActivity mSessionInfoActivity;
+    private MySessionsActivity mMySessionsActivity;
     private static Session mSessionForMaps;
 
     private int mHobbyCount;
@@ -71,6 +73,22 @@ public class SessionService {
                 Log.d("SessionService", "Failed to get sessions " + errorString);
             }
         });
+    }
+
+    public void getMySession(MySessionsActivity mySessionActivity, String username) {
+        mMySessionsActivity = mySessionActivity;
+        mNetworkController.getMySessions(new NetworkCallback<List<Session>>() {
+            @Override
+            public void onSuccess(List<Session> result) {
+                mSessionBank = result;
+                mMySessionsActivity.updateSessions(mSessionBank);
+            }
+
+            @Override
+            public void onFailure(String errorString) {
+                Log.d("SessionService", "Failed to get sessions " + errorString);
+            }
+        }, username);
     }
 
     public void getSession(SessionInfoActivity sessionInfoActivity, long id) {

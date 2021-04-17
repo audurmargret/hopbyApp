@@ -71,6 +71,7 @@ public class NetworkController {
         );
         sQueue.add(request);
     }
+
     public void getSession(NetworkCallback<Session> callback, long id) {
         String url = Uri.parse(BASE_URL)
                 .buildUpon()
@@ -86,6 +87,35 @@ public class NetworkController {
                 Gson gson = new Gson();
                 Session session = gson.fromJson(response, Session.class);
                 callback.onSuccess(session);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callback.onFailure(error.toString());
+            }
+        }
+        );
+        sQueue.add(request);
+    }
+
+    public void getMySessions(NetworkCallback<List<Session>> callback, String username) {
+        String url = Uri.parse(BASE_URL)
+                .buildUpon()
+                .appendPath("mySessions")
+                .appendPath(username)
+                .build().toString();
+
+        Log.d("NetworkController", "URL MY SESSIONS : " + url);
+
+        StringRequest request = new StringRequest(
+                Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("NetworkController", "getMYSessions" + response);
+                Gson gson = new Gson();
+                Type listType = new TypeToken<List<Session>>(){}.getType();
+                List<Session> sessionBank = gson.fromJson(response, listType);
+                callback.onSuccess(sessionBank);
             }
         }, new Response.ErrorListener() {
             @Override

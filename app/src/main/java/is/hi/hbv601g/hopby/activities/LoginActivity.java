@@ -1,6 +1,7 @@
 package is.hi.hbv601g.hopby.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import is.hi.hbv601g.hopby.MainActivity;
 import is.hi.hbv601g.hopby.R;
 import is.hi.hbv601g.hopby.entities.User;
 import is.hi.hbv601g.hopby.networking.NetworkController;
@@ -52,11 +53,12 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences preferences = getSharedPreferences("MYPREFS", MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString("loggedInUser", user.getUserName() );
+                    editor.commit();
                     editor.putString("loggedInName", user.getName());
                     editor.commit();
                     Log.d("LoginActivity", "SHARED PREFRENECES");
 
-                    Intent intent = new Intent(LoginActivity.this, FilterActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                 } else {
                     Context context = getApplicationContext();
