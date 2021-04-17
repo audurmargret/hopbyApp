@@ -26,7 +26,6 @@ public class FilterActivity extends AppCompatActivity {
     private ChipGroup mChipGroupHobby;
     private ChipGroup mChipGroupDay;
     private ChipGroup mChipGroupTime;
-    private TextView textViewUser;
     private String mLoggedInUser;
 
     private FilterService mFilterService;
@@ -39,11 +38,9 @@ public class FilterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_filter);
 
         mFilterService = new FilterService();
-        textViewUser = (TextView) findViewById(R.id.user);
 
         SharedPreferences preferences = getSharedPreferences("MYPREFS", MODE_PRIVATE);
         mLoggedInUser = preferences.getString("loggedInName", "");
-        textViewUser.setText("Hi! "+mLoggedInUser);
 
         mButtonSubmit = (Button) findViewById(R.id.filter_button);
         mButtonSubmit.setOnClickListener(new View.OnClickListener() {
@@ -68,5 +65,12 @@ public class FilterActivity extends AppCompatActivity {
             }
         });
 
+        mButtonCancel = (Button) findViewById(R.id.button_back);
+        mButtonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 }

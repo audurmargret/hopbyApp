@@ -26,8 +26,6 @@ public class SessionOverviewActivity extends AppCompatActivity implements Serial
     private Button mButtonFilter;
     private Button mButtonCreate;
     private Button mButtonMaps;
-    private Button mButtonBack;
-    private Button mButtonInfo;
     private TextView mFilterText;
     GridView grid;
 
@@ -103,15 +101,6 @@ public class SessionOverviewActivity extends AppCompatActivity implements Serial
             }
         });
 
-        mButtonBack = (Button) findViewById(R.id.logout_button);
-        mButtonBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(SessionOverviewActivity.this, LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |  Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }
-        });
     }
 
     public void updateSessions(List<Session> mSessionBank, boolean filter) {

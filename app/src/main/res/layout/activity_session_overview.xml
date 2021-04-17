@@ -43,14 +43,16 @@
 
             <Button
                 android:id="@+id/maps_button"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:enabled="true"
                 android:text="@string/button_maps" />
 
             <Button
                 android:id="@+id/filter_button"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
                 android:layout_marginRight="3dp"
@@ -59,18 +61,13 @@
 
             <Button
                 android:id="@+id/create_button"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="3dp"
                 android:enabled="true"
                 android:text="@string/button_create" />
 
-            <Button
-                android:id="@+id/logout_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:enabled="true"
-                android:text="@string/button_logout" />
         </LinearLayout>
 
     </LinearLayout>

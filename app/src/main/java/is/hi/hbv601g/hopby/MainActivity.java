@@ -3,6 +3,7 @@ package is.hi.hbv601g.hopby;
 import androidx.appcompat.app.AppCompatActivity;
 import is.hi.hbv601g.hopby.activities.FilterActivity;
 import is.hi.hbv601g.hopby.activities.LoginActivity;
+import is.hi.hbv601g.hopby.activities.SessionOverviewActivity;
 import is.hi.hbv601g.hopby.activities.SignupActivity;
 
 import android.content.Intent;
@@ -17,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button mButtonAll;
     private Button mButtonMy;
+    private Button mButtonLogout;
     private TextView mGreetings;
 
     private String mLoggedInUser;
@@ -48,6 +50,16 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 // TODO opna nytt nice
                 Log.d("MainActivity", "OPNA NYTT NICE");
+            }
+        });
+
+        mButtonLogout = (Button) findViewById(R.id.button_logout);
+        mButtonLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |  Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
             }
         });
 
