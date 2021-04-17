@@ -8,6 +8,7 @@ import is.hi.hbv601g.hopby.services.UserService;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button mButtonSignup;
 
     private UserService mUserService;
+    private SharedPreferences mSharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,12 @@ public class LoginActivity extends AppCompatActivity {
                 User user = mUserService.login(String.valueOf(mTextInputEditTextUsername.getEditableText()), String.valueOf(mTextInputEditTextPassword.getEditableText()));
 
                 if (user != null) {
+                    SharedPreferences preferences = getSharedPreferences("MYPREFS", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("loggedInUser", user.getUserName() );
+                    editor.commit();
+                    Log.d("LoginActivity", "SHARED PREFRENECES");
+
                     Intent intent = new Intent(LoginActivity.this, FilterActivity.class);
                     startActivity(intent);
                 } else {

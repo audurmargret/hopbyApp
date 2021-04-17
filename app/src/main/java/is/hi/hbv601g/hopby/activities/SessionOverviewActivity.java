@@ -1,6 +1,7 @@
 package is.hi.hbv601g.hopby.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -47,6 +48,7 @@ public class SessionOverviewActivity extends AppCompatActivity implements Serial
         NetworkController networkController = NetworkController.getInstance(this);
 
         grid = findViewById(R.id.overview_grid);
+
 
         Intent getIntent = getIntent();
         boolean filter = getIntent.getBooleanExtra("filter", false);

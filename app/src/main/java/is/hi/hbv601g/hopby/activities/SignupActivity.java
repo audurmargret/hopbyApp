@@ -7,6 +7,7 @@ import is.hi.hbv601g.hopby.services.UserService;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,6 +27,7 @@ public class SignupActivity extends AppCompatActivity {
 
     private UserService mUserService;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,8 +44,10 @@ public class SignupActivity extends AppCompatActivity {
                 mTextInputEditTextUsername = findViewById(R.id.input_user);
                 mTextInputEditTextPassword = findViewById(R.id.input_passw);
 
-                Log.d("SignupActivity", String.valueOf(mTextInputEditTextUsername.getEditableText()) + " " + String.valueOf(mTextInputEditTextPassword.getEditableText()));
+                String userName = String.valueOf(mTextInputEditTextUsername.getEditableText());
+                Log.d("SignupActivity", userName + " " + String.valueOf(mTextInputEditTextPassword.getEditableText()));
                 boolean exist = mUserService.userExist(String.valueOf(mTextInputEditTextUsername.getEditableText()));
+
 
                 if (exist) {
                     Context context = getApplicationContext();

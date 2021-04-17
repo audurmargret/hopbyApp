@@ -3,6 +3,7 @@ package is.hi.hbv601g.hopby.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,8 +28,10 @@ public class SessionInfoActivity extends AppCompatActivity {
     private List<Session> mSessionBank;
 
     private long mId;
+    private String mLoggedInUser;
 
     private SessionService mSessionService;
+
     GridView grid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,10 @@ public class SessionInfoActivity extends AppCompatActivity {
         NetworkController networkController = NetworkController.getInstance(this);
 
         mSessionService = new SessionService(networkController);
+
+        SharedPreferences preferences = getSharedPreferences("MYPREFS", MODE_PRIVATE);
+        mLoggedInUser = preferences.getString("loggedInUser", "");
+        Log.d("SessionOverview", "LOGGED IN USER: " + mLoggedInUser + " ++++++++++");
 
         Intent getIntent = getIntent();
         mId = Long.parseLong(getIntent.getStringExtra("id"));
@@ -71,7 +78,7 @@ public class SessionInfoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // TODO: Breyta yfir í leave ef viðkomandi er þegar skráður
                 // TODO: Birta toast ef það tókst að join-a
-                System.out.println("Join TAKKI");
+                System.out.println(mLoggedInUser + " is trying to join");
 
             }
         });;
