@@ -70,7 +70,8 @@
                 android:layout_width="178dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/button_back" />
+                android:text="@string/button_back"
+                style="?android:attr/buttonBarButtonStyle"/>
         </LinearLayout>
 
     </LinearLayout>
