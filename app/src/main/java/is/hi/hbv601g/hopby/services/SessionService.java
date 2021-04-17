@@ -87,7 +87,22 @@ public class SessionService {
                 Log.d("SessionService", "Failed to get sessions " + errorString);
             }
         }, id);
+    }
 
+    public void joinSession(long id, String username) {
+        // /joinSession/{id}/{username}"
+        mNetworkController.joinSession(new NetworkCallback<Session>() {
+            @Override
+            public void onSuccess(Session result) {
+                Log.d("SessionService", "joinSession success");
+
+            }
+
+            @Override
+            public void onFailure(String errorString) {
+                Log.d("SessionService", "joinSession failure");
+            }
+        }, id, username);
     }
 
     // TODO avoid static methods
@@ -115,6 +130,7 @@ public class SessionService {
 
         return sessionId;
     }
+
 
     public Session format(TextInputEditText title, CalendarView date, TextInputEditText time, TextInputEditText slots, String hobby, TextInputEditText description, TextInputEditText location) {
         String titleString = title.getText().toString();
@@ -211,9 +227,6 @@ public class SessionService {
         returnString = returnString.concat(hobby).concat(time).concat(day);
         return returnString;
     }
-
-
-
 
 
     public ArrayList<Session> filter(List<Session> sessionBank, boolean[] h, boolean[] t, boolean[]d) throws ParseException {
@@ -354,6 +367,17 @@ public class SessionService {
         return sessionArrayList;
     }
 
+    public String getUserList(Session session) {
+        List<User> userlist = session.getUsers();
+        String userListString = "";
+        if(userlist != null) {
+            int length = userlist.size();
+            for(int i = 0; i<length; i++) {
+                userListString = userListString.concat(userlist.get(i).getUserName()).concat("\n");
+            }
+        }
+        return userListString;
+    }
 }
 
 

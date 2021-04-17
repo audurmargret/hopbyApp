@@ -96,6 +96,32 @@ public class NetworkController {
         );
         sQueue.add(request);
     }
+
+    public void joinSession(NetworkCallback<Session> callback, long id, String userName) {
+        String url = Uri.parse(BASE_URL)
+                .buildUpon()
+                .appendPath("joinSession")
+                .appendPath(Long.toString(id))
+                .appendPath(userName)
+                .build().toString();
+
+        StringRequest request = new StringRequest(
+                Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Gson gson = new Gson();
+                Session session = gson.fromJson(response, Session.class);
+                callback.onSuccess(session);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callback.onFailure(error.toString());
+            }
+        }
+        );
+        sQueue.add(request);
+    }
     public void getUsers(NetworkCallback<List<User>> callback) {
         StringRequest request = new StringRequest(
                 Request.Method.GET, BASE_URL + "users", new Response.Listener<String>() {

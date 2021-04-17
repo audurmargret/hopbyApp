@@ -79,6 +79,7 @@ public class SessionInfoActivity extends AppCompatActivity {
                 // TODO: Breyta yfir í leave ef viðkomandi er þegar skráður
                 // TODO: Birta toast ef það tókst að join-a
                 System.out.println(mLoggedInUser + " is trying to join");
+                mSessionService.joinSession(mId, mLoggedInUser);
 
             }
         });;
@@ -94,7 +95,8 @@ public class SessionInfoActivity extends AppCompatActivity {
         if(session.getHobbyId() == 3)  sessionArrayList.add(new InfoModel("Hike", "HobbyId"));
         sessionArrayList.add(new InfoModel(session.getLocation(), "Location"));
         sessionArrayList.add(new InfoModel(String.valueOf(session.getSlotsAvailable())+ " / " + String.valueOf(session.getSlots()), "Slots"));
-        sessionArrayList.add(new InfoModel(session.getUsers().toString(), "Users"));
+        String userList = mSessionService.getUserList(session);
+        sessionArrayList.add(new InfoModel(userList, "Users"));
 
         InfoAdapter adapter = new InfoAdapter(this, sessionArrayList);
         grid.setAdapter(adapter);
