@@ -6,11 +6,13 @@ import is.hi.hbv601g.hopby.R;
 import is.hi.hbv601g.hopby.services.FilterService;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -24,6 +26,8 @@ public class FilterActivity extends AppCompatActivity {
     private ChipGroup mChipGroupHobby;
     private ChipGroup mChipGroupDay;
     private ChipGroup mChipGroupTime;
+    private TextView textViewUser;
+    private String mLoggedInUser;
 
     private FilterService mFilterService;
 
@@ -35,6 +39,11 @@ public class FilterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_filter);
 
         mFilterService = new FilterService();
+        textViewUser = (TextView) findViewById(R.id.user);
+
+        SharedPreferences preferences = getSharedPreferences("MYPREFS", MODE_PRIVATE);
+        mLoggedInUser = preferences.getString("loggedInName", "");
+        textViewUser.setText("Hi! "+mLoggedInUser);
 
         mButtonSubmit = (Button) findViewById(R.id.filter_button);
         mButtonSubmit.setOnClickListener(new View.OnClickListener() {
