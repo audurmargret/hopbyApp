@@ -401,6 +401,12 @@ public class SessionService {
         }
         return false;
     }
+
+    public boolean isUserHost(Session session, String username) {
+        List<User> userList = session.getUsers();
+        if(userList.get(0).getUserName().equals(username)) return true;
+        return false;
+    }
 }
 
 

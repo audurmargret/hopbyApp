@@ -2,6 +2,7 @@ package is.hi.hbv601g.hopby.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,19 +10,24 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
+import is.hi.hbv601g.hopby.AlertDialogDelete;
 import is.hi.hbv601g.hopby.R;
 import is.hi.hbv601g.hopby.entities.Session;
 import is.hi.hbv601g.hopby.networking.NetworkController;
 import is.hi.hbv601g.hopby.services.SessionService;
 
-public class SessionInfoActivity extends AppCompatActivity {
+public class SessionInfoActivity extends AppCompatActivity implements AlertDialogDelete.AlertDialogDeleteListener {
     private Button mButtonMaps;
     private Button mButtonBack;
     private Button mButtonJoin;
+    private LinearLayout mLinearLayoutHost;
+    private Button mButtonDelete;
     private List<Session> mSessionBank;
 
     private TextView mTitle;
@@ -32,9 +38,13 @@ public class SessionInfoActivity extends AppCompatActivity {
     private TextView mUsers;
 
 
+
+
     private long mId;
     private String mLoggedInUser;
     private boolean mIsInSession;
+    private boolean mIsHost;
+    private boolean mConfirmDelete;
 
     private SessionService mSessionService;
 
@@ -126,8 +136,32 @@ public class SessionInfoActivity extends AppCompatActivity {
         mIsInSession = mSessionService.isUserInSession(session, mLoggedInUser);
         Log.d("SessionInfoActivity", "mIsInSession " + mIsInSession);
         if(mIsInSession) {
+            mIsHost = mSessionService.isUserHost(session, mLoggedInUser);
+            if(mIsHost){
+                mLinearLayoutHost = (LinearLayout) findViewById(R.id.host);
+                mLinearLayoutHost.setVisibility(LinearLayout.VISIBLE);
+                mButtonDelete = (Button) findViewById(R.id.info_button_delete);
+                mButtonDelete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        AlertDialogDelete dialog = new AlertDialogDelete();
+                        dialog.show(getSupportFragmentManager(), "Delete dialog");
+
+                    }
+                });
+            }
             mButtonJoin.setText("LEAVE");
         }
+    }
+
+    @Override
+    public void onYesClicked() {
+        mConfirmDelete = true;
+        Context context = getApplicationContext();
+        CharSequence text = "YES DELETE";
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
     }
 
 }
