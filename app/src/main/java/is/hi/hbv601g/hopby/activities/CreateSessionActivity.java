@@ -73,17 +73,34 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
                 mSlots = findViewById(R.id.input_slots);
                 mDescription = findViewById(R.id.input_description);
                 mLocation = findViewById(R.id.input_location);
-                long resultId = mSessionService.addSession(mTitle, mCalendarView, mTime, mSlots, mHobbyId, mDescription, mLocation);
 
+                Log.d("CreateSessionActivity", "mTitle: " + mTitle.length());
                 // Upon illegal input display error message
+                boolean isOk = true;
                 if(!isLegalLoc(mLocation.getText().toString())) {
                     mLocation.setError("Location not found");
+                    isOk = false;
                 }
-                else if(mTime.length() != 4){
+                if(mTime.length() != 4){
                     mTime.setError("Time must be in the format 'hhmm'");
+                    isOk = false;
                 }
-                else {
+                if(mTitle.length() == 0){
+                    mTitle.setError("Required field");
+                    isOk = false;
+                }
+                if(mSlots.length() == 0){
+                    mSlots.setError("Required field");
+                    isOk = false;
+                } else if(Integer.parseInt(mSlots.getText().toString()) < 2) {
+                    mSlots.setError("Slots must be greater than 1");
+                    isOk = false;
+                }
+
+                if(isOk) {
                     // TODO: breyta hér þannig það opni info en ekki overview
+                    long resultId = mSessionService.addSession(mTitle, mCalendarView, mTime, mSlots, mHobbyId, mDescription, mLocation);
+
                     Intent intent = new Intent(CreateSessionActivity.this, SessionOverviewActivity.class);
                     intent.putExtra("id", Long.toString(resultId));
                     startActivity(intent);
