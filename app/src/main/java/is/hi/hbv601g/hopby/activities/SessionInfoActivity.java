@@ -9,15 +9,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import is.hi.hbv601g.hopby.InfoModel;
 import is.hi.hbv601g.hopby.R;
 import is.hi.hbv601g.hopby.entities.Session;
-import is.hi.hbv601g.hopby.InfoAdapter;
-import is.hi.hbv601g.hopby.networking.NetworkCallback;
 import is.hi.hbv601g.hopby.networking.NetworkController;
 import is.hi.hbv601g.hopby.services.SessionService;
 
@@ -27,8 +24,17 @@ public class SessionInfoActivity extends AppCompatActivity {
     private Button mButtonJoin;
     private List<Session> mSessionBank;
 
+    private TextView mTitle;
+    private TextView mDescription;
+    private TextView mHobbyId;
+    private TextView mLocation;
+    private TextView mSlots;
+    private TextView mUsers;
+
+
     private long mId;
     private String mLoggedInUser;
+    private boolean mIsInSession;
 
     private SessionService mSessionService;
 
@@ -72,6 +78,8 @@ public class SessionInfoActivity extends AppCompatActivity {
             }
         });
 
+
+
         mButtonJoin = (Button) findViewById(R.id.info_button_join);
         mButtonJoin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,27 +87,47 @@ public class SessionInfoActivity extends AppCompatActivity {
                 // TODO: Breyta yfir í leave ef viðkomandi er þegar skráður
                 // TODO: Birta toast ef það tókst að join-a
                 System.out.println(mLoggedInUser + " is trying to join");
-                mSessionService.joinSession(mId, mLoggedInUser);
-
+                if(mIsInSession) {
+                    Log.d("SessionInfoActivity", "USER IS IN SESSION");
+                    mSessionService.leaveSession(mId, mLoggedInUser);
+                    finish();
+                    startActivity(getIntent());
+                } else {
+                    mSessionService.joinSession(mId, mLoggedInUser);
+                    finish();
+                    startActivity(getIntent());
+                }
             }
         });;
     }
     public void updateSession(Session session) {
-        grid = findViewById(R.id.info_grid);
-        ArrayList<InfoModel> sessionArrayList = new ArrayList<InfoModel>();
 
-        sessionArrayList.add(new InfoModel(session.getTitle(), "Title"));
-        sessionArrayList.add(new InfoModel(session.getDescription(), "Description"));
-        if(session.getHobbyId() == 1)  sessionArrayList.add(new InfoModel("Football", "HobbyId"));
-        if(session.getHobbyId() == 2)  sessionArrayList.add(new InfoModel("Basketball", "HobbyId"));
-        if(session.getHobbyId() == 3)  sessionArrayList.add(new InfoModel("Hike", "HobbyId"));
-        sessionArrayList.add(new InfoModel(session.getLocation(), "Location"));
-        sessionArrayList.add(new InfoModel(String.valueOf(session.getSlotsAvailable())+ " / " + String.valueOf(session.getSlots()), "Slots"));
+        mTitle = (TextView) findViewById(R.id.info_title);
+        mTitle.setText(session.getTitle());
+
+        mDescription = (TextView) findViewById(R.id.info_description);
+        mDescription.setText(session.getDescription());
+
+        mHobbyId = (TextView) findViewById(R.id.info_hobbyId);
+        if(session.getHobbyId() == 1) mHobbyId.setText("Football");
+        else if(session.getHobbyId() == 2) mHobbyId.setText("Basketball");
+        else if(session.getHobbyId() == 3) mHobbyId.setText("Hike");
+
+        mLocation = (TextView) findViewById(R.id.info_location);
+        mLocation.setText(session.getLocation());
+
+        mSlots = (TextView) findViewById(R.id.info_slots);
+        mSlots.setText(String.valueOf(session.getSlotsAvailable())+ " / " + String.valueOf(session.getSlots()));
+
         String userList = mSessionService.getUserList(session);
-        sessionArrayList.add(new InfoModel(userList, "Users"));
+        mUsers = (TextView) findViewById(R.id.info_users);
+        mUsers.setText(userList);
 
-        InfoAdapter adapter = new InfoAdapter(this, sessionArrayList);
-        grid.setAdapter(adapter);
+        mIsInSession = mSessionService.isUserInSession(session, mLoggedInUser);
+        Log.d("SessionInfoActivity", "mIsInSession " + mIsInSession);
+        if(mIsInSession) {
+            mButtonJoin.setText("LEAVE");
+        }
     }
 
 }

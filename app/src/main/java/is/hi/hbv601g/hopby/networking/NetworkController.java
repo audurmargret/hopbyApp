@@ -97,10 +97,10 @@ public class NetworkController {
         sQueue.add(request);
     }
 
-    public void joinSession(NetworkCallback<Session> callback, long id, String userName) {
+    public void joinSession(NetworkCallback<Session> callback, String path, long id, String userName) {
         String url = Uri.parse(BASE_URL)
                 .buildUpon()
-                .appendPath("joinSession")
+                .appendPath(path)
                 .appendPath(Long.toString(id))
                 .appendPath(userName)
                 .build().toString();
@@ -122,6 +122,7 @@ public class NetworkController {
         );
         sQueue.add(request);
     }
+
     public void getUsers(NetworkCallback<List<User>> callback) {
         StringRequest request = new StringRequest(
                 Request.Method.GET, BASE_URL + "users", new Response.Listener<String>() {

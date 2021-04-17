@@ -90,7 +90,6 @@ public class SessionService {
     }
 
     public void joinSession(long id, String username) {
-        // /joinSession/{id}/{username}"
         mNetworkController.joinSession(new NetworkCallback<Session>() {
             @Override
             public void onSuccess(Session result) {
@@ -102,7 +101,22 @@ public class SessionService {
             public void onFailure(String errorString) {
                 Log.d("SessionService", "joinSession failure");
             }
-        }, id, username);
+        }, "joinSession", id, username);
+    }
+
+    public void leaveSession(long id, String username) {
+        mNetworkController.joinSession(new NetworkCallback<Session>() {
+            @Override
+            public void onSuccess(Session result) {
+                Log.d("SessionService", "leaveSession success");
+
+            }
+
+            @Override
+            public void onFailure(String errorString) {
+                Log.d("SessionService", "leaveSession failure");
+            }
+        }, "leaveSession", id, username);
     }
 
     // TODO avoid static methods
@@ -377,6 +391,15 @@ public class SessionService {
             }
         }
         return userListString;
+    }
+
+    public boolean isUserInSession(Session session, String username) {
+        List<User> userList = session.getUsers();
+        for(int i=0; i<userList.size(); i++) {
+            if(userList.get(i).getUserName().equals(username))
+                return true;
+        }
+        return false;
     }
 }
 

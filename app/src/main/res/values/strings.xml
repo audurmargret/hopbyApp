@@ -55,4 +55,11 @@
     <string name="button_map">MAP</string>
     <string name="button_logout">LOGOUT</string>
 
+    <string name="info_title">Title:</string>
+    <string name="info_description">Description:</string>
+    <string name="info_hobbyId">Hobby:</string>
+    <string name="info_slots">Slots:</string>
+    <string name="info_location">Location:</string>
+    <string name="info_users">Users:</string>
+
 </resources>
