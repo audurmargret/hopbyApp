@@ -154,6 +154,8 @@ public class SessionInfoActivity extends AppCompatActivity implements AlertDialo
                 });
             }
             mButtonJoin.setText("LEAVE");
+        } else if(session.getSlotsAvailable() == 0) {
+            mButtonJoin.setEnabled(false);
         }
     }
 

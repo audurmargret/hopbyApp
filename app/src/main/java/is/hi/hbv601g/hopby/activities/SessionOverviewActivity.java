@@ -26,6 +26,7 @@ public class SessionOverviewActivity extends AppCompatActivity implements Serial
     private Button mButtonFilter;
     private Button mButtonCreate;
     private Button mButtonMaps;
+    private Button mButtonBack;
     private TextView mFilterText;
     GridView grid;
 
@@ -98,6 +99,14 @@ public class SessionOverviewActivity extends AppCompatActivity implements Serial
                 intent.putExtra("flag","overview");
                 //intent.putExtra("sessions", sessionArrayList);
                 startActivity(intent);
+            }
+        });
+
+        mButtonBack = (Button) findViewById(R.id.back_button);
+        mButtonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
 
