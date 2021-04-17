@@ -10,6 +10,8 @@ import is.hi.hbv601g.hopby.services.SessionService;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 
@@ -19,6 +21,8 @@ import java.util.List;
 public class MySessionsActivity extends AppCompatActivity {
 
     private GridView grid;
+    private TextView mHeader;
+    private Button mButtonBack;
     private SessionService mSessionService;
     private String mLoggedInUser;
     private String mLoggedInName;
@@ -39,21 +43,30 @@ public class MySessionsActivity extends AppCompatActivity {
 
         mSessionService = new SessionService(networkController);
         mSessionService.getMySession(this, mLoggedInUser);
+
+        mHeader = (TextView) findViewById(R.id.my_overview_header);
+        mHeader.setText(mLoggedInName.concat("'s Sessions"));
+
+        mButtonBack = (Button) findViewById(R.id.back_button);
+        mButtonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
     }
 
     public void updateSessions(List<Session> mSessionBank) {
 
 
         if(mSessionBank.size() < 1) {
-            // TODO:  birta einhver skilaboð um að það hafi ekki uppfylt þessi skilyrði
+            // TODO:  birta einhver skilaboð um að þú ´sert ekki skráður í neitt session
             Log.d("MySessionsActivity", "-------ARRAY TÓMT --------");
         }
 
-        sessionArrayList = new ArrayList<Session>();
-        int length = mSessionBank.size();
-        for (int i = 0; i<length; i++){
-            sessionArrayList.add(new Session(mSessionBank.get(i).getId(), mSessionBank.get(i).getTitle(), mSessionBank.get(i).getLocation(), mSessionBank.get(i).getDate(), mSessionBank.get(i).getTime(), mSessionBank.get(i).getSlots(), mSessionBank.get(i).getHobbyId(), mSessionBank.get(i).getDescription()));
-        }
+        sessionArrayList = new ArrayList<Session>(mSessionBank);
+
         OverviewAdapter adapter = new OverviewAdapter(this, sessionArrayList);
         grid.setAdapter(adapter);
     }

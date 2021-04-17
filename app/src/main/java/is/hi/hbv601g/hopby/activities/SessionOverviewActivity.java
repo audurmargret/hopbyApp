@@ -126,18 +126,10 @@ public class SessionOverviewActivity extends AppCompatActivity implements Serial
                 sessionArrayList = new ArrayList<Session>();
                 mFilterText.setText("Could not load filter");
 
-                int length = mSessionBank.size();
-                for (int i = 0; i < length; i++) {
-                    sessionArrayList.add(new Session(mSessionBank.get(i).getId(), mSessionBank.get(i).getTitle(), mSessionBank.get(i).getLocation(), mSessionBank.get(i).getDate(), mSessionBank.get(i).getTime(), mSessionBank.get(i).getSlots(), mSessionBank.get(i).getHobbyId(), mSessionBank.get(i).getDescription()));
-                }
+                sessionArrayList = new ArrayList<Session>(mSessionBank);
             }
         } else {
-            sessionArrayList = new ArrayList<Session>();
-
-            int length = mSessionBank.size();
-            for (int i = 0; i < length; i++) {
-                sessionArrayList.add(new Session(mSessionBank.get(i).getId(), mSessionBank.get(i).getTitle(), mSessionBank.get(i).getLocation(), mSessionBank.get(i).getDate(), mSessionBank.get(i).getTime(), mSessionBank.get(i).getSlots(), mSessionBank.get(i).getHobbyId(), mSessionBank.get(i).getDescription()));
-            }
+            sessionArrayList = new ArrayList<Session>(mSessionBank);
         }
 
         if(sessionArrayList.size() < 1) {

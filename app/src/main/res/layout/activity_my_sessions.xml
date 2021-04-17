@@ -23,7 +23,7 @@
             android:layout_margin="20dp">
 
             <TextView
-                android:id="@+id/my_overveiew_header"
+                android:id="@+id/my_overview_header"
                 android:layout_width="200dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -49,6 +49,22 @@
             android:layout_margin="10dp" />
 
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:padding="20dp">
+
+            <Button
+                android:id="@+id/back_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="3dp"
+                android:enabled="true"
+                android:text="@string/button_back" />
+        </LinearLayout>
 
     </LinearLayout>
 
