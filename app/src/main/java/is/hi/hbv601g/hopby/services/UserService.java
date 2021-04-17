@@ -14,6 +14,7 @@ public class UserService {
     private List<User> mUserBank;
     NetworkController mNetworkController;
 
+
     public UserService(NetworkController networkController) {
         mNetworkController = networkController;
         mNetworkController.getUsers(new NetworkCallback<List<User>>() {

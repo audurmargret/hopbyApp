@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class SessionOverviewActivity extends AppCompatActivity implements Serial
     private Button mButtonMaps;
     private Button mButtonBack;
     private Button mButtonInfo;
+    private TextView mFilterText;
     GridView grid;
 
     private SessionService mSessionService;
@@ -103,9 +105,14 @@ public class SessionOverviewActivity extends AppCompatActivity implements Serial
         if(filter) {
             try{
                 sessionArrayList = mSessionService.filter(mSessionBank, mHobbies, mTimes, mDays);
+                mFilterText = (TextView) findViewById(R.id.overview_filterText);
+                String filterText = mSessionService.filterText(mHobbies, mTimes, mDays);
+                mFilterText.setText(filterText);
+
             } catch (Exception e) {
                 Log.d("SessionOverviewActivity", "Gat ekki notað filter" + e.toString());
                 sessionArrayList = new ArrayList<Session>();
+                mFilterText.setText("Could not load filter");
 
                 int length = mSessionBank.size();
                 for (int i = 0; i < length; i++) {
