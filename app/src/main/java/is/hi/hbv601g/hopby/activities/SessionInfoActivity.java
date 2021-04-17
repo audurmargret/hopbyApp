@@ -99,11 +99,11 @@ public class SessionInfoActivity extends AppCompatActivity implements AlertDialo
                 System.out.println(mLoggedInUser + " is trying to join");
                 if(mIsInSession) {
                     Log.d("SessionInfoActivity", "USER IS IN SESSION");
-                    mSessionService.leaveSession(mId, mLoggedInUser);
+                    mSessionService.joinSession(mId, mLoggedInUser, "leaveSession");
                     finish();
                     startActivity(getIntent());
                 } else {
-                    mSessionService.joinSession(mId, mLoggedInUser);
+                    mSessionService.joinSession(mId, mLoggedInUser, "joinSession");
                     finish();
                     startActivity(getIntent());
                 }
@@ -162,6 +162,9 @@ public class SessionInfoActivity extends AppCompatActivity implements AlertDialo
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
+
+        mSessionService.deleteSession(mId);
+        finish();
     }
 
 }

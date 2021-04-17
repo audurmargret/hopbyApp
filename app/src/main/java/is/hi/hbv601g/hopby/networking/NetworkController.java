@@ -205,4 +205,27 @@ public class NetworkController {
         });
         sQueue.add(request);
     }
+
+    public void deleteSession(NetworkCallback<String> callback, long id) {
+        String url = Uri.parse(BASE_URL)
+                .buildUpon()
+                .appendPath("delete")
+                .appendPath(Long.toString(id))
+                .build().toString();
+
+        StringRequest request = new StringRequest(
+                Request.Method.DELETE, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                callback.onSuccess("succsess");
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callback.onFailure(error.toString());
+            }
+        }
+        );
+        sQueue.add(request);
+    }
 }

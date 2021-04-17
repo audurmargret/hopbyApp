@@ -89,7 +89,7 @@ public class SessionService {
         }, id);
     }
 
-    public void joinSession(long id, String username) {
+    public void joinSession(long id, String username, String path) {
         mNetworkController.joinSession(new NetworkCallback<Session>() {
             @Override
             public void onSuccess(Session result) {
@@ -101,22 +101,20 @@ public class SessionService {
             public void onFailure(String errorString) {
                 Log.d("SessionService", "joinSession failure");
             }
-        }, "joinSession", id, username);
+        }, path, id, username);
     }
 
-    public void leaveSession(long id, String username) {
-        mNetworkController.joinSession(new NetworkCallback<Session>() {
+    public void deleteSession(long id) {
+        mNetworkController.deleteSession(new NetworkCallback<String>(){
             @Override
-            public void onSuccess(Session result) {
-                Log.d("SessionService", "leaveSession success");
-
+            public void onSuccess(String response) {
+                Log.d("SessionService", "deleteSession success");
             }
-
             @Override
-            public void onFailure(String errorString) {
-                Log.d("SessionService", "leaveSession failure");
+            public void onFailure(String errorString)  {
+                Log.d("SessionService", "deleteSession failure");
             }
-        }, "leaveSession", id, username);
+        }, id);
     }
 
     // TODO avoid static methods
