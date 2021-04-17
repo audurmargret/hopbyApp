@@ -127,11 +127,14 @@ public class SessionInfoActivity extends AppCompatActivity implements AlertDialo
         mLocation.setText(session.getLocation());
 
         mSlots = (TextView) findViewById(R.id.info_slots);
-        mSlots.setText(String.valueOf(session.getSlotsAvailable())+ " / " + String.valueOf(session.getSlots()));
+        //mSlots.setText(String.valueOf(session.getSlotsAvailable())+ " / " + String.valueOf(session.getSlots()));
+        mSlots.setText(String.valueOf(((session.getSlots())-(session.getSlotsAvailable())))+ " / " + String.valueOf(session.getSlots()));
 
         String userList = mSessionService.getUserList(session);
         mUsers = (TextView) findViewById(R.id.info_users);
         mUsers.setText(userList);
+
+
 
         mIsInSession = mSessionService.isUserInSession(session, mLoggedInUser);
         Log.d("SessionInfoActivity", "mIsInSession " + mIsInSession);

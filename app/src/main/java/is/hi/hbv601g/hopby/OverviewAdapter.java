@@ -47,7 +47,8 @@ public class OverviewAdapter extends ArrayAdapter<Session> {
         overviewLocation.setText(overviewModel.getLocation());
         overviewDate.setText(overviewModel.getDate());
         overviewTime.setText(overviewModel.getTime());
-        overviewSlots.setText("Slots: " +overviewModel.getSlotsAvailable() + "/" + overviewModel.getSlots());
+        overviewSlots.setText("Slots:  "+(((overviewModel.getSlots())-(overviewModel.getSlotsAvailable())))+ " / "+overviewModel.getSlots());
+
 
         String id = Long.toString(overviewModel.getId());
         Button infoButton = listitemView.findViewById(R.id.info_button);
