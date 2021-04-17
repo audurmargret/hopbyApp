@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,8 +26,10 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,11 +39,12 @@ import java.util.Locale;
 import is.hi.hbv601g.hopby.OverviewAdapter;
 import is.hi.hbv601g.hopby.R;
 import is.hi.hbv601g.hopby.entities.Session;
+import is.hi.hbv601g.hopby.networking.NetworkCallback;
 import is.hi.hbv601g.hopby.networking.NetworkController;
 import is.hi.hbv601g.hopby.services.SessionService;
 
 
-public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarkerClickListener, OnMapReadyCallback {
+public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarkerClickListener, OnMapReadyCallback, Serializable {
 
     private GoogleMap mMap;
     private Button mapButton;
@@ -49,6 +53,7 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
     private  ArrayList<Session> mSessions;
     private HashMap<String, Double> markerLocation;
     private Double COORDINATE_OFFSET = 0.0003;
+    private Session mSession;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +63,8 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        mSessions = new ArrayList<Session>();
 
-        // Get sessions from overview
-        mSessions = SessionOverviewActivity.getSessionArrayList();
-        markerLocation = new HashMap<String, Double>();
     }
 
     /**
@@ -75,6 +78,20 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        markerLocation = new HashMap<String, Double>();
+
+        // Add all or filtered sessions if overview or one session if info
+        Intent i = getIntent();
+        String checkFlag = i.getStringExtra("flag");
+        if (checkFlag.equals("overview")) {
+            //mSessions = i.getParcelableExtra("sessions"); TODO find out how to pass sessions through intent
+            mSessions = SessionOverviewActivity.getSessionArrayList();
+        }
+        else if (checkFlag.equals("info")){
+            // TODO find better ("correct") method for this
+            mSession = SessionService.getSessionForMaps();
+            mSessions.add(mSession);
+        }
 
         // Add a marker in Reykjavík and move the camera
         LatLng reykjavik = new LatLng(64.1466, -21.9426);
@@ -109,6 +126,10 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
             String location = mSessions.get(i).getLocation();
             int sport = mSessions.get(i).getHobbyId();
             LatLng coordinates = getLocationFromAddress(getApplicationContext(), location);
+
+            if (mSessions.size() == 1) {
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinates,13f));
+            }
 
             // Check if location is already use - if so apply offset
             // TODO use coordinates not name (doesn't account for spelling error)

@@ -51,6 +51,8 @@ public class SessionInfoActivity extends AppCompatActivity {
                 // TODO: Opna MAPS VIEW
                 System.out.println("MAPS TAKKI");
                 Intent intent = new Intent(SessionInfoActivity.this, MapsActivity.class);
+                intent.putExtra("flag","info");
+                intent.putExtra("id", mId);
                 startActivity(intent);
             }
         });

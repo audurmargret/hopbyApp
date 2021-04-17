@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,7 @@ import is.hi.hbv601g.hopby.entities.Session;
 import is.hi.hbv601g.hopby.networking.NetworkController;
 import is.hi.hbv601g.hopby.services.SessionService;
 
-public class SessionOverviewActivity extends AppCompatActivity {
+public class SessionOverviewActivity extends AppCompatActivity implements Serializable {
 
     private Button mButtonFilter;
     private Button mButtonCreate;
@@ -29,7 +30,7 @@ public class SessionOverviewActivity extends AppCompatActivity {
 
     private SessionService mSessionService;
     private List<Session> mSessionBank;
-    private static ArrayList<Session> sessionArrayList;
+    private static ArrayList<Session> sessionArrayList; // TODO make not static and pass through intent
 
     private boolean[] mHobbies;
     private boolean[] mTimes;
@@ -80,6 +81,8 @@ public class SessionOverviewActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // TODO: Opna MAPS VIEW
                 Intent intent = new Intent(SessionOverviewActivity.this, MapsActivity.class);
+                intent.putExtra("flag","overview");
+                //intent.putExtra("sessions", sessionArrayList);
                 startActivity(intent);
             }
         });
@@ -126,6 +129,7 @@ public class SessionOverviewActivity extends AppCompatActivity {
         grid.setAdapter(adapter);
     }
 
+    // TODO pass through intent not static method
     public static ArrayList<Session> getSessionArrayList() {
         return sessionArrayList;
     }

@@ -27,6 +27,7 @@ import java.util.Locale;
 import androidx.annotation.RequiresApi;
 import is.hi.hbv601g.hopby.OverviewAdapter;
 import is.hi.hbv601g.hopby.R;
+import is.hi.hbv601g.hopby.activities.MapsActivity;
 import is.hi.hbv601g.hopby.activities.SessionInfoActivity;
 import is.hi.hbv601g.hopby.activities.SessionOverviewActivity;
 import is.hi.hbv601g.hopby.entities.Session;
@@ -42,6 +43,7 @@ public class SessionService {
     private NetworkController mNetworkController;
     private SessionOverviewActivity mSessionOverviewActivity;
     private SessionInfoActivity mSessionInfoActivity;
+    private static Session mSessionForMaps;
 
     private long sessionId;
 
@@ -72,6 +74,7 @@ public class SessionService {
             @Override
             public void onSuccess(Session result) {
                 mSessionInfoActivity.updateSession(result);
+                mSessionForMaps = result;
             }
 
             @Override
@@ -81,6 +84,12 @@ public class SessionService {
         }, id);
 
     }
+
+    // TODO avoid static methods
+    public static Session getSessionForMaps(){
+        return mSessionForMaps;
+    }
+
 
     public long addSession(TextInputEditText title, CalendarView date, TextInputEditText time, TextInputEditText slots, String hobbyId, TextInputEditText description, TextInputEditText location) {
         Session newSession = format( title, date, time, slots, hobbyId, description, location);
