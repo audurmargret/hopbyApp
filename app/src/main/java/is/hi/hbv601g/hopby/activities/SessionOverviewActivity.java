@@ -44,7 +44,19 @@ public class SessionOverviewActivity extends AppCompatActivity implements Serial
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_session_overview);
+        start();
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        start();
+
+        //Refresh your stuff here
+        Log.d("SessionOVerviewActivity", "ON RESUME !!!!!!!!");
+    }
+
+    public void start() {
         NetworkController networkController = NetworkController.getInstance(this);
 
         grid = findViewById(R.id.overview_grid);
@@ -100,8 +112,8 @@ public class SessionOverviewActivity extends AppCompatActivity implements Serial
                 startActivity(intent);
             }
         });
-
     }
+
     public void updateSessions(List<Session> mSessionBank, boolean filter) {
 
         if(filter) {
