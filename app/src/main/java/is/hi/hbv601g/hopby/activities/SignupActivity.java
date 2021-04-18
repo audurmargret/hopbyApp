@@ -7,9 +7,7 @@ import is.hi.hbv601g.hopby.services.UserService;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -21,9 +19,9 @@ public class SignupActivity extends AppCompatActivity {
     private Button mButtonBack;
 
 
-    private TextInputEditText mTextInputEditTextName;
-    private TextInputEditText mTextInputEditTextUsername;
-    private TextInputEditText mTextInputEditTextPassword;
+    private TextInputEditText mName;
+    private TextInputEditText mUserName;
+    private TextInputEditText mPassword;
 
     private UserService mUserService;
 
@@ -40,23 +38,32 @@ public class SignupActivity extends AppCompatActivity {
         mButtonSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mTextInputEditTextName = findViewById(R.id.input_name);
-                mTextInputEditTextUsername = findViewById(R.id.input_user);
-                mTextInputEditTextPassword = findViewById(R.id.input_passw);
+                mName = findViewById(R.id.input_name);
+                mUserName = findViewById(R.id.input_user);
+                mPassword = findViewById(R.id.input_passw);
 
-                String userName = String.valueOf(mTextInputEditTextUsername.getEditableText());
-                Log.d("SignupActivity", userName + " " + String.valueOf(mTextInputEditTextPassword.getEditableText()));
-                boolean exist = mUserService.userExist(String.valueOf(mTextInputEditTextUsername.getEditableText()));
+                boolean exist = mUserService.userExist(String.valueOf(mUserName.getEditableText()));
 
-
+                boolean isOk = true;
                 if (exist) {
-                    Context context = getApplicationContext();
-                    CharSequence text = "Username is already in use";
-                    int duration = Toast.LENGTH_SHORT;
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
-                } else {
-                    mUserService.signup(String.valueOf(mTextInputEditTextName.getEditableText()), String.valueOf(mTextInputEditTextUsername.getEditableText()), String.valueOf(mTextInputEditTextPassword.getEditableText()));
+                    mUserName.setError("Username is already in use");
+                    isOk = false;
+                }
+                if (mUserName.length() == 0) {
+                    mUserName.setError("Required field");
+                    isOk = false;
+                }
+                if (mName.length() == 0) {
+                    mName.setError("Required field");
+                    isOk = false;
+                }
+                if (mPassword.length() == 0){
+                    mPassword.setError("Required field");
+                    isOk = false;
+                }
+
+                if(isOk){
+                    mUserService.signup(String.valueOf(mName.getEditableText()), String.valueOf(mUserName.getEditableText()), String.valueOf(mPassword.getEditableText()));
                     Context context = getApplicationContext();
                     CharSequence text = "Success, please login";
                     int duration = Toast.LENGTH_SHORT;
