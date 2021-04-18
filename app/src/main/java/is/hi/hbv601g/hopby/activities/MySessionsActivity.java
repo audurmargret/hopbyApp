@@ -33,6 +33,18 @@ public class MySessionsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_sessions);
+        start();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("MySessionsActivity", "ON RESUME!!!!" );
+        start();
+    }
+
+
+    public void start() {
 
         NetworkController networkController = NetworkController.getInstance(this);
         grid = findViewById(R.id.my_overview_grid);
@@ -54,7 +66,6 @@ public class MySessionsActivity extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 
     public void updateSessions(List<Session> mSessionBank) {

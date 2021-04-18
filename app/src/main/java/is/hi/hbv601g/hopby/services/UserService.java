@@ -17,6 +17,9 @@ public class UserService {
 
     public UserService(NetworkController networkController) {
         mNetworkController = networkController;
+    }
+
+    public void setUserBank() {
         mNetworkController.getUsers(new NetworkCallback<List<User>>() {
             @Override
             public void onSuccess(List<User> result) {

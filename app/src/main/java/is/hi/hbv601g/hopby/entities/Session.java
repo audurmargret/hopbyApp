@@ -31,8 +31,10 @@ public class Session {
     private int mHobbyId;
     @SerializedName("description")
     private String mDescription;
+    @SerializedName("host")
+    private String mHost;
 
-    public Session(long id, String title, String location, String date, String time, int slots, int hobbyId, String description) {
+    public Session(long id, String title, String location, String date, String time, int slots, int hobbyId, String description, String host) {
         mId = id;
         mTitle = title;
         mLocation = location;
@@ -42,6 +44,7 @@ public class Session {
         mSlotsAvailable = slots;
         mHobbyId = hobbyId;
         mDescription = description;
+        mHost = host;
 
     }
 
@@ -141,4 +144,11 @@ public class Session {
         mDescription = mDescription;
     }
 
+    public String getHost() {
+        return mHost;
+    }
+
+    public void setHost(String host) {
+        mHost = host;
+    }
 }

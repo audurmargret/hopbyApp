@@ -107,7 +107,7 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
 
                 if(isOk) {
                     // TODO: breyta hér þannig það opni info en ekki overview
-                    long resultId = mSessionService.addSession(mLoggedInUser, mTitle, mCalendarView, mTime, mSlots, mHobbyId, mDescription, mLocation);
+                    long resultId = mSessionService.addSession(mLoggedInUser, mTitle, mCalendarView, mTime, mSlots, mHobbyId, mDescription, mLocation, mLoggedInUser);
 
                     Intent intent = new Intent(CreateSessionActivity.this, SessionOverviewActivity.class);
                     intent.putExtra("id", Long.toString(resultId));

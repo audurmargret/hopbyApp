@@ -48,14 +48,12 @@ public class SessionInfoActivity extends AppCompatActivity implements AlertDialo
 
     private SessionService mSessionService;
 
-    GridView grid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_session_info);
 
         NetworkController networkController = NetworkController.getInstance(this);
-
         mSessionService = new SessionService(networkController);
 
         SharedPreferences preferences = getSharedPreferences("MYPREFS", MODE_PRIVATE);
@@ -93,18 +91,15 @@ public class SessionInfoActivity extends AppCompatActivity implements AlertDialo
         mButtonJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: Breyta yfir í leave ef viðkomandi er þegar skráður
                 // TODO: Birta toast ef það tókst að join-a
                 System.out.println(mLoggedInUser + " is trying to join");
                 if(mIsInSession) {
                     mSessionService.joinSession(mId, mLoggedInUser, "leaveSession");
-                    finish();
-                    startActivity(getIntent());
                 } else {
                     mSessionService.joinSession(mId, mLoggedInUser, "joinSession");
-                    finish();
-                    startActivity(getIntent());
                 }
+                finish();
+                startActivity(getIntent());
             }
         });;
     }
@@ -136,8 +131,7 @@ public class SessionInfoActivity extends AppCompatActivity implements AlertDialo
 
         mIsInSession = mSessionService.isUserInSession(session, mLoggedInUser);
         if(mIsInSession) {
-            mIsHost = mSessionService.isUserHost(session, mLoggedInUser);
-            if(mIsHost){
+            if(session.getHost().equals(mLoggedInUser)) {
                 mLinearLayoutHost = (LinearLayout) findViewById(R.id.host);
                 mLinearLayoutHost.setVisibility(LinearLayout.VISIBLE);
                 mButtonDelete = (Button) findViewById(R.id.info_button_delete);
@@ -149,6 +143,7 @@ public class SessionInfoActivity extends AppCompatActivity implements AlertDialo
 
                     }
                 });
+                mButtonJoin.setEnabled(false);
             }
             mButtonJoin.setText("LEAVE");
         } else if(session.getSlotsAvailable() == 0) {

@@ -127,8 +127,8 @@ public class SessionService {
     }
 
 
-    public long addSession(String username, TextInputEditText title, CalendarView date, TextInputEditText time, TextInputEditText slots, String hobbyId, TextInputEditText description, TextInputEditText location) {
-        Session newSession = format( title, date, time, slots, hobbyId, description, location);
+    public long addSession(String username, TextInputEditText title, CalendarView date, TextInputEditText time, TextInputEditText slots, String hobbyId, TextInputEditText description, TextInputEditText location, String host) {
+        Session newSession = format( title, date, time, slots, hobbyId, description, location, host);
         mNetworkController.addSession(newSession, new NetworkCallback<Session>() {
             @Override
             public void onSuccess(Session result) {
@@ -148,7 +148,7 @@ public class SessionService {
     }
 
 
-    public Session format(TextInputEditText title, CalendarView date, TextInputEditText time, TextInputEditText slots, String hobby, TextInputEditText description, TextInputEditText location) {
+    public Session format(TextInputEditText title, CalendarView date, TextInputEditText time, TextInputEditText slots, String hobby, TextInputEditText description, TextInputEditText location, String host) {
         String titleString = title.getText().toString();
         String descriptionString = description.getText().toString();
         String locationString = location.getText().toString();
@@ -163,7 +163,7 @@ public class SessionService {
         else if(hobby.equals("Basketball")) hobbyInt = 2;
         else hobbyInt = 1;
 
-        Session session = new Session(0, titleString, locationString, dateString, timeString, slotsInt, hobbyInt, descriptionString);
+        Session session = new Session(0, titleString, locationString, dateString, timeString, slotsInt, hobbyInt, descriptionString, host);
         return session;
     }
     public List<String> getHobbies() {

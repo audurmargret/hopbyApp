@@ -10,7 +10,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -19,13 +18,12 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private TextInputEditText mTextInputEditTextUsername;
-    private TextInputEditText mTextInputEditTextPassword;
+    private TextInputEditText mUsername;
+    private TextInputEditText mPassword;
     private Button mButtonLogin;
     private Button mButtonSignup;
 
     private UserService mUserService;
-    private SharedPreferences mSharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,21 +35,21 @@ public class LoginActivity extends AppCompatActivity {
         NetworkController networkController = NetworkController.getInstance(this);
         mUserService = new UserService(networkController);
 
+        mUserService.setUserBank();
 
         mButtonLogin = (Button) findViewById(R.id.button_confirm);
         mButtonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mTextInputEditTextUsername = findViewById(R.id.input_user);
-                mTextInputEditTextPassword = findViewById(R.id.input_passw);
+                mUsername = findViewById(R.id.input_user);
+                mPassword = findViewById(R.id.input_passw);
 
-                User user = mUserService.login(String.valueOf(mTextInputEditTextUsername.getEditableText()), String.valueOf(mTextInputEditTextPassword.getEditableText()));
+                User user = mUserService.login(String.valueOf(mUsername.getEditableText()), String.valueOf(mPassword.getEditableText()));
 
                 if (user != null) {
                     SharedPreferences preferences = getSharedPreferences("MYPREFS", MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString("loggedInUser", user.getUserName() );
-                    editor.commit();
                     editor.putString("loggedInName", user.getName());
                     editor.commit();
 
