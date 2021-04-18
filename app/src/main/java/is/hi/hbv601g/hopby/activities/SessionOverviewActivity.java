@@ -50,9 +50,6 @@ public class SessionOverviewActivity extends AppCompatActivity implements Serial
     public void onResume() {
         super.onResume();
         start();
-
-        //Refresh your stuff here
-        Log.d("SessionOVerviewActivity", "ON RESUME !!!!!!!!");
     }
 
     public void start() {

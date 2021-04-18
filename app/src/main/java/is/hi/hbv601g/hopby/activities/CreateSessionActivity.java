@@ -7,6 +7,7 @@ import is.hi.hbv601g.hopby.networking.NetworkController;
 import is.hi.hbv601g.hopby.services.SessionService;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -44,6 +45,7 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
     private CalendarView mCalendarView;
 
     private SessionService mSessionService;
+    private String mLoggedInUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,9 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
 
         NetworkController networkController = NetworkController.getInstance(this);
         mSessionService = new SessionService(networkController);
+
+        SharedPreferences preferences = getSharedPreferences("MYPREFS", MODE_PRIVATE);
+        mLoggedInUser = preferences.getString("loggedInUser", "");
 
         final Spinner hobbySpinner = (Spinner) findViewById(R.id.hobby_spinner);
         hobbySpinner.setOnItemSelectedListener(this);
@@ -78,7 +83,6 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
                 mDescription = findViewById(R.id.input_description);
                 mLocation = findViewById(R.id.input_location);
 
-                Log.d("CreateSessionActivity", "mTitle: " + mTitle.length());
                 // Upon illegal input display error message
                 boolean isOk = true;
                 if(!isLegalLoc(mLocation.getText().toString())) {
@@ -103,7 +107,7 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
 
                 if(isOk) {
                     // TODO: breyta hér þannig það opni info en ekki overview
-                    long resultId = mSessionService.addSession(mTitle, mCalendarView, mTime, mSlots, mHobbyId, mDescription, mLocation);
+                    long resultId = mSessionService.addSession(mLoggedInUser, mTitle, mCalendarView, mTime, mSlots, mHobbyId, mDescription, mLocation);
 
                     Intent intent = new Intent(CreateSessionActivity.this, SessionOverviewActivity.class);
                     intent.putExtra("id", Long.toString(resultId));
@@ -142,7 +146,6 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         String item = adapterView.getItemAtPosition(i).toString();
-        Log.d("CreateSessionActivity", "ON CLICK ITEM DROP DROWN + item: " + item);
         mHobbyId = item;
     }
 

@@ -48,7 +48,6 @@ public class OverviewAdapter extends ArrayAdapter<Session> {
         overviewDate.setText(session.getDate());
         overviewTime.setText(session.getTime());
         overviewSlots.setText("Slots:  "+(((session.getSlots())-(session.getSlotsAvailable())))+ " / "+session.getSlots());
-        Log.d("OverviewAdapter", "SLOTSAVAILABLE: " + session.getSlotsAvailable() + " SLOTS: " + session.getSlots());
 
         String id = Long.toString(session.getId());
         Button infoButton = listitemView.findViewById(R.id.info_button);

@@ -60,7 +60,6 @@ public class SessionInfoActivity extends AppCompatActivity implements AlertDialo
 
         SharedPreferences preferences = getSharedPreferences("MYPREFS", MODE_PRIVATE);
         mLoggedInUser = preferences.getString("loggedInUser", "");
-        Log.d("SessionOverview", "LOGGED IN USER: " + mLoggedInUser + " ++++++++++");
 
         Intent getIntent = getIntent();
         mId = Long.parseLong(getIntent.getStringExtra("id"));
@@ -98,7 +97,6 @@ public class SessionInfoActivity extends AppCompatActivity implements AlertDialo
                 // TODO: Birta toast ef það tókst að join-a
                 System.out.println(mLoggedInUser + " is trying to join");
                 if(mIsInSession) {
-                    Log.d("SessionInfoActivity", "USER IS IN SESSION");
                     mSessionService.joinSession(mId, mLoggedInUser, "leaveSession");
                     finish();
                     startActivity(getIntent());
@@ -137,7 +135,6 @@ public class SessionInfoActivity extends AppCompatActivity implements AlertDialo
 
 
         mIsInSession = mSessionService.isUserInSession(session, mLoggedInUser);
-        Log.d("SessionInfoActivity", "mIsInSession " + mIsInSession);
         if(mIsInSession) {
             mIsHost = mSessionService.isUserHost(session, mLoggedInUser);
             if(mIsHost){

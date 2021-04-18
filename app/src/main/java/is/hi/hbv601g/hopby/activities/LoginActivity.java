@@ -45,7 +45,6 @@ public class LoginActivity extends AppCompatActivity {
                 mTextInputEditTextUsername = findViewById(R.id.input_user);
                 mTextInputEditTextPassword = findViewById(R.id.input_passw);
 
-                Log.d("LoginActivity", String.valueOf(mTextInputEditTextUsername.getEditableText()) + " " + String.valueOf(mTextInputEditTextPassword.getEditableText()));
                 User user = mUserService.login(String.valueOf(mTextInputEditTextUsername.getEditableText()), String.valueOf(mTextInputEditTextPassword.getEditableText()));
 
                 if (user != null) {
@@ -55,7 +54,6 @@ public class LoginActivity extends AppCompatActivity {
                     editor.commit();
                     editor.putString("loggedInName", user.getName());
                     editor.commit();
-                    Log.d("LoginActivity", "SHARED PREFRENECES");
 
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);

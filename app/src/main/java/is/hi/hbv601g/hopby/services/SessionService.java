@@ -1,5 +1,6 @@
 package is.hi.hbv601g.hopby.services;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -126,15 +127,15 @@ public class SessionService {
     }
 
 
-    public long addSession(TextInputEditText title, CalendarView date, TextInputEditText time, TextInputEditText slots, String hobbyId, TextInputEditText description, TextInputEditText location) {
+    public long addSession(String username, TextInputEditText title, CalendarView date, TextInputEditText time, TextInputEditText slots, String hobbyId, TextInputEditText description, TextInputEditText location) {
         Session newSession = format( title, date, time, slots, hobbyId, description, location);
-        Log.d("SessionService", newSession.getTime());
         mNetworkController.addSession(newSession, new NetworkCallback<Session>() {
             @Override
             public void onSuccess(Session result) {
                 //mSessionBank.add(result);
-                Log.d("SessionService", "Session added to bank " + result.getTitle());
+                Log.d("SessionService", "Session added to bank " + result.getId());
                 sessionId = result.getId();
+                joinSession(sessionId, username, "joinSession" );
             }
 
             @Override
@@ -163,7 +164,6 @@ public class SessionService {
         else hobbyInt = 1;
 
         Session session = new Session(0, titleString, locationString, dateString, timeString, slotsInt, hobbyInt, descriptionString);
-        Log.d("SessionService", "FORMAT");
         return session;
     }
     public List<String> getHobbies() {

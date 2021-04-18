@@ -83,7 +83,6 @@ public class NetworkController {
                 Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("NetworkController", response);
                 Gson gson = new Gson();
                 Session session = gson.fromJson(response, Session.class);
                 callback.onSuccess(session);
@@ -105,13 +104,10 @@ public class NetworkController {
                 .appendPath(username)
                 .build().toString();
 
-        Log.d("NetworkController", "URL MY SESSIONS : " + url);
-
         StringRequest request = new StringRequest(
                 Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("NetworkController", "getMYSessions" + response);
                 Gson gson = new Gson();
                 Type listType = new TypeToken<List<Session>>(){}.getType();
                 List<Session> sessionBank = gson.fromJson(response, listType);
@@ -158,10 +154,8 @@ public class NetworkController {
                 Request.Method.GET, BASE_URL + "users", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("NetworkController", response);
                 Gson gson = new Gson();
                 Type listType = new TypeToken<List<User>>(){}.getType();
-                Log.d("NetworkController", listType.toString());
                 List<User> userBank = gson.fromJson(response, listType);
                 callback.onSuccess(userBank);
             }
@@ -184,12 +178,10 @@ public class NetworkController {
                 .appendQueryParameter("name", user.getName())
                 .build().toString();
 
-        Log.d("NetworkController", url);
         StringRequest request = new StringRequest(
                 Request.Method.POST, url,  new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("NetworkController", response);
                 Gson gson = new Gson();
                 User user = gson.fromJson(response, User.class);
                 callback.onSuccess(user);
@@ -217,15 +209,12 @@ public class NetworkController {
                 .appendQueryParameter("location", session.getLocation())
                 .build().toString();
 
-        Log.d("NetworkController", url);
         StringRequest request = new StringRequest(
                 Request.Method.POST, url,  new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("NetworkController", response);
                 Gson gson = new Gson();
                 Session session = gson.fromJson(response, Session.class);
-                Log.d("Network Controller", session.getTitle() + " ID : " + session.getId());
                 callback.onSuccess(session);
             }
         }, new Response.ErrorListener() {

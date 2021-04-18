@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, MySessionsActivity.class);
                 startActivity(intent);
                 // TODO opna nytt nice
-                Log.d("MainActivity", "OPNA NYTT NICE");
             }
         });
 
