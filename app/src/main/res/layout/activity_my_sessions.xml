@@ -42,7 +42,7 @@
         <GridView
             android:id="@+id/my_overview_grid"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="420dp"
             android:horizontalSpacing="6dp"
             android:numColumns="1"
             android:verticalSpacing="6dp"
