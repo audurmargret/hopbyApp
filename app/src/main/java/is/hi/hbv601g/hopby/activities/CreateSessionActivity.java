@@ -59,6 +59,10 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
 
         List<String> hobbies = mSessionService.getHobbies();
 
+
+        mCalendarView = findViewById(R.id.input_date_calendarView);
+        mCalendarView.setMinDate(System.currentTimeMillis());
+
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, hobbies);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         hobbySpinner.setAdapter(dataAdapter);
