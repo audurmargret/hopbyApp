@@ -68,5 +68,6 @@
     <string name="view_sessions_all">All Sessions</string>
     <string name="view_sessions_my">My Sessions</string>
     <string name="my_session_header">xxx\'s Sessions</string>
+    <string name="info_host">Host:</string>
 
 </resources>

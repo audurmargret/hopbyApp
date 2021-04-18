@@ -35,6 +35,7 @@ public class SessionInfoActivity extends AppCompatActivity implements AlertDialo
     private TextView mHobbyId;
     private TextView mLocation;
     private TextView mSlots;
+    private TextView mHost;
     private TextView mUsers;
 
 
@@ -122,6 +123,9 @@ public class SessionInfoActivity extends AppCompatActivity implements AlertDialo
         mSlots = (TextView) findViewById(R.id.info_slots);
         //mSlots.setText(String.valueOf(session.getSlotsAvailable())+ " / " + String.valueOf(session.getSlots()));
         mSlots.setText(String.valueOf(((session.getSlots())-(session.getSlotsAvailable())))+ " / " + String.valueOf(session.getSlots()));
+
+        mHost = (TextView) findViewById(R.id.info_host);
+        mHost.setText(session.getHost());
 
         String userList = mSessionService.getUserList(session);
         mUsers = (TextView) findViewById(R.id.info_users);

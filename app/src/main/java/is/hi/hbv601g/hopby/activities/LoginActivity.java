@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -43,6 +44,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 mUsername = findViewById(R.id.input_user);
                 mPassword = findViewById(R.id.input_passw);
+
+                Log.d("LoginActivity", "Reyna að finna út ur null reference " + mUserService);
+                Log.d("LoginActivity", "Reyna að finna út ur null reference " + mUsername);
+                Log.d("LoginActivity", "Reyna að finna út ur null reference " + mPassword);
 
                 User user = mUserService.login(String.valueOf(mUsername.getEditableText()), String.valueOf(mPassword.getEditableText()));
 
