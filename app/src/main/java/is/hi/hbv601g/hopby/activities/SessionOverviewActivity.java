@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.Serializable;
@@ -28,7 +30,8 @@ public class SessionOverviewActivity extends AppCompatActivity implements Serial
     private Button mButtonMaps;
     private Button mButtonBack;
     private TextView mFilterText;
-    GridView grid;
+    private ImageButton mButtonHome;
+    private GridView grid;
 
     private SessionService mSessionService;
     private List<Session> mSessionBank;
@@ -83,6 +86,7 @@ public class SessionOverviewActivity extends AppCompatActivity implements Serial
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SessionOverviewActivity.this, CreateSessionActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
             }
         });
@@ -107,6 +111,16 @@ public class SessionOverviewActivity extends AppCompatActivity implements Serial
             }
         });
 
+        mButtonHome = (ImageButton) findViewById(R.id.home_button);
+        mButtonHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                Intent intent = new Intent(SessionOverviewActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
     }
 
     public void updateSessions(List<Session> mSessionBank, boolean filter) {

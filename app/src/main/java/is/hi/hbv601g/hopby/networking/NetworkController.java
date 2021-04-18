@@ -195,7 +195,7 @@ public class NetworkController {
         sQueue.add(request);
     }
 
-    public void addSession(Session session, NetworkCallback<Session> callback) {
+    public void addSession(Session session, String host, NetworkCallback<Session> callback) {
         String url = Uri.parse(BASE_URL)
                 .buildUpon()
                 .appendPath("hobby")
@@ -207,6 +207,7 @@ public class NetworkController {
                 .appendQueryParameter("hobbyId", String.valueOf(session.getHobbyId()))
                 .appendQueryParameter("description", session.getDescription())
                 .appendQueryParameter("location", session.getLocation())
+                .appendQueryParameter("username", host)
                 .build().toString();
 
         StringRequest request = new StringRequest(
