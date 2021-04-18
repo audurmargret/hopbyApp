@@ -103,7 +103,7 @@ public class SessionService {
 
             @Override
             public void onFailure(String errorString) {
-                Log.d("SessionService", "joinSession failure");
+                Log.d("SessionService", "joinSession failure" + errorString + " ID: " + id + " USERNAME: " + username + " PATH: " + path);
             }
         }, path, id, username);
     }
@@ -127,15 +127,14 @@ public class SessionService {
     }
 
 
-    public long addSession(String username, TextInputEditText title, CalendarView date, TextInputEditText time, TextInputEditText slots, String hobbyId, TextInputEditText description, TextInputEditText location, String host) {
+    public long addSession(TextInputEditText title, CalendarView date, TextInputEditText time, TextInputEditText slots, String hobbyId, TextInputEditText description, TextInputEditText location, String host) {
         Session newSession = format( title, date, time, slots, hobbyId, description, location, host);
-        mNetworkController.addSession(newSession, new NetworkCallback<Session>() {
+        mNetworkController.addSession(newSession, host, new NetworkCallback<Session>() {
             @Override
-            public void onSuccess(Session result) {
+             public void onSuccess(Session result) {
                 //mSessionBank.add(result);
                 Log.d("SessionService", "Session added to bank " + result.getId());
                 sessionId = result.getId();
-                joinSession(sessionId, username, "joinSession" );
             }
 
             @Override

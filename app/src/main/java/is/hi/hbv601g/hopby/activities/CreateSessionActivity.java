@@ -42,6 +42,7 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
     private TextInputEditText mDescription;
     private TextInputEditText mLocation;
     private String mHobbyId;
+    private long mSessionId;
     private CalendarView mCalendarView;
 
     private SessionService mSessionService;
@@ -63,7 +64,6 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
         hobbySpinner.setOnItemSelectedListener(this);
 
         List<String> hobbies = mSessionService.getHobbies();
-
 
         mCalendarView = findViewById(R.id.input_date_calendarView);
         mCalendarView.setMinDate(System.currentTimeMillis());
@@ -107,7 +107,8 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
 
                 if(isOk) {
                     // TODO: breyta hér þannig það opni info en ekki overview
-                    long resultId = mSessionService.addSession(mLoggedInUser, mTitle, mCalendarView, mTime, mSlots, mHobbyId, mDescription, mLocation, mLoggedInUser);
+                    Log.d("CreateSEssionActivity", "LOGGED IN USER: " + mLoggedInUser);
+                    long resultId = mSessionService.addSession(mTitle, mCalendarView, mTime, mSlots, mHobbyId, mDescription, mLocation, mLoggedInUser);
 
                     Intent intent = new Intent(CreateSessionActivity.this, SessionOverviewActivity.class);
                     intent.putExtra("id", Long.toString(resultId));
@@ -143,6 +144,9 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
         }
     }
 
+    public void setSessionId(long id) {
+        mSessionId = id;
+    }
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         String item = adapterView.getItemAtPosition(i).toString();
