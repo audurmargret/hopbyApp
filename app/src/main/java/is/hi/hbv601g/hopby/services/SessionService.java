@@ -388,7 +388,7 @@ public class SessionService {
         if(userlist != null) {
             int length = userlist.size();
             for(int i = 0; i<length; i++) {
-                userListString = userListString.concat(userlist.get(i).getUserName()).concat("\n");
+                userListString = userListString.concat(userlist.get(i).getName()).concat("\n");
             }
         }
         return userListString;

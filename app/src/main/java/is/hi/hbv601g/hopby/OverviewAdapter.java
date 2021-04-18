@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,7 +51,7 @@ public class OverviewAdapter extends ArrayAdapter<Session> {
         overviewSlots.setText("Slots:  "+(((session.getSlots())-(session.getSlotsAvailable())))+ " / "+session.getSlots());
 
         String id = Long.toString(session.getId());
-        Button infoButton = listitemView.findViewById(R.id.info_button);
+        ImageButton infoButton = (ImageButton)listitemView.findViewById(R.id.info_button);
         infoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -43,6 +43,7 @@ public class SessionInfoActivity extends AppCompatActivity implements AlertDialo
 
     private long mId;
     private String mLoggedInUser;
+    private String mLoggedInName;
     private boolean mIsInSession;
     private boolean mIsHost;
     private boolean mConfirmDelete;
