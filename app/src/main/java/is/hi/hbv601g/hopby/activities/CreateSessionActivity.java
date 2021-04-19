@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -38,8 +39,6 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
     private Button mButtonMaps;
 
     private TextInputEditText mTitle;
-    private TextInputEditText mDate;
-    private TextInputEditText mTime;
     private TextInputEditText mSlots;
     private TextInputEditText mDescription;
     private TextInputEditText mLocation;
@@ -47,6 +46,7 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
     private String mHobbyId;
     private long mSessionId;
     private CalendarView mCalendarView;
+    private TimePicker mTimePicker;
 
     private SessionService mSessionService;
     private String mLoggedInUser;
@@ -72,6 +72,9 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
         mCalendarView = findViewById(R.id.input_date_calendarView);
         mCalendarView.setMinDate(System.currentTimeMillis());
 
+        mTimePicker = findViewById(R.id.simpleTimePicker);
+        mTimePicker.setIs24HourView(true);
+
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, hobbies);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         hobbySpinner.setAdapter(dataAdapter);
@@ -82,22 +85,27 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
             public void onClick(View view) {
                 mTitle = findViewById(R.id.input_title);
                 mCalendarView = findViewById(R.id.input_date_calendarView);
-                mTime = findViewById(R.id.input_time);
                 mSlots = findViewById(R.id.input_slots);
                 mDescription = findViewById(R.id.input_description);
                 mLocation = findViewById(R.id.input_location);
                 mHobbySpinner = findViewById(R.id.hobby_spinner);
+
+                String hourString = String.valueOf(mTimePicker.getHour());
+                String minString = String.valueOf(mTimePicker.getMinute());
+                String timeString = hourString.concat(minString);
+                Log.d("CreateSessionActivity", timeString);
+
 
                 // Upon illegal input display error message
                 boolean isOk = true;
                 if(!isLegalLoc(mLocation.getText().toString())) {
                     mLocation.setError("Location not found");
                     isOk = false;
-                }
+                }/*
                 if(mTime.length() != 4){
                     mTime.setError("Time must be in the format 'hhmm'");
                     isOk = false;
-                }
+                }*/
                 if(mTitle.length() == 0){
                     mTitle.setError("Required field");
                     isOk = false;
@@ -118,7 +126,7 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
                 if(isOk) {
                     // TODO: breyta hér þannig það opni info en ekki overview
                     Log.d("CreateSEssionActivity", "LOGGED IN USER: " + mLoggedInUser);
-                    long resultId = mSessionService.addSession(mTitle, mCalendarView, mTime, mSlots, mHobbyId, mDescription, mLocation, mLoggedInUser);
+                    long resultId = mSessionService.addSession(mTitle, mCalendarView, timeString, mSlots, mHobbyId, mDescription, mLocation, mLoggedInUser);
 
                     Intent intent = new Intent(CreateSessionActivity.this, SessionOverviewActivity.class);
                     intent.putExtra("id", Long.toString(resultId));

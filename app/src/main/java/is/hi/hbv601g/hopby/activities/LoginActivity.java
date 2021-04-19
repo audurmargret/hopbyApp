@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
                 mPassword = findViewById(R.id.input_passw);
 
                 Log.d("LoginActivity", "Reyna að finna út ur null reference " + mUserService);
-                Log.d("LoginActivity", "Reyna að finna út ur null reference " + mUsername);
+                Log.d("LoginActivity", "Reyna að finna út ur null reference " + mUsername); // ÞESSI KOM SEM NULL
                 Log.d("LoginActivity", "Reyna að finna út ur null reference " + mPassword);
 
                 User user = mUserService.login(String.valueOf(mUsername.getEditableText()), String.valueOf(mPassword.getEditableText()));
