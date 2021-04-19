@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,11 +45,16 @@ public class OverviewAdapter extends ArrayAdapter<Session> {
         TextView overviewDate = listitemView.findViewById(R.id.overview_date);
         TextView overviewTime = listitemView.findViewById(R.id.overview_time);
         TextView overviewSlots = listitemView.findViewById(R.id.overview_slots);
+        ProgressBar progressBar = listitemView.findViewById(R.id.progressBar);
+
         overviewTitle.setText(session.getTitle());
         overviewLocation.setText(session.getLocation());
         overviewDate.setText(session.getDate());
         overviewTime.setText(session.getTime());
+        int slots = session.getSlots() - session.getSlotsAvailable();
         overviewSlots.setText("Slots:  "+(((session.getSlots())-(session.getSlotsAvailable())))+ " / "+session.getSlots());
+        progressBar.setMax(session.getSlots());
+        progressBar.setProgress(slots);
 
         String id = Long.toString(session.getId());
         ImageButton infoButton = (ImageButton)listitemView.findViewById(R.id.info_button);

@@ -59,6 +59,14 @@
                     android:id="@+id/overview_slots"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"/>
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    />
             </LinearLayout>
 
             <ImageButton

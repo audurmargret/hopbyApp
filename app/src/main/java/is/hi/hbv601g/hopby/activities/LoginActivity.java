@@ -31,8 +31,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
-
         NetworkController networkController = NetworkController.getInstance(this);
         mUserService = new UserService(networkController);
 

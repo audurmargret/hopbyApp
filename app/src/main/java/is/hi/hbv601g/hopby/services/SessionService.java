@@ -320,9 +320,6 @@ public class SessionService {
             checkHobby = false;
         }
 
-        System.out.println("CHECK TIME " + checkTime + " Count: " + mTimeCount);
-        System.out.println("CHECK DAY " + checkDay + " Count: " + mDayCount);
-        System.out.println("CHECK HOBBY " + checkHobby + " Count: " + mHobbyCount);
         boolean fitsDay = false;
         boolean fitsTime = false;
         boolean fitsHobby = false;
@@ -370,7 +367,6 @@ public class SessionService {
             }
 
             if(fitsDay && fitsTime && fitsHobby) {
-                System.out.println("YAY PASSAR");
                 sessionArrayList.add(sessionBank.get(i));
             }
             fitsDay = false;

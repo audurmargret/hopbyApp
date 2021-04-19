@@ -75,7 +75,6 @@ public class SessionInfoActivity extends AppCompatActivity implements AlertDialo
             @Override
             public void onClick(View view) {
                 // TODO: Opna MAPS VIEW
-                System.out.println("MAPS TAKKI");
                 Intent intent = new Intent(SessionInfoActivity.this, MapsActivity.class);
                 intent.putExtra("flag","info");
                 intent.putExtra("id", mId);
@@ -97,7 +96,6 @@ public class SessionInfoActivity extends AppCompatActivity implements AlertDialo
         mButtonJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println(mLoggedInUser + " is trying to join");
                 CharSequence text = "";
                 if(mIsInSession) {
                     mSessionService.joinSession(mId, mLoggedInUser, "leaveSession");

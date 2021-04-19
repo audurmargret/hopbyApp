@@ -99,16 +99,11 @@ public class Session {
 
     public void setUsers(User user) {
         mUsers.add(user);
-        System.out.println("Bæta við user í session lista");
-        System.out.println("listinn: " + mUsers);
         mSlotsAvailable--;
     }
 
     public void removeUser(User user) {
         mUsers.remove(user);
-        System.out.println("Taka " + user.getUserName() + " úr lista");
-        System.out.println("listinn: " + mUsers);
-        System.out.println("user: " + user);
         mSlotsAvailable++;
     }
 
