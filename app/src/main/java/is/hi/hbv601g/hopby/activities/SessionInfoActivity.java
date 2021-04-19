@@ -21,6 +21,7 @@ import is.hi.hbv601g.hopby.R;
 import is.hi.hbv601g.hopby.entities.Session;
 import is.hi.hbv601g.hopby.networking.NetworkController;
 import is.hi.hbv601g.hopby.services.SessionService;
+import is.hi.hbv601g.hopby.services.UserService;
 
 public class SessionInfoActivity extends AppCompatActivity implements AlertDialogDelete.AlertDialogDeleteListener {
     private Button mButtonMaps;
@@ -49,6 +50,7 @@ public class SessionInfoActivity extends AppCompatActivity implements AlertDialo
     private boolean mConfirmDelete;
 
     private SessionService mSessionService;
+    private UserService mUserService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,8 @@ public class SessionInfoActivity extends AppCompatActivity implements AlertDialo
 
         NetworkController networkController = NetworkController.getInstance(this);
         mSessionService = new SessionService(networkController);
+        mUserService = new UserService(networkController);
+        mUserService.setUserBank();
 
         SharedPreferences preferences = getSharedPreferences("MYPREFS", MODE_PRIVATE);
         mLoggedInUser = preferences.getString("loggedInUser", "");
@@ -93,15 +97,22 @@ public class SessionInfoActivity extends AppCompatActivity implements AlertDialo
         mButtonJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: Birta toast ef það tókst að join-a
                 System.out.println(mLoggedInUser + " is trying to join");
+                CharSequence text = "";
                 if(mIsInSession) {
                     mSessionService.joinSession(mId, mLoggedInUser, "leaveSession");
+                    text = "Sad to watch you leave!";
                 } else {
                     mSessionService.joinSession(mId, mLoggedInUser, "joinSession");
+                    text = "Yay, can't wait to see you!";
                 }
+                Context context = getApplicationContext();
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
                 finish();
                 startActivity(getIntent());
+
             }
         });;
     }
@@ -125,8 +136,12 @@ public class SessionInfoActivity extends AppCompatActivity implements AlertDialo
         //mSlots.setText(String.valueOf(session.getSlotsAvailable())+ " / " + String.valueOf(session.getSlots()));
         mSlots.setText(String.valueOf(((session.getSlots())-(session.getSlotsAvailable())))+ " / " + String.valueOf(session.getSlots()));
 
+
+
         mHost = (TextView) findViewById(R.id.info_host);
-        mHost.setText(session.getHost());
+        String hostUser = session.getHost();
+
+        mHost.setText(mUserService.getNameForUser(hostUser));
 
         String userList = mSessionService.getUserList(session);
         mUsers = (TextView) findViewById(R.id.info_users);
@@ -160,7 +175,7 @@ public class SessionInfoActivity extends AppCompatActivity implements AlertDialo
     public void onYesClicked() {
         mConfirmDelete = true;
         Context context = getApplicationContext();
-        CharSequence text = "YES DELETE";
+        CharSequence text = "Session deleted";
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();

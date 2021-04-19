@@ -124,7 +124,6 @@ public class SessionOverviewActivity extends AppCompatActivity implements Serial
     }
 
     public void updateSessions(List<Session> mSessionBank, boolean filter) {
-
         if(filter) {
             try{
                 sessionArrayList = mSessionService.filter(mSessionBank, mHobbies, mTimes, mDays);

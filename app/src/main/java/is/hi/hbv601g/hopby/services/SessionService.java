@@ -165,6 +165,7 @@ public class SessionService {
         Session session = new Session(0, titleString, locationString, dateString, time, slotsInt, hobbyInt, descriptionString, host);
         return session;
     }
+
     public List<String> getHobbies() {
         List<String> hobbies = new ArrayList<String>();
         hobbies.add("Football");

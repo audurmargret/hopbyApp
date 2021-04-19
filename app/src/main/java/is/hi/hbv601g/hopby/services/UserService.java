@@ -33,6 +33,18 @@ public class UserService {
             }
         });
     }
+    public String getNameForUser(String username){
+        if(mUserBank== null ) {
+            setUserBank();
+        }
+        int len = mUserBank.size();
+        for(int i=0; i<len; i++) {
+            if(mUserBank.get(i).getUserName().equals(username)) {
+                return mUserBank.get(i).getName();
+            }
+        }
+        return null;
+    }
 
     public void signup(String name, String username, String password) {
         User newUser = new User(name, username, password);
