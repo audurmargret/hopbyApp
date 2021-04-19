@@ -8,6 +8,7 @@ import is.hi.hbv601g.hopby.services.SessionService;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -41,6 +43,7 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
     private TextInputEditText mSlots;
     private TextInputEditText mDescription;
     private TextInputEditText mLocation;
+    private Spinner mHobbySpinner;
     private String mHobbyId;
     private long mSessionId;
     private CalendarView mCalendarView;
@@ -64,6 +67,7 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
         hobbySpinner.setOnItemSelectedListener(this);
 
         List<String> hobbies = mSessionService.getHobbies();
+        hobbies.add(0,"Hobby:");
 
         mCalendarView = findViewById(R.id.input_date_calendarView);
         mCalendarView.setMinDate(System.currentTimeMillis());
@@ -82,6 +86,7 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
                 mSlots = findViewById(R.id.input_slots);
                 mDescription = findViewById(R.id.input_description);
                 mLocation = findViewById(R.id.input_location);
+                mHobbySpinner = findViewById(R.id.hobby_spinner);
 
                 // Upon illegal input display error message
                 boolean isOk = true;
@@ -97,7 +102,12 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
                     mTitle.setError("Required field");
                     isOk = false;
                 }
-                if(mSlots.length() == 0){
+                if(mHobbyId.equals("") || mHobbyId.equals("Hobby:")) {
+                    TextView errorText = (TextView) mHobbySpinner.getSelectedView();
+                    errorText.setError("Required field");
+                    Log.d("CreateSessionActivity", "ERRROR Á HOBBYYYY");
+                }
+                if(mSlots.length() == 0) {
                     mSlots.setError("Required field");
                     isOk = false;
                 } else if(Integer.parseInt(mSlots.getText().toString()) < 2) {
@@ -150,12 +160,13 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         String item = adapterView.getItemAtPosition(i).toString();
+        Log.d("CreateSessionActivity", "SESSION" + item);
         mHobbyId = item;
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
-        mHobbyId = "Football";
+        mHobbyId = "";
 
     }
 }

@@ -158,9 +158,10 @@ public class SessionService {
         String dateString = simpleDateFormat.format(date.getDate());
 
         int hobbyInt;
-        if(hobby.equals("Hike")) hobbyInt = 3;
+        if(hobby.equals("Football")) hobbyInt = 1;
         else if(hobby.equals("Basketball")) hobbyInt = 2;
-        else hobbyInt = 1;
+        else hobbyInt = 3;
+
 
         Session session = new Session(0, titleString, locationString, dateString, timeString, slotsInt, hobbyInt, descriptionString, host);
         return session;
