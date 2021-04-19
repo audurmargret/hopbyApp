@@ -33,6 +33,7 @@ public class SignupActivity extends AppCompatActivity {
 
         NetworkController networkController = NetworkController.getInstance(this);
         mUserService = new UserService(networkController);
+        mUserService.setUserBank();
 
         mButtonSignup = (Button) findViewById(R.id.button_confirm);
         mButtonSignup.setOnClickListener(new View.OnClickListener() {

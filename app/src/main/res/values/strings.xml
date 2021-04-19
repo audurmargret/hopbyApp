@@ -64,7 +64,7 @@
     <string name="host_delete_text">You are the host, do you want to delete this session?</string>
     <string name="button_delete">DELETE</string>
 
-    <string name="main_hello_name">Hello name</string>
+    <string name="main_hello_name">Hello name ð á þ ö </string>
     <string name="view_sessions_all">All Sessions</string>
     <string name="view_sessions_my">My Sessions</string>
     <string name="my_session_header">xxx\'s Sessions</string>
