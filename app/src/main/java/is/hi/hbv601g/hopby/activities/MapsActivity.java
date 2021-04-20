@@ -54,6 +54,7 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
     private HashMap<String, Double> markerLocation;
     private Double COORDINATE_OFFSET = 0.0003;
     private Session mSession;
+    private SessionOverviewActivity mOverviewActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,10 +126,13 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
         for(int i = 0; i < length; i++) {
             String location = mSessions.get(i).getLocation();
             int sport = mSessions.get(i).getHobbyId();
+            Long id = mSessions.get(i).getId();
+            Log.d("herna", "id = "+id);
+
             LatLng coordinates = getLocationFromAddress(getApplicationContext(), location);
 
             if (mSessions.size() == 1) {
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinates,13f));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinates,15f));
             }
 
             // Check if location is already use - if so apply offset
@@ -136,7 +140,6 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
             if(mapAlreadyHasMarkerForLocation(location)){
                 markerLocation.put(location, markerLocation.get(location) + COORDINATE_OFFSET );
                 coordinates = new LatLng(coordinates.latitude+markerLocation.get(location),coordinates.longitude+markerLocation.get(location));
-                Log.d("herna", "kemst hingað "+(coordinates.latitude+markerLocation.get(location)));
             }
             else{
                 markerLocation.put(location, 0.0);
@@ -145,13 +148,13 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
             // Draw markers on map with correct icon depending on activity
             switch (sport) {
                 case 1:
-                    mMap.addMarker((new MarkerOptions().position(coordinates).alpha(0.6f).title("Football - " + location).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_soccer_24)))).setTag(0);
+                    mMap.addMarker((new MarkerOptions().position(coordinates).alpha(0.6f).title("Football - " + location).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_soccer_24)))).setTag(id);
                     break;
                 case 2:
-                    mMap.addMarker((new MarkerOptions().position(coordinates).alpha(0.6f).title("Basketball - " + location).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_basketball_24)))).setTag(0);
+                    mMap.addMarker((new MarkerOptions().position(coordinates).alpha(0.6f).title("Basketball - " + location).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_basketball_24)))).setTag(id);
                     break;
                 default:
-                    mMap.addMarker((new MarkerOptions().position(coordinates).alpha(0.6f).title("Hike - " + location).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_directions_walk_24)))).setTag(0);
+                    mMap.addMarker((new MarkerOptions().position(coordinates).alpha(0.6f).title("Hike - " + location).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_directions_walk_24)))).setTag(id);
             }
         }
     }
@@ -217,28 +220,32 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
     // TODO open session info when double clicked
     @Override
     public boolean onMarkerClick(final Marker marker) {
+
+        Long id = (Long) marker.getTag();
+
         if (prevAddress == null){
             marker.setAlpha(1.0f);
             prevAddress = marker.getTitle();
             mapPrevMarker = marker;
+            Toast.makeText(this,
+                    " Click marker again for session info",
+                    Toast.LENGTH_SHORT).show();
         }
         else if (!marker.getTitle().equals(prevAddress)){
             marker.setAlpha(1.0f);
             mapPrevMarker.setAlpha(0.6f);
             prevAddress = marker.getTitle();
             mapPrevMarker = marker;
-        }
-
-        Integer clickCount = (Integer) marker.getTag();
-
-        // Check if a click count was set, then display the click count.
-        if (clickCount != null) {
-            clickCount = clickCount + 1;
-            marker.setTag(clickCount);
             Toast.makeText(this,
-                    marker.getTitle() +
-                            " has been clicked " + clickCount + " times.",
+                    "Click marker again for session info",
                     Toast.LENGTH_SHORT).show();
+        }
+        else {
+            prevAddress = null;
+            String sId = Long.toString(id);
+            Intent intent = new Intent(this, SessionInfoActivity.class);
+            intent.putExtra("id", sId);
+            this.startActivity(intent);
         }
         return false;
     }
