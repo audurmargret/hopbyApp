@@ -71,5 +71,6 @@
     <string name="info_host">Host:</string>
     <string name="info_date">Date:</string>
     <string name="info_time">Time:</string>
+    <string name="no_sessions_found">No sessions found</string>
 
 </resources>

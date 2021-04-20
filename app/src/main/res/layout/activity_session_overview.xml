@@ -44,6 +44,16 @@
         </LinearLayout>
 
 
+        <TextView
+            android:id="@+id/no_sessions_found"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/no_sessions_found"
+            android:textSize="25dp"
+            android:gravity="center"
+            android:paddingTop="100dp"
+            android:visibility="gone"/>
+
         <GridView
             android:id="@+id/overview_grid"
             android:layout_width="match_parent"

@@ -30,6 +30,7 @@ public class SessionOverviewActivity extends AppCompatActivity implements Serial
     private Button mButtonMaps;
     private Button mButtonBack;
     private TextView mFilterText;
+    private TextView mNoSessions;
     private ImageButton mButtonHome;
     private GridView grid;
 
@@ -145,6 +146,9 @@ public class SessionOverviewActivity extends AppCompatActivity implements Serial
         if(sessionArrayList.size() < 1) {
             // TODO:  birta einhver skilaboð um að það hafi ekki uppfylt þessi skilyrði
             Log.d("SessionOverviewActivity", "-------ARRAY TÓMT --------");
+            mNoSessions = findViewById(R.id.no_sessions_found);
+            mNoSessions.setVisibility(View.VISIBLE);
+            grid.setVisibility(View.GONE);
         }
         OverviewAdapter adapter = new OverviewAdapter(this, sessionArrayList);
         grid.setAdapter(adapter);
