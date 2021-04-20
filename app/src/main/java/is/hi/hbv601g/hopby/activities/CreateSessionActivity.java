@@ -1,5 +1,6 @@
 package is.hi.hbv601g.hopby.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import is.hi.hbv601g.hopby.R;
 import is.hi.hbv601g.hopby.entities.Session;
@@ -19,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -46,6 +48,7 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
     private String mHobbyId;
     private long mSessionId;
     private CalendarView mCalendarView;
+    private String date;
     private TimePicker mTimePicker;
 
     private SessionService mSessionService;
@@ -71,6 +74,19 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
 
         mCalendarView = findViewById(R.id.input_date_calendarView);
         mCalendarView.setMinDate(System.currentTimeMillis());
+
+        mCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView calendarView, int i, int i1, int i2) {
+                String month = String.valueOf(i1+1);
+                if((i1+1)<10) month = "0".concat(month);
+                String day = String.valueOf(i2);
+                if(i2<10) day = "0".concat(day);
+                date = String.valueOf(i).concat("-").concat(month).concat("-").concat(day);
+                Log.d("CreateSessionActivity", date);
+            }
+        });
+
 
         mTimePicker = findViewById(R.id.simpleTimePicker);
         mTimePicker.setIs24HourView(true);
@@ -123,10 +139,11 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
                     isOk = false;
                 }
 
+                Log.d("CreateSEssion", "DATE " + mCalendarView.getDate());
                 if(isOk) {
                     // TODO: breyta hér þannig það opni info en ekki overview
                     Log.d("CreateSEssionActivity", "LOGGED IN USER: " + mLoggedInUser);
-                    long resultId = mSessionService.addSession(mTitle, mCalendarView, timeString, mSlots, mHobbyId, mDescription, mLocation, mLoggedInUser);
+                    long resultId = mSessionService.addSession(mTitle, date, timeString, mSlots, mHobbyId, mDescription, mLocation, mLoggedInUser);
 
                     Intent intent = new Intent(CreateSessionActivity.this, SessionOverviewActivity.class);
                     intent.putExtra("id", Long.toString(resultId));

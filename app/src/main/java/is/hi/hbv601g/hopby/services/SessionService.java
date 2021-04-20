@@ -50,7 +50,6 @@ public class SessionService {
             @Override
             public void onSuccess(List<Session> result) {
                 mSessionBank = result;
-                Log.d("SessionService", "First session in bank " + mSessionBank.get(0).getTitle() + ", slots: " + mSessionBank.get(0).getSlots());
                 mSessionOverviewActivity.updateSessions(mSessionBank, filter);
             }
 
@@ -127,7 +126,7 @@ public class SessionService {
     }
 
 
-    public long addSession(TextInputEditText title, CalendarView date, String time, TextInputEditText slots, String hobbyId, TextInputEditText description, TextInputEditText location, String host) {
+    public long addSession(TextInputEditText title, String date, String time, TextInputEditText slots, String hobbyId, TextInputEditText description, TextInputEditText location, String host) {
         Session newSession = format( title, date, time, slots, hobbyId, description, location, host);
         mNetworkController.addSession(newSession, host, new NetworkCallback<Session>() {
             @Override
@@ -147,14 +146,11 @@ public class SessionService {
     }
 
 
-    public Session format(TextInputEditText title, CalendarView date, String time, TextInputEditText slots, String hobby, TextInputEditText description, TextInputEditText location, String host) {
+    public Session format(TextInputEditText title, String date, String time, TextInputEditText slots, String hobby, TextInputEditText description, TextInputEditText location, String host) {
         String titleString = title.getText().toString();
         String descriptionString = description.getText().toString();
         String locationString = location.getText().toString();
         int slotsInt = Integer.parseInt(slots.getText().toString());
-
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String dateString = simpleDateFormat.format(date.getDate());
 
         int hobbyInt;
         if(hobby.equals("Football")) hobbyInt = 1;
@@ -162,7 +158,7 @@ public class SessionService {
         else hobbyInt = 3;
 
 
-        Session session = new Session(0, titleString, locationString, dateString, time, slotsInt, hobbyInt, descriptionString, host);
+        Session session = new Session(0, titleString, locationString, date, time, slotsInt, hobbyInt, descriptionString, host);
         return session;
     }
 

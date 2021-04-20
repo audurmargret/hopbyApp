@@ -69,5 +69,7 @@
     <string name="view_sessions_my">My Sessions</string>
     <string name="my_session_header">xxx\'s Sessions</string>
     <string name="info_host">Host:</string>
+    <string name="info_date">Date:</string>
+    <string name="info_time">Time:</string>
 
 </resources>

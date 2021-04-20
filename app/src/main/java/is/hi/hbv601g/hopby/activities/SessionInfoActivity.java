@@ -33,6 +33,8 @@ public class SessionInfoActivity extends AppCompatActivity implements AlertDialo
 
     private TextView mTitle;
     private TextView mDescription;
+    private TextView mDate;
+    private TextView mTime;
     private TextView mHobbyId;
     private TextView mLocation;
     private TextView mSlots;
@@ -118,6 +120,12 @@ public class SessionInfoActivity extends AppCompatActivity implements AlertDialo
 
         mTitle = (TextView) findViewById(R.id.info_title);
         mTitle.setText(session.getTitle());
+
+        mDate = (TextView) findViewById(R.id.info_date);
+        mDate.setText(session.getDate());
+
+        mTime = (TextView) findViewById(R.id.info_time);
+        mTime.setText(session.getTime().substring(0,5));
 
         mDescription = (TextView) findViewById(R.id.info_description);
         mDescription.setText(session.getDescription());

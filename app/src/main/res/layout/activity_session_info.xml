@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_margin="10dp">
+        android:layout_margin="7dp">
 
         <TextView
             android:id="@+id/title"
@@ -29,12 +29,56 @@
             android:layout_height="wrap_content"
             android:textAlignment="textEnd" />
     </LinearLayout>
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_margin="10dp">
+        android:layout_margin="7dp">
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:text="@string/info_date"/>
+
+        <TextView
+            android:id="@+id/info_date"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="textEnd" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_margin="7dp">
+
+        <TextView
+            android:id="@+id/time_info"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:text="@string/info_time"/>
+
+        <TextView
+            android:id="@+id/info_time"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="textEnd" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_margin="7dp">
 
         <TextView
             android:id="@+id/description"
@@ -54,7 +98,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_margin="10dp">
+        android:layout_margin="7dp">
 
         <TextView
             android:id="@+id/hobbyId"
@@ -75,7 +119,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_margin="10dp">
+        android:layout_margin="7dp">
 
         <TextView
             android:id="@+id/location"
@@ -96,7 +140,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_margin="10dp">
+        android:layout_margin="7dp">
 
         <TextView
             android:id="@+id/slots"
@@ -117,7 +161,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_margin="10dp">
+        android:layout_margin="7dp">
 
         <TextView
             android:id="@+id/host_in_list"
@@ -138,7 +182,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_margin="10dp">
+        android:layout_margin="7dp">
 
         <TextView
             android:id="@+id/users"

@@ -59,7 +59,6 @@ public class NetworkController {
                 Gson gson = new Gson();
                 Type listType = new TypeToken<List<Session>>(){}.getType();
                 List<Session> sessionBank = gson.fromJson(response, listType);
-                Log.d("NetworkController", "sessionBank, 0 "+ sessionBank.get(0).getTitle() + ", SLOTS " + sessionBank.get(0).getSlots());
                 callback.onSuccess(sessionBank);
             }
         }, new Response.ErrorListener() {
