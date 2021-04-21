@@ -127,7 +127,6 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
             String location = mSessions.get(i).getLocation();
             int sport = mSessions.get(i).getHobbyId();
             Long id = mSessions.get(i).getId();
-            Log.d("herna", "id = "+id);
 
             LatLng coordinates = getLocationFromAddress(getApplicationContext(), location);
 
@@ -224,6 +223,7 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
         Long id = (Long) marker.getTag();
 
         if (prevAddress == null){
+            Log.d("herna", "null id = "+id);
             marker.setAlpha(1.0f);
             prevAddress = marker.getTitle();
             mapPrevMarker = marker;
@@ -232,6 +232,7 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
                     Toast.LENGTH_SHORT).show();
         }
         else if (!marker.getTitle().equals(prevAddress)){
+            Log.d("herna", "!marker id = "+id);
             marker.setAlpha(1.0f);
             mapPrevMarker.setAlpha(0.6f);
             prevAddress = marker.getTitle();
@@ -241,7 +242,6 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
                     Toast.LENGTH_SHORT).show();
         }
         else {
-            prevAddress = null;
             String sId = Long.toString(id);
             Intent intent = new Intent(this, SessionInfoActivity.class);
             intent.putExtra("id", sId);
