@@ -35,12 +35,13 @@ public class UserService {
     }
     public String getNameForUser(String username){
         if(mUserBank== null ) {
-            setUserBank();
+            return username;
         }
-        int len = mUserBank.size();
-        for(int i=0; i<len; i++) {
-            if(mUserBank.get(i).getUserName().equals(username)) {
-                return mUserBank.get(i).getName();
+        else {
+            for(int i=0; i<mUserBank.size(); i++) {
+                if(mUserBank.get(i).getUserName().equals(username)) {
+                    return mUserBank.get(i).getName();
+                }
             }
         }
         return null;

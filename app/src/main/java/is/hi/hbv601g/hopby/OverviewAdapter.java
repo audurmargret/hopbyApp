@@ -20,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import is.hi.hbv601g.hopby.activities.SessionInfoActivity;
 import is.hi.hbv601g.hopby.entities.Session;
+import is.hi.hbv601g.hopby.services.SessionService;
 
 public class OverviewAdapter extends ArrayAdapter<Session> {
     Context mContext;
@@ -50,7 +51,7 @@ public class OverviewAdapter extends ArrayAdapter<Session> {
         overviewTitle.setText(session.getTitle());
         overviewLocation.setText(session.getLocation());
         overviewDate.setText(session.getDate());
-        overviewTime.setText(session.getTime());
+        overviewTime.setText(session.getTime().substring(0,5));
         int slots = session.getSlots() - session.getSlotsAvailable();
         overviewSlots.setText("Slots:  "+(((session.getSlots())-(session.getSlotsAvailable())))+ " / "+session.getSlots());
         progressBar.setMax(session.getSlots());

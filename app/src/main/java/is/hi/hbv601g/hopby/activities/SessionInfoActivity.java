@@ -121,8 +121,11 @@ public class SessionInfoActivity extends AppCompatActivity implements AlertDialo
         mTitle = (TextView) findViewById(R.id.info_title);
         mTitle.setText(session.getTitle());
 
+
+        String date = mSessionService.formatDateStringforView(session.getDate());
         mDate = (TextView) findViewById(R.id.info_date);
-        mDate.setText(session.getDate());
+        mDate.setText(date);
+
 
         mTime = (TextView) findViewById(R.id.info_time);
         mTime.setText(session.getTime().substring(0,5));

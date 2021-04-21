@@ -145,6 +145,66 @@ public class SessionService {
         return sessionId;
     }
 
+    public String formatDateStringforView(String date) {
+        String year = date.substring(0,4);
+        String month = date.substring(5,7);
+        String day = date.substring(8,10);
+
+
+        Log.d("SessionService", "DATE::: " + date.toString());
+
+
+       String dateString = "";
+        if(Integer.parseInt(day)<10) {
+            dateString = day.substring(1,2).concat(". ");
+        } else {
+            dateString = day.concat(". ");
+        }
+
+        switch (month) {
+            case "01":
+                dateString = dateString.concat("Jan ");
+                break;
+            case "02":
+                dateString = dateString.concat("Feb ");
+                break;
+            case "03":
+                dateString = dateString.concat("Mar ");
+                break;
+            case "04":
+                dateString = dateString.concat("Apr ");
+                break;
+            case "05":
+                dateString = dateString.concat("May ");
+                break;
+            case "06":
+                dateString = dateString.concat("Jun ");
+                break;
+            case "07":
+                dateString = dateString.concat("Jul ");
+                break;
+            case "08":
+                dateString = dateString.concat("Aug ");
+                break;
+            case "09":
+                dateString = dateString.concat("Sep ");
+                break;
+            case "10":
+                dateString = dateString.concat("Okt ");
+                break;
+            case "11":
+                dateString = dateString.concat("Nov ");
+                break;
+            case "12":
+                dateString = dateString.concat("Dec ");
+                break;
+        }
+
+        dateString = dateString.concat(year);
+
+        return dateString;
+    }
+
 
     public Session format(TextInputEditText title, String date, String time, TextInputEditText slots, String hobby, TextInputEditText description, TextInputEditText location, String host) {
         String titleString = title.getText().toString();

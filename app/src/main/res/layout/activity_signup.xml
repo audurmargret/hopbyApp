@@ -30,7 +30,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
-                android:hint="@string/name" />
+                android:hint="@string/name"
+                android:background="@android:color/transparent"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -42,7 +43,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="59dp"
                 android:layout_margin="7dp"
-                android:hint="@string/username" />
+                android:hint="@string/username"
+                android:background="@android:color/transparent"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -55,7 +57,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="7dp"
                 android:hint="@string/password"
-                android:inputType="textPassword"/>
+                android:inputType="textPassword"
+                android:background="@android:color/transparent"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
