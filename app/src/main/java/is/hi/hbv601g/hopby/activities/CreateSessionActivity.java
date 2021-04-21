@@ -117,11 +117,7 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
                 if(!isLegalLoc(mLocation.getText().toString())) {
                     mLocation.setError("Location not found");
                     isOk = false;
-                }/*
-                if(mTime.length() != 4){
-                    mTime.setError("Time must be in the format 'hhmm'");
-                    isOk = false;
-                }*/
+                }
                 if(mTitle.length() == 0){
                     mTitle.setError("Required field");
                     isOk = false;
@@ -130,6 +126,7 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
                     TextView errorText = (TextView) mHobbySpinner.getSelectedView();
                     errorText.setError("Required field");
                     Log.d("CreateSessionActivity", "ERRROR Á HOBBYYYY");
+                    isOk = false;
                 }
                 if(mSlots.length() == 0) {
                     mSlots.setError("Required field");
@@ -157,6 +154,16 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+
+        mButtonMaps = (Button) findViewById(R.id.maps_button);
+        mButtonMaps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CreateSessionActivity.this, MapsActivity.class);
+                intent.putExtra("flag","create");
+                startActivity(intent);
             }
         });
 

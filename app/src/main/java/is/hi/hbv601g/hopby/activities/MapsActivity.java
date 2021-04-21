@@ -10,6 +10,7 @@ import android.location.Geocoder;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -55,7 +56,8 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
     private Double COORDINATE_OFFSET = 0.0003;
     private Session mSession;
     private String checkFlag;
-    private SessionOverviewActivity mOverviewActivity;
+    private Geocoder geocoder;
+    private List<Address> addresses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +84,7 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
         mMap = googleMap;
         markerLocation = new HashMap<String, Double>();
 
+
         // Add all or filtered sessions if overview or one session if info
         Intent i = getIntent();
         checkFlag = i.getStringExtra("flag");
@@ -99,8 +102,28 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
         LatLng reykjavik = new LatLng(64.1466, -21.9426);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(reykjavik, 13f));
 
-        // Add markers on map
-        addCurrentMarkers(mSessions);
+        if (checkFlag.equals("create")){
+            System.out.println("prump");
+            geocoder = new Geocoder(this, Locale.getDefault());
+            mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                @Override
+                public void onMapClick(LatLng latLng) {
+                    try {
+                        addresses = geocoder.getFromLocation(latLng.latitude,latLng.longitude, 1);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    mMap.addMarker(new MarkerOptions().position(latLng).title("Velja: "+addresses.get(0).getAddressLine(0)));
+                    Toast.makeText(MapsActivity.this, addresses.get(0).getAddressLine(0), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        else {
+            // Add markers on map
+            addCurrentMarkers(mSessions);
+        }
+
+
 
         // Make markers do something when clicked
         mMap.setOnMarkerClickListener(this);
@@ -130,6 +153,7 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
             LatLng coordinates = getLocationFromAddress(getApplicationContext(), location);
             String coordinatesString = coordinates.toString();
 
+            // If only 1 session zoom in on that session
             if (mSessions.size() == 1) {
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinates,15f));
             }
@@ -156,6 +180,8 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
             }
         }
     }
+
+
 
     // Return whether marker with same location is already on map
     private boolean mapAlreadyHasMarkerForLocation(String location) {
