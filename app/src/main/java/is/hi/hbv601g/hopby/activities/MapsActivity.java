@@ -54,6 +54,7 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
     private HashMap<String, Double> markerLocation;
     private Double COORDINATE_OFFSET = 0.0003;
     private Session mSession;
+    private String checkFlag;
     private SessionOverviewActivity mOverviewActivity;
 
     @Override
@@ -83,7 +84,7 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
 
         // Add all or filtered sessions if overview or one session if info
         Intent i = getIntent();
-        String checkFlag = i.getStringExtra("flag");
+        checkFlag = i.getStringExtra("flag");
         if (checkFlag.equals("overview")) {
             //mSessions = i.getParcelableExtra("sessions"); TODO find out how to pass sessions through intent
             mSessions = SessionOverviewActivity.getSessionArrayList();
@@ -127,6 +128,9 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
             String location = mSessions.get(i).getLocation();
             int sport = mSessions.get(i).getHobbyId();
             Long id = mSessions.get(i).getId();
+            String time = mSessions.get(i).getTime();
+            String date = mSessions.get(i).getDate();
+            String dateTime = date.substring(8,10) +"."+ date.substring(5,7) + "."+ date.substring(0,4)+" at "  + time.substring(0,5);
 
             LatLng coordinates = getLocationFromAddress(getApplicationContext(), location);
 
@@ -147,13 +151,13 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
             // Draw markers on map with correct icon depending on activity
             switch (sport) {
                 case 1:
-                    mMap.addMarker((new MarkerOptions().position(coordinates).alpha(0.6f).title("Football - " + location).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_soccer_24)))).setTag(id);
+                    mMap.addMarker((new MarkerOptions().position(coordinates).alpha(0.6f).title("Football  "+ dateTime).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_soccer_24)))).setTag(id);
                     break;
                 case 2:
-                    mMap.addMarker((new MarkerOptions().position(coordinates).alpha(0.6f).title("Basketball - " + location).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_basketball_24)))).setTag(id);
+                    mMap.addMarker((new MarkerOptions().position(coordinates).alpha(0.6f).title("Basketball  "+ dateTime).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_basketball_24)))).setTag(id);
                     break;
                 default:
-                    mMap.addMarker((new MarkerOptions().position(coordinates).alpha(0.6f).title("Hike - " + location).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_directions_walk_24)))).setTag(id);
+                    mMap.addMarker((new MarkerOptions().position(coordinates).alpha(0.6f).title("Hike  "+ dateTime).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_directions_walk_24)))).setTag(id);
             }
         }
     }
@@ -214,38 +218,38 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
     }
 
 
-    // Do something when a marker is selected
-    // Increases opacity
-    // TODO open session info when double clicked
+    // Opens sessionInfo when double clicked on marker
+    // Increases opacity of selected marker
     @Override
     public boolean onMarkerClick(final Marker marker) {
 
         Long id = (Long) marker.getTag();
+        if (checkFlag.equals("overview")) {
 
-        if (prevAddress == null){
-            Log.d("herna", "null id = "+id);
-            marker.setAlpha(1.0f);
-            prevAddress = marker.getTitle();
-            mapPrevMarker = marker;
-            Toast.makeText(this,
-                    " Click marker again for session info",
-                    Toast.LENGTH_SHORT).show();
-        }
-        else if (!marker.getTitle().equals(prevAddress)){
-            Log.d("herna", "!marker id = "+id);
-            marker.setAlpha(1.0f);
-            mapPrevMarker.setAlpha(0.6f);
-            prevAddress = marker.getTitle();
-            mapPrevMarker = marker;
-            Toast.makeText(this,
-                    "Click marker again for session info",
-                    Toast.LENGTH_SHORT).show();
+            if (prevAddress == null) {
+                marker.setAlpha(1.0f);
+                prevAddress = marker.getTitle();
+                mapPrevMarker = marker;
+                Toast.makeText(this,
+                        " Click marker again for session info",
+                        Toast.LENGTH_SHORT).show();
+            } else if (!marker.getTitle().equals(prevAddress)) {
+                marker.setAlpha(1.0f);
+                mapPrevMarker.setAlpha(0.6f);
+                prevAddress = marker.getTitle();
+                mapPrevMarker = marker;
+                Toast.makeText(this,
+                        "Click marker again for session info",
+                        Toast.LENGTH_SHORT).show();
+            } else {
+                String sId = Long.toString(id);
+                Intent intent = new Intent(this, SessionInfoActivity.class);
+                intent.putExtra("id", sId);
+                this.startActivity(intent);
+            }
         }
         else {
-            String sId = Long.toString(id);
-            Intent intent = new Intent(this, SessionInfoActivity.class);
-            intent.putExtra("id", sId);
-            this.startActivity(intent);
+            marker.setAlpha(1.0f);
         }
         return false;
     }
