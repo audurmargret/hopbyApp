@@ -38,8 +38,8 @@ public class UserService {
             return username;
         }
         else {
-            for (int i = 0; i < mUserBank.size(); i++) {
-                if (mUserBank.get(i).getUserName().equals(username)) {
+            for(int i=0; i<mUserBank.size(); i++) {
+                if(mUserBank.get(i).getUserName().equals(username)) {
                     return mUserBank.get(i).getName();
                 }
             }
