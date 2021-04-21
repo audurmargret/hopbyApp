@@ -115,11 +115,6 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
         });
     }
 
-    // Return whether marker with same location is already on map
-    private boolean mapAlreadyHasMarkerForLocation(String location) {
-        return (markerLocation.containsKey(location));
-    }
-
     // Adds markers to correct from current sessions
     private void addCurrentMarkers(ArrayList sessions) {
         int length = sessions.size();
@@ -133,19 +128,19 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
             String dateTime = date.substring(8,10) +"."+ date.substring(5,7) + "."+ date.substring(0,4)+" at "  + time.substring(0,5);
 
             LatLng coordinates = getLocationFromAddress(getApplicationContext(), location);
+            String coordinatesString = coordinates.toString();
 
             if (mSessions.size() == 1) {
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordinates,15f));
             }
 
-            // Check if location is already use - if so apply offset
-            // TODO use coordinates not name (doesn't account for spelling error)
-            if(mapAlreadyHasMarkerForLocation(location)){
-                markerLocation.put(location, markerLocation.get(location) + COORDINATE_OFFSET );
-                coordinates = new LatLng(coordinates.latitude+markerLocation.get(location),coordinates.longitude+markerLocation.get(location));
+            // If location is already in use apply offset
+            if(mapAlreadyHasMarkerForLocation(coordinatesString)){
+                markerLocation.put(coordinatesString, markerLocation.get(coordinatesString) + COORDINATE_OFFSET );
+                coordinates = new LatLng(coordinates.latitude+markerLocation.get(coordinatesString),coordinates.longitude+markerLocation.get(coordinatesString));
             }
             else{
-                markerLocation.put(location, 0.0);
+                markerLocation.put(coordinatesString, 0.0);
             }
 
             // Draw markers on map with correct icon depending on activity
@@ -160,6 +155,11 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
                     mMap.addMarker((new MarkerOptions().position(coordinates).alpha(0.6f).title("Hike  "+ dateTime).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_directions_walk_24)))).setTag(id);
             }
         }
+    }
+
+    // Return whether marker with same location is already on map
+    private boolean mapAlreadyHasMarkerForLocation(String location) {
+        return (markerLocation.containsKey(location));
     }
 
     // Draws markers on map

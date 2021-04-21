@@ -79,7 +79,6 @@ public class SessionInfoActivity extends AppCompatActivity implements AlertDialo
                 // TODO: Opna MAPS VIEW
                 Intent intent = new Intent(SessionInfoActivity.this, MapsActivity.class);
                 intent.putExtra("flag","info");
-                intent.putExtra("id", mId);
                 startActivity(intent);
             }
         });
