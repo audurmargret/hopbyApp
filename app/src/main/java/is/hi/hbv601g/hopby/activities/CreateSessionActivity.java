@@ -50,6 +50,7 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
     private CalendarView mCalendarView;
     private String date;
     private TimePicker mTimePicker;
+    private TextView mErrorMessage;
 
     private SessionService mSessionService;
     private String mLoggedInUser;
@@ -70,7 +71,7 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
         hobbySpinner.setOnItemSelectedListener(this);
 
         List<String> hobbies = mSessionService.getHobbies();
-        hobbies.add(0,"Hobby:");
+        hobbies.add(0,"Select Hobby:");
 
         mCalendarView = findViewById(R.id.input_date_calendarView);
         mCalendarView.setMinDate(System.currentTimeMillis());
@@ -126,10 +127,11 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
                     mTitle.setError("Required field");
                     isOk = false;
                 }
-                if(mHobbyId.equals("") || mHobbyId.equals("Hobby:")) {
+                if(mHobbyId.equals("") || mHobbyId.equals("Select Hobby:")) {
                     TextView errorText = (TextView) mHobbySpinner.getSelectedView();
                     errorText.setError("Required field");
                     Log.d("CreateSessionActivity", "ERRROR Á HOBBYYYY");
+                    isOk = false;
                 }
                 if(mSlots.length() == 0) {
                     mSlots.setError("Required field");
@@ -138,6 +140,7 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
                     mSlots.setError("Slots must be greater than 1");
                     isOk = false;
                 }
+
 
                 Log.d("CreateSEssion", "DATE " + mCalendarView.getDate());
                 if(isOk) {
@@ -148,6 +151,10 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
                     Intent intent = new Intent(CreateSessionActivity.this, SessionOverviewActivity.class);
                     intent.putExtra("id", Long.toString(resultId));
                     startActivity(intent);
+                }
+                else {
+                    mErrorMessage = findViewById(R.id.error_message_create);
+                    mErrorMessage.setVisibility(View.VISIBLE);
                 }
             }
         });
