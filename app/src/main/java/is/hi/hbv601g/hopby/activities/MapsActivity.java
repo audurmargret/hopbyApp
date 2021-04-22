@@ -163,9 +163,8 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
             String location = mSessions.get(i).getLocation();
             int sport = mSessions.get(i).getHobbyId();
             Long id = mSessions.get(i).getId();
-            String time = mSessions.get(i).getTime();
             String date = mSessions.get(i).getDate();
-            String dateTime = date.substring(8,10) +"."+ date.substring(5,7) + "."+ date.substring(0,4)+" at "  + time.substring(0,5);
+            String dateString = date.substring(8,10) +"."+ date.substring(5,7) + "."+ date.substring(0,4);
             String title = mSessions.get(i).getTitle();
 
             // Get LatLng from address
@@ -192,15 +191,15 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
             switch (sport) {
 
                 case 1:
-                    mMap.addMarker((new MarkerOptions().position(coordinates).alpha(0.6f).title(title + " " + dateTime).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_soccer_24)))).setTag(id);
+                    mMap.addMarker((new MarkerOptions().position(coordinates).alpha(0.6f).title(title + " " + dateString).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_soccer_24)))).setTag(id);
                     break;
 
                 case 2:
-                    mMap.addMarker((new MarkerOptions().position(coordinates).alpha(0.6f).title(title + " " + dateTime).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_basketball_24)))).setTag(id);
+                    mMap.addMarker((new MarkerOptions().position(coordinates).alpha(0.6f).title(title + " " + dateString).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_basketball_24)))).setTag(id);
                     break;
 
                 default:
-                    mMap.addMarker((new MarkerOptions().position(coordinates).alpha(0.6f).title(title + " " + dateTime).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_directions_walk_24)))).setTag(id);
+                    mMap.addMarker((new MarkerOptions().position(coordinates).alpha(0.6f).title(title + " " + dateString).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_directions_walk_24)))).setTag(id);
             }
         }
     }
