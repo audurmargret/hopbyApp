@@ -58,6 +58,7 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
     private String checkFlag;
     private Geocoder geocoder;
     private List<Address> addresses;
+    private Marker createMarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,7 +114,10 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    mMap.addMarker(new MarkerOptions().position(latLng).title("Velja: "+addresses.get(0).getAddressLine(0)));
+                    if (createMarker != null){
+                        createMarker.remove();
+                    }
+                    createMarker = mMap.addMarker(new MarkerOptions().position(latLng).title("Velja: "+addresses.get(0).getAddressLine(0)));
                     Toast.makeText(MapsActivity.this, addresses.get(0).getAddressLine(0), Toast.LENGTH_SHORT).show();
                 }
             });
