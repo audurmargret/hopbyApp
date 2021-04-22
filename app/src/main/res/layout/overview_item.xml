@@ -85,7 +85,7 @@
                     style="?android:attr/buttonBarButtonStyle"/>
 
                 <ImageButton
-                    android:id="@+id/notification_on_button"
+                    android:id="@+id/notification_yellow_button"
                     android:layout_width="35dp"
                     android:layout_height="24dp"
                     android:layout_gravity="top"

@@ -83,6 +83,9 @@ public class OverviewAdapter extends ArrayAdapter<Session> {
         });
 
         ImageButton notificationButton = (ImageButton)listitemView.findViewById(R.id.notification_button);
+        ImageButton notificationButtonYellow = (ImageButton) listitemView.findViewById(R.id.notification_yellow_button);
+
+
 
         if(mFromMySessions) {
             notificationButton.setOnClickListener(new View.OnClickListener() {
@@ -94,9 +97,19 @@ public class OverviewAdapter extends ArrayAdapter<Session> {
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
 
+                    notificationButton.setVisibility(View.GONE);
+                    notificationButtonYellow.setVisibility(View.VISIBLE);
+
+
                     mMySessionsActivity.sendOnChannel(session.getTitle(), session.getLocation(), session.getId());
+                }
+            });
 
-
+            notificationButtonYellow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    notificationButton.setVisibility(View.VISIBLE);
+                    notificationButtonYellow.setVisibility(View.GONE);
                 }
             });
         } else {
