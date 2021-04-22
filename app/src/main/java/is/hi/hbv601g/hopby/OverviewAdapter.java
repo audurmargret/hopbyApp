@@ -1,5 +1,7 @@
 package is.hi.hbv601g.hopby;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -21,12 +23,14 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import is.hi.hbv601g.hopby.activities.MainActivity;
 import is.hi.hbv601g.hopby.activities.MySessionsActivity;
 import is.hi.hbv601g.hopby.activities.SessionInfoActivity;
 import is.hi.hbv601g.hopby.entities.Session;
 import is.hi.hbv601g.hopby.services.SessionService;
 
-import static is.hi.hbv601g.hopby.activities.MainActivity.CHANNEL_ID;
+import static android.content.Context.ALARM_SERVICE;
+
 
 public class OverviewAdapter extends ArrayAdapter<Session> {
     Context mContext;
@@ -90,15 +94,9 @@ public class OverviewAdapter extends ArrayAdapter<Session> {
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
 
-                    NotificationCompat.Builder builder = new NotificationCompat.Builder(mMySessionsActivity, CHANNEL_ID);
-                    builder.setContentTitle("Noti title");
-                    builder.setContentText("Viðburður");
-                    builder.setSmallIcon(R.drawable.ic_hopbykall);
-                    builder.setPriority(NotificationCompat.PRIORITY_HIGH);
-                    builder.setCategory(NotificationCompat.CATEGORY_MESSAGE);
+                    mMySessionsActivity.sendOnChannel(session.getTitle(), session.getLocation(), session.getId());
 
-                    NotificationManagerCompat managerCompat = NotificationManagerCompat.from(mMySessionsActivity);
-                    managerCompat.notify(1, builder.build());
+
                 }
             });
         } else {

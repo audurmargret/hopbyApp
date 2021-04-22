@@ -25,13 +25,12 @@ public class MainActivity extends AppCompatActivity {
 
     private String mLoggedInUser;
 
-    public static final String CHANNEL_ID = "channel";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        createNotificationChannel();
 
         SharedPreferences preferences = getSharedPreferences("MYPREFS", MODE_PRIVATE);
         mLoggedInUser = preferences.getString("loggedInName", "");
@@ -70,17 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(
-                    CHANNEL_ID,
-                    "Channel",
-                    NotificationManager.IMPORTANCE_HIGH
-            );
-            channel.setDescription("This is a notification");
+    private void sendOnChannel(String title, String message) {
 
-            NotificationManager manager = getSystemService(NotificationManager.class);
-            manager.createNotificationChannel(channel);
-        }
     }
 }
