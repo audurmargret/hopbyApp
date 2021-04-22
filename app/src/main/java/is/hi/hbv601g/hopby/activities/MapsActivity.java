@@ -1,5 +1,6 @@
 package is.hi.hbv601g.hopby.activities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -143,6 +144,11 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
         mMapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (mCheckFlag.equals("create")) {
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra("Address", mAddresses.get(0).getAddressLine(0));
+                    setResult(Activity.RESULT_OK, resultIntent);
+                }
                 finish();
             }
         });
@@ -293,7 +299,7 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
         else {
             marker.setAlpha(1.0f);
         }
-        
+
         return false;
     }
 }
