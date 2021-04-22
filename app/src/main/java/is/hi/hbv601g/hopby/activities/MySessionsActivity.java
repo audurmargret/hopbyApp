@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import is.hi.hbv601g.hopby.AlertReceiver;
 import is.hi.hbv601g.hopby.NotificationHelper;
 import is.hi.hbv601g.hopby.OverviewAdapter;
 import is.hi.hbv601g.hopby.R;
@@ -11,8 +12,11 @@ import is.hi.hbv601g.hopby.entities.Session;
 import is.hi.hbv601g.hopby.networking.NetworkController;
 import is.hi.hbv601g.hopby.services.SessionService;
 
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -25,7 +29,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.ImageButton;
 
-import java.nio.channels.InterruptedByTimeoutException;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -53,6 +57,7 @@ public class MySessionsActivity extends AppCompatActivity {
 
         mNotificationHelper = new NotificationHelper(this);
         notificationManager = NotificationManagerCompat.from(this);
+
 
         start();
     }
@@ -137,13 +142,47 @@ public class MySessionsActivity extends AppCompatActivity {
         mNotificationHelper.getManager().notify((int) id, nb.build());
     }
 
-    public void onTimeSet(int hourofDay, int minute) {
+
+    public void onTimeSet(int month, int dayofMonth, int hourofDay, int minute, String title, String message, int id) {
         Calendar c = Calendar.getInstance();
+        c.set(Calendar.MONTH, month);
+        c.set(Calendar.DAY_OF_MONTH, dayofMonth);
         c.set(Calendar.HOUR_OF_DAY, hourofDay);
         c.set(Calendar.MINUTE, minute);
+        c.set(Calendar.SECOND, 0);
+
+        startAlarm(c, title, message, id);
     }
 
-    public void cancelAlarm() {
+    private void startAlarm(Calendar c, String title, String message, int id) {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlertReceiver.class);
+        intent.putExtra("title", title );
+        intent.putExtra("message", message);
+        intent.putExtra("id", id);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id, intent, 0);
 
+
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+    }
+
+    public void cancelAlarm(int id) {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, AlertReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id, intent, 0);
+
+        alarmManager.cancel(pendingIntent);
+    }
+
+    public void setNotificationPref(String id, boolean bool) {
+        SharedPreferences preferences = getSharedPreferences("MYPREFS", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(id, bool);
+        editor.commit();
+    }
+
+    public boolean getNotificationPref(String id) {
+        SharedPreferences preferences = getSharedPreferences("MYPREFS", MODE_PRIVATE);
+        return preferences.getBoolean(id, false);
     }
 }

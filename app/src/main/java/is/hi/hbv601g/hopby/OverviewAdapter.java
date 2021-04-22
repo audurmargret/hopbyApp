@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,7 +72,9 @@ public class OverviewAdapter extends ArrayAdapter<Session> {
         progressBar.setMax(session.getSlots());
         progressBar.setProgress(slots);
 
+
         String id = Long.toString(session.getId());
+
         ImageButton infoButton = (ImageButton)listitemView.findViewById(R.id.info_button);
         infoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +91,18 @@ public class OverviewAdapter extends ArrayAdapter<Session> {
 
 
         if(mFromMySessions) {
+            if(!mMySessionsActivity.getNotificationPref(id)){
+                notificationButton.setVisibility(View.VISIBLE);
+                notificationButtonYellow.setVisibility(View.GONE);
+            }
+            else {
+                notificationButtonYellow.setVisibility(View.VISIBLE);
+                notificationButton.setVisibility(View.GONE);
+
+            }
+
+            int idInt = Integer.parseInt(id);
+
             notificationButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -99,9 +114,18 @@ public class OverviewAdapter extends ArrayAdapter<Session> {
 
                     notificationButton.setVisibility(View.GONE);
                     notificationButtonYellow.setVisibility(View.VISIBLE);
+                    mMySessionsActivity.setNotificationPref(id, true);
 
+                    int month = (Integer.parseInt(session.getDate().substring(5,7)) - 1);
+                    int dayofMonth = Integer.parseInt(session.getDate().substring(8,10));
+                    int hourofDay = (Integer.parseInt(session.getTime().substring(0,2)) - 1);
+                    int minute = Integer.parseInt(session.getTime().substring(3,5));
+                    String title = session.getTitle();
+                    String message = session.getLocation();
 
-                    mMySessionsActivity.sendOnChannel(session.getTitle(), session.getLocation(), session.getId());
+                    mMySessionsActivity.onTimeSet(month, dayofMonth, hourofDay, minute, title, message, idInt);
+
+                    //mMySessionsActivity.sendOnChannel(String.valueOf(month)+String.valueOf(dayofMonth), String.valueOf(hourofDay)+String.valueOf(minute), session.getId());
                 }
             });
 
@@ -110,6 +134,9 @@ public class OverviewAdapter extends ArrayAdapter<Session> {
                 public void onClick(View view) {
                     notificationButton.setVisibility(View.VISIBLE);
                     notificationButtonYellow.setVisibility(View.GONE);
+                    mMySessionsActivity.setNotificationPref(id, false);
+
+                    mMySessionsActivity.cancelAlarm(idInt);
                 }
             });
         } else {
