@@ -117,7 +117,7 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
                     if (createMarker != null){
                         createMarker.remove();
                     }
-                    createMarker = mMap.addMarker(new MarkerOptions().position(latLng).title("Velja: "+addresses.get(0).getAddressLine(0)));
+                    createMarker = mMap.addMarker(new MarkerOptions().position(latLng).title("Address: "+addresses.get(0).getAddressLine(0)));
                     Toast.makeText(MapsActivity.this, addresses.get(0).getAddressLine(0), Toast.LENGTH_SHORT).show();
                 }
             });
