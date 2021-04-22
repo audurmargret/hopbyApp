@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import is.hi.hbv601g.hopby.NotificationHelper;
 import is.hi.hbv601g.hopby.OverviewAdapter;
 import is.hi.hbv601g.hopby.R;
 import is.hi.hbv601g.hopby.entities.Session;
@@ -24,9 +25,9 @@ import android.widget.TextView;
 import android.widget.ImageButton;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
-import static is.hi.hbv601g.hopby.activities.MainActivity.CHANNEL_ID;
 
 public class MySessionsActivity extends AppCompatActivity {
 
@@ -38,6 +39,7 @@ public class MySessionsActivity extends AppCompatActivity {
     private String mLoggedInName;
     ImageButton notifyButton;
 
+    private NotificationHelper mNotificationHelper;
     private NotificationManagerCompat notificationManager;
 
     private static ArrayList <Session> sessionArrayList; // TODO make not static and pass though intent ??
@@ -47,21 +49,14 @@ public class MySessionsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_sessions);
 
+        mNotificationHelper = new NotificationHelper(this);
         notificationManager = NotificationManagerCompat.from(this);
 
         notifyButton = findViewById(R.id.notification_button);
         notifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(MySessionsActivity.this, CHANNEL_ID);
-                builder.setContentTitle("Noti title");
-                builder.setContentText("Viðburður");
-                builder.setSmallIcon(R.drawable.ic_hopbykall);
-                builder.setPriority(NotificationCompat.PRIORITY_HIGH);
-                builder.setCategory(NotificationCompat.CATEGORY_MESSAGE);
 
-                NotificationManagerCompat managerCompat = NotificationManagerCompat.from(MySessionsActivity.this);
-                managerCompat.notify(1, builder.build());
             }
         });
 
@@ -116,5 +111,20 @@ public class MySessionsActivity extends AppCompatActivity {
         boolean fromMySessions = true;
         OverviewAdapter adapter = new OverviewAdapter(this, sessionArrayList, fromMySessions, MySessionsActivity.this);
         grid.setAdapter(adapter);
+    }
+
+    public void sendOnChannel(String title, String message, long id) {
+        NotificationCompat.Builder nb = mNotificationHelper.getChannelNotification(title, message);
+        mNotificationHelper.getManager().notify((int) id, nb.build());
+    }
+
+    public void onTimeSet(int hourofDay, int minute) {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.HOUR_OF_DAY, hourofDay);
+        c.set(Calendar.MINUTE, minute);
+    }
+
+    public void cancelAlarm() {
+
     }
 }
