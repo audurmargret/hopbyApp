@@ -137,11 +137,6 @@ public class MySessionsActivity extends AppCompatActivity {
         grid.setAdapter(adapter);
     }
 
-    public void sendOnChannel(String title, String message, long id) {
-        NotificationCompat.Builder nb = mNotificationHelper.getChannelNotification(title, message);
-        mNotificationHelper.getManager().notify((int) id, nb.build());
-    }
-
 
     public void onTimeSet(int month, int dayofMonth, int hourofDay, int minute, String title, String message, int id) {
         Calendar c = Calendar.getInstance();

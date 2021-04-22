@@ -124,8 +124,6 @@ public class OverviewAdapter extends ArrayAdapter<Session> {
                     String message = session.getLocation();
 
                     mMySessionsActivity.onTimeSet(month, dayofMonth, hourofDay, minute, title, message, idInt);
-
-                    //mMySessionsActivity.sendOnChannel(String.valueOf(month)+String.valueOf(dayofMonth), String.valueOf(hourofDay)+String.valueOf(minute), session.getId());
                 }
             });
 

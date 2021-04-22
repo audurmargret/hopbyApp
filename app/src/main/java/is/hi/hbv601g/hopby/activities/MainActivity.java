@@ -68,8 +68,4 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-
-    private void sendOnChannel(String title, String message) {
-
-    }
 }
