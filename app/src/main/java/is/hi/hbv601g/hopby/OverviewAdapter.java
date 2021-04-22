@@ -68,6 +68,19 @@ public class OverviewAdapter extends ArrayAdapter<Session> {
             }
         });
 
+
+        ImageButton notificationButton = (ImageButton)listitemView.findViewById(R.id.notification_button);
+        notificationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Context context = getContext();
+                CharSequence text = "Notification ON";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+            }
+        });
+
         return listitemView;
     }
 }

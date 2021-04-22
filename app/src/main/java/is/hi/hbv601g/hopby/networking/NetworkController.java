@@ -55,7 +55,6 @@ public class NetworkController {
                 Request.Method.GET, BASE_URL + "hobby/all", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("NetworkController", "getSessions" + response);
                 Gson gson = new Gson();
                 Type listType = new TypeToken<List<Session>>(){}.getType();
                 List<Session> sessionBank = gson.fromJson(response, listType);
