@@ -151,7 +151,7 @@ public class SessionOverviewActivity extends AppCompatActivity implements Serial
             grid.setVisibility(View.GONE);
         }
         boolean fromMySessions = false;
-        OverviewAdapter adapter = new OverviewAdapter(this, sessionArrayList, fromMySessions );
+        OverviewAdapter adapter = new OverviewAdapter(this, sessionArrayList, fromMySessions, null );
         grid.setAdapter(adapter);
     }
 

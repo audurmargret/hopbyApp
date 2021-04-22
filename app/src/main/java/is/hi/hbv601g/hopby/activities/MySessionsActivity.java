@@ -114,7 +114,7 @@ public class MySessionsActivity extends AppCompatActivity {
         sessionArrayList = new ArrayList<Session>(mSessionBank);
 
         boolean fromMySessions = true;
-        OverviewAdapter adapter = new OverviewAdapter(this, sessionArrayList, fromMySessions);
+        OverviewAdapter adapter = new OverviewAdapter(this, sessionArrayList, fromMySessions, MySessionsActivity.this);
         grid.setAdapter(adapter);
     }
 }
