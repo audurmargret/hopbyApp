@@ -81,7 +81,17 @@
                     android:layout_height="24dp"
                     android:layout_gravity="top"
                     android:layout_weight="1"
+                    app:srcCompat="@drawable/ic_baseline_notifications_black_24"
+                    style="?android:attr/buttonBarButtonStyle"/>
+
+                <ImageButton
+                    android:id="@+id/notification_on_button"
+                    android:layout_width="35dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="top"
+                    android:layout_weight="1"
                     app:srcCompat="@drawable/ic_baseline_notifications_24"
+                    android:visibility="gone"
                     style="?android:attr/buttonBarButtonStyle"/>
 
                 <ImageButton
