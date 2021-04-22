@@ -1,5 +1,6 @@
 package is.hi.hbv601g.hopby.activities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -48,27 +49,29 @@ import is.hi.hbv601g.hopby.services.SessionService;
 public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarkerClickListener, OnMapReadyCallback, Serializable {
 
     private GoogleMap mMap;
-    private Button mapButton;
-    private String prevAddress;
-    private Marker mapPrevMarker;
+    private Button mMapButton;
+    private String mPrevAddress;
+    private Marker mPrevMarker;
     private  ArrayList<Session> mSessions;
-    private HashMap<String, Double> markerLocation;
-    private Double COORDINATE_OFFSET = 0.0003;
+    private HashMap<String, Double> mMarkerLocations;
+    private Double mCoordinateOffset = 0.0003;
     private Session mSession;
-    private String checkFlag;
-    private Geocoder geocoder;
-    private List<Address> addresses;
+    private String mCheckFlag;
+    private Geocoder mGeocoder;
+    private List<Address> mAddresses;
+    private Marker mCreateMarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        mSessions = new ArrayList<Session>();
 
+        mSessions = new ArrayList<Session>();
     }
 
     /**
@@ -82,17 +85,20 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        markerLocation = new HashMap<String, Double>();
-
+        mMarkerLocations = new HashMap<String, Double>();
 
         // Add all or filtered sessions if overview or one session if info
         Intent i = getIntent();
-        checkFlag = i.getStringExtra("flag");
-        if (checkFlag.equals("overview")) {
+        mCheckFlag = i.getStringExtra("flag");
+
+        // If came from SessionOverview add all sessions
+        if (mCheckFlag.equals("overview")) {
             //mSessions = i.getParcelableExtra("sessions"); TODO find out how to pass sessions through intent
             mSessions = SessionOverviewActivity.getSessionArrayList();
         }
-        else if (checkFlag.equals("info")){
+
+        // If came from SessionInfo add that session
+        else if (mCheckFlag.equals("info")){
             // TODO find better ("correct") method for this
             mSession = SessionService.getSessionForMaps();
             mSessions.add(mSession);
@@ -102,46 +108,57 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
         LatLng reykjavik = new LatLng(64.1466, -21.9426);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(reykjavik, 13f));
 
-        if (checkFlag.equals("create")){
-            System.out.println("prump");
-            geocoder = new Geocoder(this, Locale.getDefault());
+        // If came from CreateSession show addresses when clicked on map
+        if (mCheckFlag.equals("create")){
+            mGeocoder = new Geocoder(this, Locale.getDefault());
             mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                 @Override
                 public void onMapClick(LatLng latLng) {
                     try {
-                        addresses = geocoder.getFromLocation(latLng.latitude,latLng.longitude, 1);
+                        mAddresses = mGeocoder.getFromLocation(latLng.latitude,latLng.longitude, 1);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    mMap.addMarker(new MarkerOptions().position(latLng).title("Velja: "+addresses.get(0).getAddressLine(0)));
-                    Toast.makeText(MapsActivity.this, addresses.get(0).getAddressLine(0), Toast.LENGTH_SHORT).show();
+
+                    if (mCreateMarker != null){
+                        mCreateMarker.remove();
+                    }
+
+                    mCreateMarker = mMap.addMarker(new MarkerOptions().position(latLng).title("Address: "+mAddresses.get(0).getAddressLine(0)));
+                    Toast.makeText(MapsActivity.this, mAddresses.get(0).getAddressLine(0), Toast.LENGTH_SHORT).show();
                 }
             });
         }
+
+        // If not from CreateSession draw markers on map
         else {
             // Add markers on map
             addCurrentMarkers(mSessions);
         }
 
-
-
         // Make markers do something when clicked
         mMap.setOnMarkerClickListener(this);
 
         // Close map
-        mapButton = (Button) findViewById(R.id.maps_button_finish);
-        mapButton.setOnClickListener(new View.OnClickListener() {
+        mMapButton = (Button) findViewById(R.id.maps_button_finish);
+        mMapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (mCheckFlag.equals("create")) {
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra("Address", mAddresses.get(0).getAddressLine(0));
+                    setResult(Activity.RESULT_OK, resultIntent);
+                }
                 finish();
             }
         });
     }
 
-    // Adds markers to correct from current sessions
+    // Adds markers to correct locations from current sessions
     private void addCurrentMarkers(ArrayList sessions) {
         int length = sessions.size();
 
+        // Find coordinates from addresses and important info from sessions to display
         for(int i = 0; i < length; i++) {
             String location = mSessions.get(i).getLocation();
             int sport = mSessions.get(i).getHobbyId();
@@ -160,32 +177,35 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
 
             // If location is already in use apply offset
             if(mapAlreadyHasMarkerForLocation(coordinatesString)){
-                markerLocation.put(coordinatesString, markerLocation.get(coordinatesString) + COORDINATE_OFFSET );
-                coordinates = new LatLng(coordinates.latitude+markerLocation.get(coordinatesString),coordinates.longitude+markerLocation.get(coordinatesString));
+                mMarkerLocations.put(coordinatesString, mMarkerLocations.get(coordinatesString) + mCoordinateOffset );
+                coordinates = new LatLng(coordinates.latitude+mMarkerLocations.get(coordinatesString),coordinates.longitude+mMarkerLocations.get(coordinatesString));
             }
-            else{
-                markerLocation.put(coordinatesString, 0.0);
+
+            // Else don't add any offset
+            else {
+                mMarkerLocations.put(coordinatesString, 0.0);
             }
 
             // Draw markers on map with correct icon depending on activity
             switch (sport) {
+
                 case 1:
                     mMap.addMarker((new MarkerOptions().position(coordinates).alpha(0.6f).title("Football  "+ dateTime).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_soccer_24)))).setTag(id);
                     break;
+
                 case 2:
                     mMap.addMarker((new MarkerOptions().position(coordinates).alpha(0.6f).title("Basketball  "+ dateTime).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_basketball_24)))).setTag(id);
                     break;
+
                 default:
                     mMap.addMarker((new MarkerOptions().position(coordinates).alpha(0.6f).title("Hike  "+ dateTime).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_directions_walk_24)))).setTag(id);
             }
         }
     }
 
-
-
     // Return whether marker with same location is already on map
     private boolean mapAlreadyHasMarkerForLocation(String location) {
-        return (markerLocation.containsKey(location));
+        return (mMarkerLocations.containsKey(location));
     }
 
     // Draws markers on map
@@ -243,27 +263,27 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
         return resLatLng;
     }
 
-
     // Opens sessionInfo when double clicked on marker
     // Increases opacity of selected marker
     @Override
     public boolean onMarkerClick(final Marker marker) {
-
         Long id = (Long) marker.getTag();
-        if (checkFlag.equals("overview")) {
 
-            if (prevAddress == null) {
+        // If came from overview change opacity on deselected markers and open session info if double clicked on marker
+        if (mCheckFlag.equals("overview")) {
+
+            if (mPrevAddress == null) {
                 marker.setAlpha(1.0f);
-                prevAddress = marker.getTitle();
-                mapPrevMarker = marker;
+                mPrevAddress = marker.getTitle();
+                mPrevMarker = marker;
                 Toast.makeText(this,
                         " Click marker again for session info",
                         Toast.LENGTH_SHORT).show();
-            } else if (!marker.getTitle().equals(prevAddress)) {
+            } else if (!marker.getTitle().equals(mPrevAddress)) {
                 marker.setAlpha(1.0f);
-                mapPrevMarker.setAlpha(0.6f);
-                prevAddress = marker.getTitle();
-                mapPrevMarker = marker;
+                mPrevMarker.setAlpha(0.6f);
+                mPrevAddress = marker.getTitle();
+                mPrevMarker = marker;
                 Toast.makeText(this,
                         "Click marker again for session info",
                         Toast.LENGTH_SHORT).show();
@@ -274,9 +294,12 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
                 this.startActivity(intent);
             }
         }
+
+        // Else just increase the opacity of selected marker
         else {
             marker.setAlpha(1.0f);
         }
+
         return false;
     }
 }

@@ -87,7 +87,7 @@ public class SessionOverviewActivity extends AppCompatActivity implements Serial
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SessionOverviewActivity.this, CreateSessionActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                //intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
             }
         });

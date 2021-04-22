@@ -7,6 +7,7 @@ import is.hi.hbv601g.hopby.entities.Session;
 import is.hi.hbv601g.hopby.networking.NetworkController;
 import is.hi.hbv601g.hopby.services.SessionService;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -169,10 +170,24 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
             public void onClick(View view) {
                 Intent intent = new Intent(CreateSessionActivity.this, MapsActivity.class);
                 intent.putExtra("flag","create");
-                startActivity(intent);
+                startActivityForResult(intent, 10);
             }
         });
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case (10) : {
+                if (resultCode == Activity.RESULT_OK) {
+                    String newText = data.getStringExtra("Address");
+                    TextView locationView = (TextView)findViewById(R.id.input_location);
+                    locationView.setText(newText);
+                }
+                break;
+            }
+        }
     }
 
     private boolean isLegalLoc(String createLocation) {
