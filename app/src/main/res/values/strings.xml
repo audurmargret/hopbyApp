@@ -72,7 +72,7 @@
     <string name="info_date">Date:</string>
     <string name="info_time">Time:</string>
     <string name="no_sessions_found">No sessions found</string>
-    <string name="grid_header">Up comming sessions:</string>
+    <string name="grid_header">Upcoming sessions:</string>
     <string name="grid_header_past">Past sessions:</string>
     <string name="create_error_string">Make sure that everything is filled out correctly</string>
 
