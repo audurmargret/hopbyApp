@@ -15,6 +15,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,6 +25,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.ImageButton;
 
+import java.nio.channels.InterruptedByTimeoutException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -51,14 +53,6 @@ public class MySessionsActivity extends AppCompatActivity {
 
         mNotificationHelper = new NotificationHelper(this);
         notificationManager = NotificationManagerCompat.from(this);
-
-        notifyButton = findViewById(R.id.notification_button);
-        notifyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
 
         start();
     }
@@ -94,6 +88,31 @@ public class MySessionsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+
+        notifyButton = findViewById(R.id.notification_button);
+        notifyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+
+                if(Build.VERSION.SDK_INT >= 5 && Build.VERSION.SDK_INT < 8) {
+                    Log.d("MySessionsActivity", "fyrri IF");
+                    intent.putExtra("app_package", getPackageName());
+                    intent.putExtra("app_uid", getApplicationInfo().uid);
+                    startActivity(intent);
+                } else if (Build.VERSION.SDK_INT >= 8) {
+                    Log.d("MySessionsActivity", "seinni IF");
+                    intent.putExtra("android.provider.extra.APP_PACKAGE", getPackageName());
+                    startActivity(intent);
+                } else {
+                    Log.d("MySessionsActivity", "Gat ekki opnad settings");
+                }
+
+
+
             }
         });
     }
