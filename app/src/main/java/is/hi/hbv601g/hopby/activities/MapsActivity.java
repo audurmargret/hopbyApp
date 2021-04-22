@@ -64,12 +64,13 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        mSessions = new ArrayList<Session>();
 
+        mSessions = new ArrayList<Session>();
     }
 
     /**
@@ -85,14 +86,17 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
         mMap = googleMap;
         mMarkerLocations = new HashMap<String, Double>();
 
-
         // Add all or filtered sessions if overview or one session if info
         Intent i = getIntent();
         mCheckFlag = i.getStringExtra("flag");
+
+        // If came from SessionOverview add all sessions
         if (mCheckFlag.equals("overview")) {
             //mSessions = i.getParcelableExtra("sessions"); TODO find out how to pass sessions through intent
             mSessions = SessionOverviewActivity.getSessionArrayList();
         }
+
+        // If came from SessionInfo add that session
         else if (mCheckFlag.equals("info")){
             // TODO find better ("correct") method for this
             mSession = SessionService.getSessionForMaps();
@@ -103,8 +107,8 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
         LatLng reykjavik = new LatLng(64.1466, -21.9426);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(reykjavik, 13f));
 
+        // If came from CreateSession show addresses when clicked on map
         if (mCheckFlag.equals("create")){
-            System.out.println("prump");
             mGeocoder = new Geocoder(this, Locale.getDefault());
             mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                 @Override
@@ -114,20 +118,22 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+
                     if (mCreateMarker != null){
                         mCreateMarker.remove();
                     }
+
                     mCreateMarker = mMap.addMarker(new MarkerOptions().position(latLng).title("Address: "+mAddresses.get(0).getAddressLine(0)));
                     Toast.makeText(MapsActivity.this, mAddresses.get(0).getAddressLine(0), Toast.LENGTH_SHORT).show();
                 }
             });
         }
+
+        // If not from CreateSession draw markers on map
         else {
             // Add markers on map
             addCurrentMarkers(mSessions);
         }
-
-
 
         // Make markers do something when clicked
         mMap.setOnMarkerClickListener(this);
@@ -142,10 +148,11 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
         });
     }
 
-    // Adds markers to correct from current sessions
+    // Adds markers to correct locations from current sessions
     private void addCurrentMarkers(ArrayList sessions) {
         int length = sessions.size();
 
+        // Find coordinates from addresses and important info from sessions to display
         for(int i = 0; i < length; i++) {
             String location = mSessions.get(i).getLocation();
             int sport = mSessions.get(i).getHobbyId();
@@ -167,25 +174,28 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
                 mMarkerLocations.put(coordinatesString, mMarkerLocations.get(coordinatesString) + mCoordinateOffset );
                 coordinates = new LatLng(coordinates.latitude+mMarkerLocations.get(coordinatesString),coordinates.longitude+mMarkerLocations.get(coordinatesString));
             }
-            else{
+
+            // Else don't add any offset
+            else {
                 mMarkerLocations.put(coordinatesString, 0.0);
             }
 
             // Draw markers on map with correct icon depending on activity
             switch (sport) {
+
                 case 1:
                     mMap.addMarker((new MarkerOptions().position(coordinates).alpha(0.6f).title("Football  "+ dateTime).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_soccer_24)))).setTag(id);
                     break;
+
                 case 2:
                     mMap.addMarker((new MarkerOptions().position(coordinates).alpha(0.6f).title("Basketball  "+ dateTime).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_sports_basketball_24)))).setTag(id);
                     break;
+
                 default:
                     mMap.addMarker((new MarkerOptions().position(coordinates).alpha(0.6f).title("Hike  "+ dateTime).icon(BitmapFromVector(getApplicationContext(), R.drawable.ic_baseline_directions_walk_24)))).setTag(id);
             }
         }
     }
-
-
 
     // Return whether marker with same location is already on map
     private boolean mapAlreadyHasMarkerForLocation(String location) {
@@ -247,13 +257,13 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
         return resLatLng;
     }
 
-
     // Opens sessionInfo when double clicked on marker
     // Increases opacity of selected marker
     @Override
     public boolean onMarkerClick(final Marker marker) {
-
         Long id = (Long) marker.getTag();
+
+        // If came from overview change opacity on deselected markers and open session info if double clicked on marker
         if (mCheckFlag.equals("overview")) {
 
             if (mPrevAddress == null) {
@@ -278,9 +288,12 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
                 this.startActivity(intent);
             }
         }
+
+        // Else just increase the opacity of selected marker
         else {
             marker.setAlpha(1.0f);
         }
+        
         return false;
     }
 }
