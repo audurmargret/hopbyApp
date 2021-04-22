@@ -25,10 +25,12 @@ import is.hi.hbv601g.hopby.services.SessionService;
 public class OverviewAdapter extends ArrayAdapter<Session> {
     Context mContext;
     SessionInfoActivity mInfoActivity;
-    public OverviewAdapter(@NonNull Context context, ArrayList<Session> overviewArrayList) {
+    boolean mFromMySessions;
+    public OverviewAdapter(@NonNull Context context, ArrayList<Session> overviewArrayList, boolean fromMySessions) {
         super(context, 0, overviewArrayList);
         mContext = context;
         mInfoActivity = new SessionInfoActivity();
+        mFromMySessions = fromMySessions;
     }
 
     @NonNull
@@ -68,18 +70,24 @@ public class OverviewAdapter extends ArrayAdapter<Session> {
             }
         });
 
-
         ImageButton notificationButton = (ImageButton)listitemView.findViewById(R.id.notification_button);
-        notificationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Context context = getContext();
-                CharSequence text = "Notification ON";
-                int duration = Toast.LENGTH_SHORT;
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
-            }
-        });
+
+        if(mFromMySessions) {
+            notificationButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Context context = getContext();
+                    CharSequence text = "Notification ON";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
+            });
+        } else {
+            notificationButton.setVisibility(View.GONE);
+        }
+
+
 
         return listitemView;
     }
