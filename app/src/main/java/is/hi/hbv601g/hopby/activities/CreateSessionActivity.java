@@ -113,6 +113,9 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
                 // Change TimePicker to String
                 String hourString = String.valueOf(mTimePicker.getHour());
                 String minString = String.valueOf(mTimePicker.getMinute());
+                if(mTimePicker.getMinute()< 10) {
+                    minString = "0".concat(minString);
+                }
                 String timeString = hourString.concat(minString);
 
 
@@ -140,6 +143,7 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
                     isOk = false;
                 }
 
+                Log.d("CREATES SESSION " , timeString);
                 if(isOk) {
                     // Form is correct and send it to the service
                     long resultId = mSessionService.addSession(mTitle, date, timeString, mSlots, mHobbyId, mDescription, mLocation, mLoggedInUser);
