@@ -50,6 +50,7 @@ public class NetworkController {
         return sQueue;
     }
 
+    // Get all sessions
     public void getSessions(NetworkCallback<List<Session>> callback) {
         StringRequest request = new StringRequest(
                 Request.Method.GET, BASE_URL + "hobby/all", new Response.Listener<String>() {
@@ -70,6 +71,7 @@ public class NetworkController {
         sQueue.add(request);
     }
 
+    // Get one session by id
     public void getSession(NetworkCallback<Session> callback, long id) {
         String url = Uri.parse(BASE_URL)
                 .buildUpon()
@@ -95,6 +97,7 @@ public class NetworkController {
         sQueue.add(request);
     }
 
+    // Get sessions that user is attending
     public void getMySessions(NetworkCallback<List<Session>> callback, String username) {
         String url = Uri.parse(BASE_URL)
                 .buildUpon()
@@ -121,6 +124,7 @@ public class NetworkController {
         sQueue.add(request);
     }
 
+    // Join session by id and username
     public void joinSession(NetworkCallback<Session> callback, String path, long id, String userName) {
         String url = Uri.parse(BASE_URL)
                 .buildUpon()
@@ -147,6 +151,7 @@ public class NetworkController {
         sQueue.add(request);
     }
 
+    // Get all users
     public void getUsers(NetworkCallback<List<User>> callback) {
         StringRequest request = new StringRequest(
                 Request.Method.GET, BASE_URL + "users", new Response.Listener<String>() {
@@ -167,6 +172,7 @@ public class NetworkController {
         sQueue.add(request);
     }
 
+    // Add user
     public void addUser(User user, NetworkCallback<User> callback) {
         String url = Uri.parse(BASE_URL)
                 .buildUpon()
@@ -193,6 +199,7 @@ public class NetworkController {
         sQueue.add(request);
     }
 
+    // Add session
     public void addSession(Session session, String host, NetworkCallback<Session> callback) {
         String url = Uri.parse(BASE_URL)
                 .buildUpon()
@@ -225,6 +232,7 @@ public class NetworkController {
         sQueue.add(request);
     }
 
+    // Delete session by id
     public void deleteSession(NetworkCallback<String> callback, long id) {
         String url = Uri.parse(BASE_URL)
                 .buildUpon()

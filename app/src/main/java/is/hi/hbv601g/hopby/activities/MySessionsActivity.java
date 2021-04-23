@@ -120,21 +120,21 @@ public class MySessionsActivity extends AppCompatActivity {
 
     public void updateSessions(List<Session> mSessionBank) {
         if(mSessionBank.size() < 1) {
-            // TODO:  birta einhver skilaboð um að þú ´sert ekki skráður í neitt session
-            Log.d("MySessionsActivity", "-------ARRAY TÓMT --------");
+            // If there are no sessions
             mNoSessions = findViewById(R.id.no_sessions);
             mNoSessions.setVisibility(View.VISIBLE);
             grid.setVisibility(View.GONE);
         }
 
+        // Update the grid
         sessionArrayList = new ArrayList<Session>(mSessionBank);
-
         boolean fromMySessions = true;
         OverviewAdapter adapter = new OverviewAdapter(this, sessionArrayList, fromMySessions, MySessionsActivity.this);
         grid.setAdapter(adapter);
     }
 
 
+    // TODO: skjölun
     public void onTimeSet(int month, int dayofMonth, int hourofDay, int minute, String title, String message, int id) {
         Calendar c = Calendar.getInstance();
         c.set(Calendar.MONTH, month);
@@ -146,6 +146,7 @@ public class MySessionsActivity extends AppCompatActivity {
         startAlarm(c, title, message, id);
     }
 
+    // TODO: skjölun
     private void startAlarm(Calendar c, String title, String message, int id) {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlertReceiver.class);
@@ -154,10 +155,10 @@ public class MySessionsActivity extends AppCompatActivity {
         intent.putExtra("id", id);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id, intent, 0);
 
-
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
     }
 
+    // TODO: skjölun
     public void cancelAlarm(int id) {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlertReceiver.class);
@@ -166,6 +167,7 @@ public class MySessionsActivity extends AppCompatActivity {
         alarmManager.cancel(pendingIntent);
     }
 
+    // TODO: skjölun
     public void setNotificationPref(String id, boolean bool) {
         SharedPreferences preferences = getSharedPreferences("MYPREFS", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
@@ -173,6 +175,7 @@ public class MySessionsActivity extends AppCompatActivity {
         editor.commit();
     }
 
+    // TODO: skjölun
     public boolean getNotificationPref(String id) {
         SharedPreferences preferences = getSharedPreferences("MYPREFS", MODE_PRIVATE);
         return preferences.getBoolean(id, false);

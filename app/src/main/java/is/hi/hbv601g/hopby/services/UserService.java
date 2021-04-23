@@ -12,13 +12,13 @@ import is.hi.hbv601g.hopby.networking.NetworkController;
 public class UserService {
 
     private List<User> mUserBank;
-    NetworkController mNetworkController;
-
+    private NetworkController mNetworkController;
 
     public UserService(NetworkController networkController) {
         mNetworkController = networkController;
     }
 
+    // Set the userbank
     public void setUserBank() {
         mNetworkController.getUsers(new NetworkCallback<List<User>>() {
             @Override
@@ -33,6 +33,8 @@ public class UserService {
             }
         });
     }
+
+    // Get name for that username
     public String getNameForUser(String username){
         if(mUserBank== null ) {
             return username;
@@ -47,6 +49,7 @@ public class UserService {
         return null;
     }
 
+    // Add user to backend
     public void signup(String name, String username, String password) {
         User newUser = new User(name, username, password);
         mNetworkController.addUser(newUser, new NetworkCallback<User>() {
@@ -63,7 +66,7 @@ public class UserService {
         });
     }
 
-
+    // Check if user exist
     public boolean userExist(String username) {
         int len = mUserBank.size();
         for(int i=0; i<len; i++) {
@@ -74,6 +77,7 @@ public class UserService {
         return false;
     }
 
+    // Check if username and password match
     public User login(String username, String password){
         int len = mUserBank.size();
         for(int i=0; i<len; i++) {

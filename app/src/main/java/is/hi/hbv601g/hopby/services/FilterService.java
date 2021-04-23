@@ -6,7 +6,7 @@ import com.google.android.material.chip.ChipGroup;
 import java.util.List;
 
 public class FilterService {
-
+    // Returns boolean array for that chipGroup from filter
     public boolean[] getBoolean(ChipGroup chipGroup){
         int size = chipGroup.getChildCount();
         boolean[] list = new boolean[size];

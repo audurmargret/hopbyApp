@@ -1,16 +1,11 @@
 package is.hi.hbv601g.hopby;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -20,17 +15,11 @@ import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import is.hi.hbv601g.hopby.activities.MainActivity;
 import is.hi.hbv601g.hopby.activities.MySessionsActivity;
 import is.hi.hbv601g.hopby.activities.SessionInfoActivity;
 import is.hi.hbv601g.hopby.entities.Session;
-import is.hi.hbv601g.hopby.services.SessionService;
-
-import static android.content.Context.ALARM_SERVICE;
 
 
 public class OverviewAdapter extends ArrayAdapter<Session> {
@@ -38,6 +27,7 @@ public class OverviewAdapter extends ArrayAdapter<Session> {
     SessionInfoActivity mInfoActivity;
     boolean mFromMySessions;
     MySessionsActivity mMySessionsActivity;
+
     public OverviewAdapter(@NonNull Context context, ArrayList<Session> overviewArrayList, boolean fromMySessions, MySessionsActivity mySessionsActivity) {
         super(context, 0, overviewArrayList);
         mContext = context;
@@ -50,7 +40,6 @@ public class OverviewAdapter extends ArrayAdapter<Session> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View listitemView = convertView;
-        final RecyclerView.ViewHolder viewHolder;
         if (listitemView == null) {
             // Layout Inflater inflates each item to be displayed in GridView.
             listitemView = LayoutInflater.from(getContext()).inflate(R.layout.overview_item, parent, false);
@@ -63,6 +52,7 @@ public class OverviewAdapter extends ArrayAdapter<Session> {
         TextView overviewSlots = listitemView.findViewById(R.id.overview_slots);
         ProgressBar progressBar = listitemView.findViewById(R.id.progressBar);
 
+        // Set all information to item
         overviewTitle.setText(session.getTitle());
         overviewLocation.setText(session.getLocation());
         overviewDate.setText(session.getDate());
@@ -72,9 +62,9 @@ public class OverviewAdapter extends ArrayAdapter<Session> {
         progressBar.setMax(session.getSlots());
         progressBar.setProgress(slots);
 
-
         String id = Long.toString(session.getId());
 
+        // Info button to open more detailed information
         ImageButton infoButton = (ImageButton)listitemView.findViewById(R.id.info_button);
         infoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,12 +75,13 @@ public class OverviewAdapter extends ArrayAdapter<Session> {
             }
         });
 
+        // Notification button - turn on / off notifications
         ImageButton notificationButton = (ImageButton)listitemView.findViewById(R.id.notification_button);
         ImageButton notificationButtonYellow = (ImageButton) listitemView.findViewById(R.id.notification_yellow_button);
 
-
-
+        // If we are in My Sessions
         if(mFromMySessions) {
+            // Flip notification buttons from on/off
             if(!mMySessionsActivity.getNotificationPref(id)){
                 notificationButton.setVisibility(View.VISIBLE);
                 notificationButtonYellow.setVisibility(View.GONE);
@@ -98,11 +89,11 @@ public class OverviewAdapter extends ArrayAdapter<Session> {
             else {
                 notificationButtonYellow.setVisibility(View.VISIBLE);
                 notificationButton.setVisibility(View.GONE);
-
             }
 
             int idInt = Integer.parseInt(id);
 
+            // Listener for notification button - set the notification
             notificationButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -127,21 +118,20 @@ public class OverviewAdapter extends ArrayAdapter<Session> {
                 }
             });
 
+            // Listener for notification button - take off the notification
             notificationButtonYellow.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     notificationButton.setVisibility(View.VISIBLE);
                     notificationButtonYellow.setVisibility(View.GONE);
                     mMySessionsActivity.setNotificationPref(id, false);
-
                     mMySessionsActivity.cancelAlarm(idInt);
                 }
             });
         } else {
+            // If we are in Session overview, remove the notification button
             notificationButton.setVisibility(View.GONE);
         }
-
-
 
         return listitemView;
     }

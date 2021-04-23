@@ -18,23 +18,23 @@ public class SignupActivity extends AppCompatActivity {
     private Button mButtonSignup;
     private Button mButtonBack;
 
-
     private TextInputEditText mName;
     private TextInputEditText mUserName;
     private TextInputEditText mPassword;
 
     private UserService mUserService;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
+        // Connect the service
         NetworkController networkController = NetworkController.getInstance(this);
         mUserService = new UserService(networkController);
         mUserService.setUserBank();
 
+        // Sign up button
         mButtonSignup = (Button) findViewById(R.id.button_confirm);
         mButtonSignup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +45,7 @@ public class SignupActivity extends AppCompatActivity {
 
                 boolean exist = mUserService.userExist(String.valueOf(mUserName.getEditableText()));
 
+                // Upon illegal input display error message
                 boolean isOk = true;
                 if (exist) {
                     mUserName.setError("Username is already in use");
@@ -64,19 +65,21 @@ public class SignupActivity extends AppCompatActivity {
                 }
 
                 if(isOk){
+                    // Form is correct and send it to the service
                     mUserService.signup(String.valueOf(mName.getEditableText()), String.valueOf(mUserName.getEditableText()), String.valueOf(mPassword.getEditableText()));
                     Context context = getApplicationContext();
                     CharSequence text = "Success, please login";
                     int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
-                    //finish();
+
                     Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
                     startActivity(intent);
                 }
             }
         });
 
+        // Back button
         mButtonBack = (Button) findViewById(R.id.button_back);
         mButtonBack.setOnClickListener(new View.OnClickListener() {
             @Override

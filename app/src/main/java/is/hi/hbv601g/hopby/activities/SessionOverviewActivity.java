@@ -57,31 +57,31 @@ public class SessionOverviewActivity extends AppCompatActivity implements Serial
     }
 
     public void start() {
-        NetworkController networkController = NetworkController.getInstance(this);
-
+        // Set the grid
         grid = findViewById(R.id.overview_grid);
 
-
+        // Get the filters
         Intent getIntent = getIntent();
         boolean filter = getIntent.getBooleanExtra("filter", false);
         mHobbies = getIntent.getBooleanArrayExtra("hobbies");
         mTimes = getIntent.getBooleanArrayExtra("times");
         mDays = getIntent.getBooleanArrayExtra("days");
 
+        // Connect to service
+        NetworkController networkController = NetworkController.getInstance(this);
         mSessionService = new SessionService(networkController);
         mSessionService.getAllSession(this, filter);
 
-
+        // Filter button
         mButtonFilter = (Button) findViewById(R.id.filter_button);
         mButtonFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent intent = new Intent(SessionOverviewActivity.this, FilterActivity.class);
-                //startActivity(intent);
                 finish();
             }
         });
 
+        // Create session button
         mButtonCreate = (Button) findViewById(R.id.create_button);
         mButtonCreate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,18 +92,18 @@ public class SessionOverviewActivity extends AppCompatActivity implements Serial
             }
         });
 
+        // Maps button
         mButtonMaps = (Button) findViewById(R.id.maps_button);
         mButtonMaps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: Opna MAPS VIEW
                 Intent intent = new Intent(SessionOverviewActivity.this, MapsActivity.class);
                 intent.putExtra("flag","overview");
-                //intent.putExtra("sessions", sessionArrayList);
                 startActivity(intent);
             }
         });
 
+        // Back button
         mButtonBack = (Button) findViewById(R.id.back_button);
         mButtonBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,6 +112,7 @@ public class SessionOverviewActivity extends AppCompatActivity implements Serial
             }
         });
 
+        // Home button - back to MainActivityt
         mButtonHome = (ImageButton) findViewById(R.id.home_button);
         mButtonHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,8 +125,10 @@ public class SessionOverviewActivity extends AppCompatActivity implements Serial
         });
     }
 
+    // Update the sessions in grid
     public void updateSessions(List<Session> mSessionBank, boolean filter) {
         if(filter) {
+            // If there is filter
             try{
                 sessionArrayList = mSessionService.filter(mSessionBank, mHobbies, mTimes, mDays);
                 mFilterText = (TextView) findViewById(R.id.overview_filterText);
@@ -133,25 +136,27 @@ public class SessionOverviewActivity extends AppCompatActivity implements Serial
                 mFilterText.setText(filterText);
 
             } catch (Exception e) {
-                Log.d("SessionOverviewActivity", "Gat ekki notað filter" + e.toString());
+                // If something went wrong, get all sessions
+                Log.d("SessionOverviewActivity", "Could not use filter " + e.toString());
                 sessionArrayList = new ArrayList<Session>();
                 mFilterText.setText("Could not load filter");
 
                 sessionArrayList = new ArrayList<Session>(mSessionBank);
             }
         } else {
+            // No filter - get all sessions
             sessionArrayList = new ArrayList<Session>(mSessionBank);
         }
 
         if(sessionArrayList.size() < 1) {
-            // TODO:  birta einhver skilaboð um að það hafi ekki uppfylt þessi skilyrði
-            Log.d("SessionOverviewActivity", "-------ARRAY TÓMT --------");
+            // If there are no sessions
             mNoSessions = findViewById(R.id.no_sessions_found);
             mNoSessions.setVisibility(View.VISIBLE);
             grid.setVisibility(View.GONE);
         }
-        boolean fromMySessions = false;
-        OverviewAdapter adapter = new OverviewAdapter(this, sessionArrayList, fromMySessions, null );
+
+        // Set every item in grid with adapter
+        OverviewAdapter adapter = new OverviewAdapter(this, sessionArrayList, false, null );
         grid.setAdapter(adapter);
     }
 

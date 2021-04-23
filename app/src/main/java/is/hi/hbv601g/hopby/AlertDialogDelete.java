@@ -30,9 +30,7 @@ public class AlertDialogDelete extends AppCompatDialogFragment {
 
                     }
                 });
-
         return builder.create();
-
     }
 
     public interface AlertDialogDeleteListener {
@@ -42,7 +40,6 @@ public class AlertDialogDelete extends AppCompatDialogFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
         try{
             listener = (AlertDialogDeleteListener) context;
         } catch (ClassCastException e) {

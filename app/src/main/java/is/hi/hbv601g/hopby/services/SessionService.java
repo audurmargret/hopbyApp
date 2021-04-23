@@ -44,6 +44,7 @@ public class SessionService {
         mNetworkController = networkController;
     }
 
+    // Get all sessions from backend
     public void getAllSession(SessionOverviewActivity sessionOverviewActivity, boolean filter) {
         mSessionOverviewActivity = sessionOverviewActivity;
         mNetworkController.getSessions(new NetworkCallback<List<Session>>() {
@@ -60,6 +61,7 @@ public class SessionService {
         });
     }
 
+    // Get all sessions that user is attending
     public void getMySession(MySessionsActivity mySessionActivity, String username) {
         mMySessionsActivity = mySessionActivity;
         mNetworkController.getMySessions(new NetworkCallback<List<Session>>() {
@@ -76,6 +78,7 @@ public class SessionService {
         }, username);
     }
 
+    // Get session by id
     public void getSession(SessionInfoActivity sessionInfoActivity, long id) {
         mSessionInfoActivity = sessionInfoActivity;
         mNetworkController.getSession(new NetworkCallback<Session>() {
@@ -92,6 +95,7 @@ public class SessionService {
         }, id);
     }
 
+    // Join session by id and username
     public void joinSession(long id, String username, String path) {
         mNetworkController.joinSession(new NetworkCallback<Session>() {
             @Override
@@ -107,6 +111,7 @@ public class SessionService {
         }, path, id, username);
     }
 
+    // Delete session by id
     public void deleteSession(long id) {
         mNetworkController.deleteSession(new NetworkCallback<String>(){
             @Override
@@ -126,6 +131,7 @@ public class SessionService {
     }
 
 
+    // Add session to backend
     public long addSession(TextInputEditText title, String date, String time, TextInputEditText slots, String hobbyId, TextInputEditText description, TextInputEditText location, String host) {
         Session newSession = format( title, date, time, slots, hobbyId, description, location, host);
         mNetworkController.addSession(newSession, host, new NetworkCallback<Session>() {
@@ -145,14 +151,11 @@ public class SessionService {
         return sessionId;
     }
 
+    // Format Date String to be on format "1. ap 2021"
     public String formatDateStringforView(String date) {
         String year = date.substring(0,4);
         String month = date.substring(5,7);
         String day = date.substring(8,10);
-
-
-        Log.d("SessionService", "DATE::: " + date.toString());
-
 
        String dateString = "";
         if(Integer.parseInt(day)<10) {
@@ -160,7 +163,6 @@ public class SessionService {
         } else {
             dateString = day.concat(". ");
         }
-
         switch (month) {
             case "01":
                 dateString = dateString.concat("Jan ");
@@ -199,13 +201,12 @@ public class SessionService {
                 dateString = dateString.concat("Dec ");
                 break;
         }
-
         dateString = dateString.concat(year);
 
         return dateString;
     }
 
-
+    // Format input to correct form for backend
     public Session format(TextInputEditText title, String date, String time, TextInputEditText slots, String hobby, TextInputEditText description, TextInputEditText location, String host) {
         String titleString = title.getText().toString();
         String descriptionString = description.getText().toString();
@@ -217,11 +218,11 @@ public class SessionService {
         else if(hobby.equals("Basketball")) hobbyInt = 2;
         else hobbyInt = 3;
 
-
         Session session = new Session(0, titleString, locationString, date, time, slotsInt, hobbyInt, descriptionString, host);
         return session;
     }
 
+    // Get all hobbies
     public List<String> getHobbies() {
         List<String> hobbies = new ArrayList<String>();
         hobbies.add("Football");
@@ -231,6 +232,7 @@ public class SessionService {
         return hobbies;
     }
 
+    // Generate filter text
     public String filterText(boolean[] h, boolean[] t, boolean[] d) {
         if(mHobbyCount == 0 && mTimeCount == 0 && mDayCount == 0) {
             return "No filters applied";
@@ -241,6 +243,7 @@ public class SessionService {
         String time = "";
         String returnString = "";
 
+        // If there are hobby filters
         if(mHobbyCount>0){
             if(mHobbyCount == 1){
                 hobby = "Hobby: ";
@@ -259,6 +262,7 @@ public class SessionService {
             hobby = hobby.concat("\n");
         }
 
+        // If there are time filters
         if(mTimeCount>0){
             time = "Time: ";
             for (int i = 0; i<t.length; i++) {
@@ -274,6 +278,7 @@ public class SessionService {
 
         }
 
+        // If there are day filters
         if(mDayCount>0){
             if(mDayCount == 1){
                 day = "Day: ";
@@ -299,7 +304,7 @@ public class SessionService {
         return returnString;
     }
 
-
+    // Get filtered sessions
     public ArrayList<Session> filter(List<Session> sessionBank, boolean[] h, boolean[] t, boolean[]d) throws ParseException {
         ArrayList<Session> sessionArrayList = new ArrayList<Session>();
         int bankLength = sessionBank.size();
@@ -308,24 +313,28 @@ public class SessionService {
         mTimeCount = 0;
         mDayCount = 0;
 
+        // Count hobby filters
         for(int i=0; i<h.length; i++) {
             if (h[i]) {
                 mHobbyCount++;
             }
         }
 
+        // Count time filters
         for(int i=0; i<t.length; i++) {
             if (t[i]) {
                 mTimeCount++;
             }
         }
 
+        // Count day filters
         for(int i=0; i<d.length; i++) {
             if (d[i]) {
                 mDayCount++;
             }
         }
 
+        // Make array for day filters
         int[] day = new int[mDayCount];
         int indexD = 0;
         for(int i = 0; i<d.length; i++) {
@@ -335,6 +344,7 @@ public class SessionService {
             }
         }
 
+        // Make array for time filters
         int[] time = new int[mTimeCount*2];
         int indexT = 0;
         for (int i=0; i<t.length; i++) {
@@ -354,6 +364,7 @@ public class SessionService {
             }
         }
 
+        // Make array for hobby filters
         int[] hobby = new int[mHobbyCount];
         int indexH = 0;
         for(int i = 0; i<h.length; i++) {
@@ -361,6 +372,8 @@ public class SessionService {
                 hobby[indexH++] = i+1;
             }
         }
+
+        // Check if filters apply (zero or all selected have no effect)
         boolean checkTime = true;
         if (mTimeCount == 0 || mTimeCount == t.length) {
             checkTime = false;
@@ -380,13 +393,17 @@ public class SessionService {
         boolean fitsTime = false;
         boolean fitsHobby = false;
 
+        // Check if day filters fits
         for(int i = 0; i<bankLength; i++) {
             if(checkDay) {
+                // If there are day filters
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 Date date = dateFormat.parse(sessionBank.get(i).getDate());
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(date);
                 int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+
+                // check if session fits
                 for(int value : day) {
                     if(dayOfWeek == value) {
                         fitsDay = true;
@@ -398,6 +415,7 @@ public class SessionService {
             }
 
             if(checkTime) {
+                // If there are time filters - check if session fits
                 for (int iTime = 0; iTime < time.length; iTime += 2) {
                     SimpleDateFormat formatTime = new SimpleDateFormat("HHmm", Locale.getDefault());
                     int sessionTime = Integer.parseInt(sessionBank.get(i).getTime().replace(":", "").substring(0, 4));
@@ -411,8 +429,8 @@ public class SessionService {
             }
 
             if(checkHobby) {
+                // If there are hobby filters - check if session fits
                 for (int index = 0; index < hobby.length; index++) {
-
                     if (sessionBank.get(i).getHobbyId() == hobby[index]) {
                         fitsHobby = true;
                         break;
@@ -422,18 +440,21 @@ public class SessionService {
                 fitsHobby = true;
             }
 
+            // If it fits all filters
             if(fitsDay && fitsTime && fitsHobby) {
                 sessionArrayList.add(sessionBank.get(i));
             }
+
+            // reset for next session
             fitsDay = false;
             fitsTime = false;
             fitsHobby = false;
         }
 
-
         return sessionArrayList;
     }
 
+    // Get user list from session
     public String getUserList(Session session) {
         List<User> userlist = session.getUsers();
         String userListString = "";
@@ -446,18 +467,13 @@ public class SessionService {
         return userListString;
     }
 
+    // Check if username is in session
     public boolean isUserInSession(Session session, String username) {
         List<User> userList = session.getUsers();
         for(int i=0; i<userList.size(); i++) {
             if(userList.get(i).getUserName().equals(username))
                 return true;
         }
-        return false;
-    }
-
-    public boolean isUserHost(Session session, String username) {
-        List<User> userList = session.getUsers();
-        if(userList.get(0).getUserName().equals(username)) return true;
         return false;
     }
 }
