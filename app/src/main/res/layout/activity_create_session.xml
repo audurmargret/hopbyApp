@@ -106,11 +106,11 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/input_location"
                             android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="textMultiLine"
-                            android:lines="2"
+                            android:layout_height="99dp"
                             android:background="@android:color/transparent"
-                            android:hint="@string/location" />
+                            android:hint="@string/location"
+                            android:inputType="textMultiLine"
+                            android:lines="3" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <Button
