@@ -22,7 +22,7 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="70dp"
                     >
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -35,7 +35,7 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp">
+                    android:layout_height="70dp">
 
                     <Spinner
                         android:id="@+id/hobby_spinner"
@@ -69,7 +69,7 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp">
+                    android:layout_height="70dp">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/input_slots"
