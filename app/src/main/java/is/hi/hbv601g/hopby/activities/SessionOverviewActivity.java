@@ -103,16 +103,19 @@ public class SessionOverviewActivity extends AppCompatActivity implements Serial
             }
         });
 
-        // Back button
+        // Back button to HOME
         mButtonBack = (Button) findViewById(R.id.back_button);
         mButtonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
+                Intent intent = new Intent(SessionOverviewActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
 
-        // Home button - back to MainActivityt
+        /* Home button - back to MainActivityt
         mButtonHome = (ImageButton) findViewById(R.id.home_button);
         mButtonHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,7 +125,7 @@ public class SessionOverviewActivity extends AppCompatActivity implements Serial
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
-        });
+        });*/
     }
 
     // Update the sessions in grid

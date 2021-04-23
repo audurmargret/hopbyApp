@@ -76,5 +76,6 @@
     <string name="grid_header_past">Past sessions:</string>
     <string name="create_error_string">Make sure that everything is filled out correctly</string>
     <string name="no_my_sessions">Oh no, you have no upcoming sessions!</string>
+    <string name="button_home">HOME</string>
 
 </resources>
