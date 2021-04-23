@@ -65,7 +65,7 @@ public class MySessionsActivity extends AppCompatActivity {
     }
 
     public void start() {
-        // TODO:  skjölun
+        // Connect the Service with the Notification Helper
         mNotificationHelper = new NotificationHelper(this);
         notificationManager = NotificationManagerCompat.from(this);
 
@@ -134,7 +134,7 @@ public class MySessionsActivity extends AppCompatActivity {
     }
 
 
-    // TODO: skjölun
+    // Function for creating a calendar object
     public void onTimeSet(int month, int dayofMonth, int hourofDay, int minute, String title, String message, int id) {
         Calendar c = Calendar.getInstance();
         c.set(Calendar.MONTH, month);
@@ -146,7 +146,7 @@ public class MySessionsActivity extends AppCompatActivity {
         startAlarm(c, title, message, id);
     }
 
-    // TODO: skjölun
+    // Function for creating a pending intent for Alarm manager
     private void startAlarm(Calendar c, String title, String message, int id) {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlertReceiver.class);
@@ -158,7 +158,7 @@ public class MySessionsActivity extends AppCompatActivity {
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
     }
 
-    // TODO: skjölun
+    // Cancel an alarm in Alarm manager
     public void cancelAlarm(int id) {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlertReceiver.class);
@@ -167,7 +167,7 @@ public class MySessionsActivity extends AppCompatActivity {
         alarmManager.cancel(pendingIntent);
     }
 
-    // TODO: skjölun
+    // Create a shared preference variable for Notification on/off per session
     public void setNotificationPref(String id, boolean bool) {
         SharedPreferences preferences = getSharedPreferences("MYPREFS", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
@@ -175,7 +175,7 @@ public class MySessionsActivity extends AppCompatActivity {
         editor.commit();
     }
 
-    // TODO: skjölun
+    // Get boolean value for notification of a session
     public boolean getNotificationPref(String id) {
         SharedPreferences preferences = getSharedPreferences("MYPREFS", MODE_PRIVATE);
         return preferences.getBoolean(id, false);
