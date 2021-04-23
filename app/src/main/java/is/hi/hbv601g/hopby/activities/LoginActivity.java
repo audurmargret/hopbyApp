@@ -31,11 +31,12 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // Connect the Service with the Network Controller
         NetworkController networkController = NetworkController.getInstance(this);
         mUserService = new UserService(networkController);
-
         mUserService.setUserBank();
 
+        // Login button
         mButtonLogin = (Button) findViewById(R.id.button_confirm);
         mButtonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,13 +44,10 @@ public class LoginActivity extends AppCompatActivity {
                 mUsername = findViewById(R.id.input_user);
                 mPassword = findViewById(R.id.input_passw);
 
-                Log.d("LoginActivity", "Reyna að finna út ur null reference " + mUserService);
-                Log.d("LoginActivity", "Reyna að finna út ur null reference " + mUsername); // ÞESSI KOM SEM NULL
-                Log.d("LoginActivity", "Reyna að finna út ur null reference " + mPassword);
-
                 User user = mUserService.login(String.valueOf(mUsername.getEditableText()), String.valueOf(mPassword.getEditableText()));
 
                 if (user != null) {
+                    // if user exist
                     SharedPreferences preferences = getSharedPreferences("MYPREFS", MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString("loggedInUser", user.getUserName() );
@@ -59,21 +57,22 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                 } else {
+                    // if user don't exist
                     Context context = getApplicationContext();
                     CharSequence text = "Username and password don't match";
                     int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
                 }
-
             }
         });
 
+
+        // Sign up button
         mButtonSignup = (Button) findViewById(R.id.button_signup);
         mButtonSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: opna signup
                 Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
                 startActivity(intent);
             }

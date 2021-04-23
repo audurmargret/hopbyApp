@@ -39,6 +39,7 @@ public class MySessionsActivity extends AppCompatActivity {
 
     private GridView grid;
     private TextView mHeader;
+    private TextView mNoSessions;
     private Button mButtonBack;
     private SessionService mSessionService;
     private String mLoggedInUser;
@@ -54,40 +55,39 @@ public class MySessionsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_sessions);
-
-        mNotificationHelper = new NotificationHelper(this);
-        notificationManager = NotificationManagerCompat.from(this);
-
-
         start();
     }
-
-
-
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.d("MySessionsActivity", "ON RESUME!!!!" );
         start();
     }
 
-
     public void start() {
+        // TODO:  skjölun
+        mNotificationHelper = new NotificationHelper(this);
+        notificationManager = NotificationManagerCompat.from(this);
 
+        // Connect the Service with the Network Controller
         NetworkController networkController = NetworkController.getInstance(this);
+        mSessionService = new SessionService(networkController);
+
         grid = findViewById(R.id.my_overview_grid);
 
+        // Get the logged in user
         SharedPreferences preferences = getSharedPreferences("MYPREFS", MODE_PRIVATE);
         mLoggedInName = preferences.getString("loggedInName", "");
         mLoggedInUser = preferences.getString("loggedInUser", "");
 
-        mSessionService = new SessionService(networkController);
+        // Get sessions that the user is attending
         mSessionService.getMySession(this, mLoggedInUser);
 
+        // Set the title
         mHeader = (TextView) findViewById(R.id.my_overview_header);
         mHeader.setText(mLoggedInName.concat("'s Sessions"));
 
+        // Button back to MainActivity
         mButtonBack = (Button) findViewById(R.id.back_button);
         mButtonBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,6 +96,7 @@ public class MySessionsActivity extends AppCompatActivity {
             }
         });
 
+        // Button to open notification in settings on phone
         notifyButton = findViewById(R.id.notification_button);
         notifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,30 +105,26 @@ public class MySessionsActivity extends AppCompatActivity {
                 intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
 
                 if(Build.VERSION.SDK_INT >= 5 && Build.VERSION.SDK_INT < 8) {
-                    Log.d("MySessionsActivity", "fyrri IF");
                     intent.putExtra("app_package", getPackageName());
                     intent.putExtra("app_uid", getApplicationInfo().uid);
                     startActivity(intent);
                 } else if (Build.VERSION.SDK_INT >= 8) {
-                    Log.d("MySessionsActivity", "seinni IF");
                     intent.putExtra("android.provider.extra.APP_PACKAGE", getPackageName());
                     startActivity(intent);
                 } else {
                     Log.d("MySessionsActivity", "Gat ekki opnad settings");
                 }
-
-
-
             }
         });
     }
 
     public void updateSessions(List<Session> mSessionBank) {
-
-
         if(mSessionBank.size() < 1) {
             // TODO:  birta einhver skilaboð um að þú ´sert ekki skráður í neitt session
             Log.d("MySessionsActivity", "-------ARRAY TÓMT --------");
+            mNoSessions = findViewById(R.id.no_sessions);
+            mNoSessions.setVisibility(View.VISIBLE);
+            grid.setVisibility(View.GONE);
         }
 
         sessionArrayList = new ArrayList<Session>(mSessionBank);

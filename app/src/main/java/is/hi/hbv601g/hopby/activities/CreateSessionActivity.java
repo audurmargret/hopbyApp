@@ -62,21 +62,26 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_session);
 
+        // Connect the Service with the Network Controller
         NetworkController networkController = NetworkController.getInstance(this);
         mSessionService = new SessionService(networkController);
 
+        // Get logged in user
         SharedPreferences preferences = getSharedPreferences("MYPREFS", MODE_PRIVATE);
         mLoggedInUser = preferences.getString("loggedInUser", "");
 
+        // Listener for drop down list - choose hobby
         final Spinner hobbySpinner = (Spinner) findViewById(R.id.hobby_spinner);
         hobbySpinner.setOnItemSelectedListener(this);
-
         List<String> hobbies = mSessionService.getHobbies();
         hobbies.add(0,"Select Hobby:");
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, hobbies);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        hobbySpinner.setAdapter(dataAdapter);
 
+        // Calendar
         mCalendarView = findViewById(R.id.input_date_calendarView);
         mCalendarView.setMinDate(System.currentTimeMillis());
-
         mCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int i, int i1, int i2) {
@@ -89,14 +94,11 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
             }
         });
 
-
+        // TimePicker
         mTimePicker = findViewById(R.id.simpleTimePicker);
         mTimePicker.setIs24HourView(true);
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, hobbies);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        hobbySpinner.setAdapter(dataAdapter);
-
+        // Submit button
         mButtonSubmit = (Button) findViewById(R.id.submit_button);
         mButtonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,10 +110,10 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
                 mLocation = findViewById(R.id.input_location);
                 mHobbySpinner = findViewById(R.id.hobby_spinner);
 
+                // Change TimePicker to String
                 String hourString = String.valueOf(mTimePicker.getHour());
                 String minString = String.valueOf(mTimePicker.getMinute());
                 String timeString = hourString.concat(minString);
-                Log.d("CreateSessionActivity", timeString);
 
 
                 // Upon illegal input display error message
@@ -138,11 +140,8 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
                     isOk = false;
                 }
 
-
-                Log.d("CreateSEssion", "DATE " + mCalendarView.getDate());
                 if(isOk) {
-                    // TODO: breyta hér þannig það opni info en ekki overview
-                    Log.d("CreateSEssionActivity", "LOGGED IN USER: " + mLoggedInUser);
+                    // Form is correct and send it to the service
                     long resultId = mSessionService.addSession(mTitle, date, timeString, mSlots, mHobbyId, mDescription, mLocation, mLoggedInUser);
 
                     Intent intent = new Intent(CreateSessionActivity.this, SessionOverviewActivity.class);
@@ -150,12 +149,14 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
                     startActivity(intent);
                 }
                 else {
+                    // Form is incorrect - show errors
                     mErrorMessage = findViewById(R.id.error_message_create);
                     mErrorMessage.setVisibility(View.VISIBLE);
                 }
             }
         });
 
+        // Cancel button
         mButtonCancel = (Button) findViewById(R.id.cancel_button);
         mButtonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,6 +165,7 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
             }
         });
 
+        // Maps button
         mButtonMaps = (Button) findViewById(R.id.maps_button);
         mButtonMaps.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -210,15 +212,17 @@ public class CreateSessionActivity extends AppCompatActivity implements AdapterV
     public void setSessionId(long id) {
         mSessionId = id;
     }
+
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        // To know what hobby was selected
         String item = adapterView.getItemAtPosition(i).toString();
-        Log.d("CreateSessionActivity", "SESSION" + item);
         mHobbyId = item;
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
+        // If nothing was selected in the hobby drop down list
         mHobbyId = "";
 
     }

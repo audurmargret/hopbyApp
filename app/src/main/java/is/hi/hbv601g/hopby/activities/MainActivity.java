@@ -31,13 +31,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        // Get name of logged in user
         SharedPreferences preferences = getSharedPreferences("MYPREFS", MODE_PRIVATE);
         mLoggedInUser = preferences.getString("loggedInName", "");
 
+        // Greet the user
         mGreetings = (TextView) findViewById(R.id.greetings);
         mGreetings.setText("Hi! " + mLoggedInUser );
 
+        // Button to open all sessions (filter)
         mButtonAll = (Button) findViewById(R.id.button_view_all_sessions);
         mButtonAll.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,16 +49,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Button to open my sessions
         mButtonMy = (Button) findViewById(R.id.button_view_my_sessions);
         mButtonMy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, MySessionsActivity.class);
                 startActivity(intent);
-                // TODO opna nytt nice
             }
         });
 
+        // Button to log out
         mButtonLogout = (Button) findViewById(R.id.button_logout);
         mButtonLogout.setOnClickListener(new View.OnClickListener() {
             @Override

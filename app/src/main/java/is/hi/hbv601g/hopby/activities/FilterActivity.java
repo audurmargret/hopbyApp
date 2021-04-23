@@ -9,20 +9,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
-import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
-
-import java.util.List;
 
 public class FilterActivity extends AppCompatActivity {
 
     private Button mButtonSubmit;
-    private Button mButtonCancel;
+    private Button mButtonBack;
     private ChipGroup mChipGroupHobby;
     private ChipGroup mChipGroupDay;
     private ChipGroup mChipGroupTime;
@@ -37,11 +32,14 @@ public class FilterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
 
+        // Connect to service
         mFilterService = new FilterService();
 
+        // Get name of logged in user
         SharedPreferences preferences = getSharedPreferences("MYPREFS", MODE_PRIVATE);
         mLoggedInUser = preferences.getString("loggedInName", "");
 
+        // Submit filter button
         mButtonSubmit = (Button) findViewById(R.id.filter_button);
         mButtonSubmit.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -65,8 +63,9 @@ public class FilterActivity extends AppCompatActivity {
             }
         });
 
-        mButtonCancel = (Button) findViewById(R.id.button_back);
-        mButtonCancel.setOnClickListener(new View.OnClickListener() {
+        // Back button
+        mButtonBack = (Button) findViewById(R.id.button_back);
+        mButtonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
