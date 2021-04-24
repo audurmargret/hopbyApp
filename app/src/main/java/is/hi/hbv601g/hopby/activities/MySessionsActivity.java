@@ -1,20 +1,6 @@
 package is.hi.hbv601g.hopby.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-
-import is.hi.hbv601g.hopby.AlertReceiver;
-import is.hi.hbv601g.hopby.NotificationHelper;
-import is.hi.hbv601g.hopby.OverviewAdapter;
-import is.hi.hbv601g.hopby.R;
-import is.hi.hbv601g.hopby.entities.Session;
-import is.hi.hbv601g.hopby.networking.NetworkController;
-import is.hi.hbv601g.hopby.services.SessionService;
-
 import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -27,12 +13,21 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.ImageButton;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationManagerCompat;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import is.hi.hbv601g.hopby.AlertReceiver;
+import is.hi.hbv601g.hopby.NotificationHelper;
+import is.hi.hbv601g.hopby.OverviewAdapter;
+import is.hi.hbv601g.hopby.R;
+import is.hi.hbv601g.hopby.entities.Session;
+import is.hi.hbv601g.hopby.networking.NetworkController;
+import is.hi.hbv601g.hopby.services.SessionService;
 
 
 public class MySessionsActivity extends AppCompatActivity {
@@ -49,7 +44,7 @@ public class MySessionsActivity extends AppCompatActivity {
     private NotificationHelper mNotificationHelper;
     private NotificationManagerCompat notificationManager;
 
-    private static ArrayList <Session> sessionArrayList; // TODO make not static and pass though intent ??
+    private static ArrayList <Session> sessionArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

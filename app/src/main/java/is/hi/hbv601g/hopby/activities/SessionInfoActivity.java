@@ -1,18 +1,16 @@
 package is.hi.hbv601g.hopby.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.List;
 
@@ -76,7 +74,6 @@ public class SessionInfoActivity extends AppCompatActivity implements AlertDialo
         mButtonMaps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: Opna MAPS VIEW
                 Intent intent = new Intent(SessionInfoActivity.this, MapsActivity.class);
                 intent.putExtra("flag","info");
                 startActivity(intent);
