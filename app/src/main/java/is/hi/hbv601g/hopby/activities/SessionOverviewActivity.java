@@ -1,21 +1,19 @@
 package is.hi.hbv601g.hopby.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import is.hi.hbv601g.hopby.OverviewAdapter;
 import is.hi.hbv601g.hopby.R;
@@ -36,7 +34,7 @@ public class SessionOverviewActivity extends AppCompatActivity implements Serial
 
     private SessionService mSessionService;
     private List<Session> mSessionBank;
-    private static ArrayList<Session> sessionArrayList; // TODO make not static and pass through intent
+    private static ArrayList<Session> sessionArrayList;
 
     private boolean[] mHobbies;
     private boolean[] mTimes;
@@ -163,7 +161,7 @@ public class SessionOverviewActivity extends AppCompatActivity implements Serial
         grid.setAdapter(adapter);
     }
 
-    // TODO pass through intent not static method
+    // Pass sessions
     public static ArrayList<Session> getSessionArrayList() {
         return sessionArrayList;
     }

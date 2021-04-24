@@ -9,9 +9,6 @@ import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -28,21 +25,16 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.gson.annotations.SerializedName;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-import is.hi.hbv601g.hopby.OverviewAdapter;
 import is.hi.hbv601g.hopby.R;
 import is.hi.hbv601g.hopby.entities.Session;
-import is.hi.hbv601g.hopby.networking.NetworkCallback;
-import is.hi.hbv601g.hopby.networking.NetworkController;
 import is.hi.hbv601g.hopby.services.SessionService;
 
 
@@ -93,13 +85,12 @@ public class MapsActivity extends AppCompatActivity implements GoogleMap.OnMarke
 
         // If came from SessionOverview add all sessions
         if (mCheckFlag.equals("overview")) {
-            //mSessions = i.getParcelableExtra("sessions"); TODO find out how to pass sessions through intent
+            //mSessions = i.getParcelableExtra("sessions");
             mSessions = SessionOverviewActivity.getSessionArrayList();
         }
 
         // If came from SessionInfo add that session
         else if (mCheckFlag.equals("info")){
-            // TODO find better ("correct") method for this
             mSession = SessionService.getSessionForMaps();
             mSessions.add(mSession);
         }

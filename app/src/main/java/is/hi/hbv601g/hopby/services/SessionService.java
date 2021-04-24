@@ -1,17 +1,15 @@
 package is.hi.hbv601g.hopby.services;
 
-import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Button;
-import android.widget.CalendarView;
 
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -125,7 +123,7 @@ public class SessionService {
         }, id);
     }
 
-    // TODO avoid static methods
+    // Pass session to maps
     public static Session getSessionForMaps(){
         return mSessionForMaps;
     }
